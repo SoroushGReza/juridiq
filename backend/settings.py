@@ -36,13 +36,21 @@ CORS_ALLOWED_ORIGINS = [
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "django.contrib.sites",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "rest_framework.authtoken",
     "rest_framework",
+    "accounts",
 ]
+
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -53,6 +61,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
