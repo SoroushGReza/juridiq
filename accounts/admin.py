@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ["is_staff", "is_active"]
     search_fields = ["email", "name", "surname"]
     ordering = ["email"]
+    exclude = ("date_joined",)
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
@@ -29,7 +30,7 @@ class CustomUserAdmin(UserAdmin):
                 )
             },
         ),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        ("Important dates", {"fields": ("last_login",)}),
     )
 
     # Custom fieldsets for user creation form
