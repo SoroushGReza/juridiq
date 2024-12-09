@@ -3,6 +3,7 @@ import { axiosReq } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
+import LoginImg from "../assets/images/login.png";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -111,6 +112,8 @@ const Login = () => {
           )}
         </Col>
       </Row>
+      {/* Login Image */}
+      <img src={LoginImg} alt="Login" className={styles.loginImage} />
     </Container>
   );
 };
