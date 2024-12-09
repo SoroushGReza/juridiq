@@ -1,0 +1,16 @@
+.navBarLinks {
+  font-family: "adventpro-regular", sans-serif !important;
+  font-size: 22px;
+  margin-left: 10px;
+  letter-spacing: 1px;
+  border-radius: 15px;
+  padding: 2px;
+    color: rgb(173, 134, 4);
+}
+
+.navBarLinks:hover {
+  background-color: rgba(173, 133, 4, 0.324);
+  color: rgb(0, 0, 0);
+}
+
+
