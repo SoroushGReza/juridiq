@@ -166,9 +166,17 @@ const Register = () => {
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Button variant="primary" type="submit" className={`${styles["customBtn"]} text-center`}>
+              <Button
+                variant="primary"
+                type="submit"
+                className={`${styles["customBtn"]} text-center`}
+              >
                 Register
               </Button>
+
+              <p className={`${styles["textAndLink"]} text-center`}>
+                Already have an account? <a href="/login">Login here</a>
+              </p>
             </Form>
           </div>
           {Object.keys(errors).length > 0 && (

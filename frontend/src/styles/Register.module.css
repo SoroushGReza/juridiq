@@ -76,3 +76,24 @@ html {
   background-color: #846e40 !important;
   color: black !important;
 }
+
+.textAndLink {
+  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  font-size: 20px;
+  color: bisque;
+  margin-bottom: 0 !important;
+  letter-spacing: 1px;
+}
+
+.textAndLink a {
+  color: #ffb700;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.textAndLink a:hover {
+  font-weight: 400;
+}

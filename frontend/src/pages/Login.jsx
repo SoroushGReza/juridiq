@@ -96,6 +96,10 @@ const Login = () => {
               >
                 Login
               </Button>
+
+              <p className={`${styles["textAndLink"]} text-center`}>
+                Don't have an account? <a href="/register">Register here</a>
+              </p>
             </Form>
           </div>
           {Object.keys(errors).length > 0 && (
