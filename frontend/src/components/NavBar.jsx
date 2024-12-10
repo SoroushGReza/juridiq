@@ -1,9 +1,9 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import useAuthStatus from "../../hooks/useAuthStatus.js";
-import styles from "../../styles/NavBar.module.css";
-import LogoImg from "../../assets/images/logo.png";
+import useAuthStatus from "../hooks/useAuthStatus"
+import styles from "../../src/styles/NavBar.module.css";
+import LogoImg from "../assets/images/logo.png";
 
 const NavBar = () => {
   const { isAuthenticated } = useAuthStatus();
