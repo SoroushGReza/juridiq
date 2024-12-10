@@ -1,0 +1,161 @@
+/* --- Home Page Container --- */
+.homeContainer {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* --- Home Page Background Image --- */
+.homeBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/images/home.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.homeBackground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* --- Page Content --- */
+.homeContent {
+  position: relative;
+  z-index: 3;
+  color: white;
+}
+
+/* --- Page Heading --- */
+.homeHeading {
+  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 3rem;
+}
+
+/* --- Services Heading --- */
+.services {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3.4rem;
+}
+
+/* --- Section Boxes --- */
+.sectionBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 350px;
+  padding: 20px;
+  background: rgba(123, 76, 2, 0.9);
+  border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sectionBox h4 {
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+/* --- Services Paragraphs --- */
+.serviceParagraf {
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: 20px 20px;
+}
+
+.sectionBox p {
+  margin-bottom: 0.7rem;
+  flex-grow: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: rgb(224, 219, 210);
+}
+
+/* --- Services Lists --- */
+.sectionBox ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  color: rgb(242, 176, 117);
+}
+
+.sectionBox ul li {
+  margin-bottom: 0.6rem;
+  list-style-type: square;
+}
+
+/* --- Services Icons --- */
+
+.iconDiv {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.appealIcon {
+  width: 25%;
+  filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.8));
+  opacity: 0.9;
+}
+
+.documentIcon {
+  width: 20%;
+  filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.8));
+  opacity: 0.9;
+}
+
+/* -------------- MEDIA QUERIES --------------*/
+
+/* --- Servives Heading --- */
+@media screen and (max-width: 992px) {
+  .services {
+    font-size: 2.5rem;
+  }
+}
+
+/* --- Section h4  --- */
+@media screen and (max-width: 991px) {
+  .sectionBox h4 {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .sectionBox h4 {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 991px) {
+  .sectionBox h4 {
+    font-size: 30px;
+  }
+}
