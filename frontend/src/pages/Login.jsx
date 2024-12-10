@@ -53,10 +53,10 @@ const Login = () => {
         >
           <div className={styles.formWrapper}>
             <Form onSubmit={handleSubmit}>
-              <h1 className={`${styles["formHeader"]} text-center`}>Login</h1>
+              <h1 className={`${styles["formHeader"]} text-center`}>Logga in</h1>
               <Form.Group className="mt-4" controlId="formEmail">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Email
+                  E-post
                 </Form.Label>
                 <Form.Control
                   type="email"
@@ -74,7 +74,7 @@ const Login = () => {
 
               <Form.Group className="mb-3" controlId="formPassword">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Password
+                  Lösenord
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -95,11 +95,11 @@ const Login = () => {
                 type="submit"
                 className={`${styles["customBtn"]} text-center`}
               >
-                Login
+                Logga in
               </Button>
 
               <p className={`${styles["textAndLink"]} text-center`}>
-                Don't have an account? <a href="/register">Register here</a>
+                Har du inget konto? <a href="/register">Skapa konto</a>
               </p>
             </Form>
           </div>

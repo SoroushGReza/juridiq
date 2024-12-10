@@ -3,6 +3,7 @@ import { axiosReq } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
+import RegisterImg from "../assets/images/register.png";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -56,11 +57,11 @@ const Register = () => {
           <div className={styles.formWrapper}>
             <Form onSubmit={handleSubmit}>
               <h1 className={`${styles["formHeader"]} text-center`}>
-                Register
+                Registrera
               </h1>
               <Form.Group className="mt-4" controlId="formEmail">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Email
+                  E-post
                 </Form.Label>
                 <Form.Control
                   type="email"
@@ -78,7 +79,7 @@ const Register = () => {
 
               <Form.Group className="mb-3" controlId="formName">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  First Name
+                  Förnamn
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -96,7 +97,7 @@ const Register = () => {
 
               <Form.Group className="mb-3" controlId="formSurname">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Surname
+                  Efternamn
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -114,7 +115,7 @@ const Register = () => {
 
               <Form.Group className="mb-3" controlId="formPhoneNumber">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Phone Number
+                  Telefon nummer
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -132,7 +133,7 @@ const Register = () => {
 
               <Form.Group className="mb-3" controlId="formPassword">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Password
+                  Ange lösenord
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -150,7 +151,7 @@ const Register = () => {
 
               <Form.Group className="mb-3" controlId="formPassword2">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Confirm Password
+                  Verifiera lösenord
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -171,11 +172,11 @@ const Register = () => {
                 type="submit"
                 className={`${styles["customBtn"]} text-center`}
               >
-                Register
+                Registrera
               </Button>
 
               <p className={`${styles["textAndLink"]} text-center`}>
-                Already have an account? <a href="/login">Login here</a>
+                Har du redan ett konto? <a href="/login">Logga in</a>
               </p>
             </Form>
           </div>
@@ -186,6 +187,7 @@ const Register = () => {
           )}
         </Col>
       </Row>
+      <img src={RegisterImg} alt="Login" className={styles.registerImage} />
     </Container>
   );
 };
