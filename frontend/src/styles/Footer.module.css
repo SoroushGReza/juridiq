@@ -1,0 +1,51 @@
+
+footer {
+  height: auto;
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  line-height: 0;
+  position: relative;
+  z-index: 2; 
+}
+
+.footerHeadings {
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 1px;
+}
+
+.footerLinks {
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-size: 1.1rem;
+  margin-top: 5px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.footerLinks:hover {
+  color: #535353 !important;
+}
+
+.footerSeperator {
+  color: rgb(92, 92, 92);
+  line-height: 8px;
+  font-size: 11px;
+  margin: 0;
+  padding: 0;
+}
+
+.companyLogo {
+  max-width: 80px;
+  margin-bottom: 10px;
+}
+
+.linkedIn:hover {
+  color: #1d75b9 !important;
+}
+
+small {
+    font-size: 10px;
+    color: rgb(148, 148, 148);
+}
