@@ -1,11 +1,10 @@
 /* --- Home Page Container --- */
 .homeContainer {
-  position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - 150px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  overflow: hidden;
+  justify-content: space-between;
+  position: relative;
 }
 
 /* --- Home Page Background Image --- */
