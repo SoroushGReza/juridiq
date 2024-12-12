@@ -42,7 +42,7 @@ const Login = () => {
   };
 
   return (
-    <Container fluid className={styles.loginContainer}>
+    <Container fluid className={styles.registerContainer}>
       <Row className="justify-content-center mt-3 mb-3">
         <Col
           xs={12}
