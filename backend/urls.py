@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http import HttpResponse
 # from django.views.generic import TemplateView
@@ -9,7 +11,9 @@ urlpatterns = [
     # path("", TemplateView.as_view(template_name="index.html")),
     path("secure-admin/", admin.site.urls),  # Admin Panel
     path("api/accounts/", include("accounts.urls")),
+    path('api/matters/', include('matters.urls')),
     path("api/auth/", include("dj_rest_auth.urls")),
+    path("api-auth/", include("rest_framework.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
     path(
         "api/auth/token/obtain/",
@@ -21,4 +25,6 @@ urlpatterns = [
     ),  # JWT Token refresh
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # handler404 = TemplateView.as_view(template_name="index.html")
