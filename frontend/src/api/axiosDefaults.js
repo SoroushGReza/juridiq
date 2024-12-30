@@ -1,4 +1,10 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const csrfToken = Cookies.get("csrftoken");
+if (csrfToken) {
+    axios.defaults.headers.common["X-CSRFToken"] = csrfToken;
+}
 
 // Dynamically set the base URL based on the environment
 axios.defaults.baseURL =
@@ -8,6 +14,10 @@ axios.defaults.baseURL =
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
+
+// CSRF settings
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 // Function to get token from localStorage
 const getToken = () => {
