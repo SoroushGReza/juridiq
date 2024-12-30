@@ -37,7 +37,7 @@ const NavBar = () => {
                 <Nav.Link as={NavLink} to="/profile" className={`${styles["navBarLinks"]}`}>
                   Profil
                 </Nav.Link>
-                <Nav.Link as={NavLink} to="/cases" className={`${styles["navBarLinks"]}`}>
+                <Nav.Link as={NavLink} to="/user-matters" className={`${styles["navBarLinks"]}`}>
                   Ärenden
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/contact" className={`${styles["navBarLinks"]}`}>
