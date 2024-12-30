@@ -13,6 +13,7 @@ class Matter(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="matters"
     )
+    title = models.CharField(max_length=200, default="Ingen titel")
     description = models.TextField()
     file = models.FileField(
         upload_to="matter_files/",
@@ -25,4 +26,4 @@ class Matter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Matter {self.id} - {self.user.email}"
+        return f"Matter {self.id} ({self.title}) - {self.user.email}"

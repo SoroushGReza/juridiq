@@ -8,7 +8,16 @@ class MatterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Matter
-        fields = ["id", "user", "description", "file", "status", "notes", "created_at"]
+        fields = [
+            "id",
+            "user",
+            "title",
+            "description",
+            "file",
+            "status",
+            "notes",
+            "created_at",
+        ]
         read_only_fields = ["id", "status", "notes", "created_at"]
 
     def create(self, validated_data):
@@ -16,27 +25,38 @@ class MatterSerializer(serializers.ModelSerializer):
 
 
 class MatterDetailSerializer(serializers.ModelSerializer):
-    file = serializers.FileField(required=False)
+    file = serializers.FileField(required=False, allow_null=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Matter
-        fields = ["id", "user", "description", "file", "status", "notes", "created_at"]
+        fields = [
+            "id",
+            "user",
+            "title",
+            "description",
+            "file",
+            "status",
+            "notes",
+            "created_at",
+        ]
         read_only_fields = ["id", "created_at"]
 
     def update(self, instance, validated_data):
         user = self.context["request"].user
 
-        # Handle permissions for non-admin users
+        # Handle permission for non-admin users
         if not (user.is_staff or user.is_superuser):
             validated_data.pop("status", None)
             validated_data.pop("notes", None)
 
-        # Keep existing file if no new file is uploaded
-        if not validated_data.get("file"):
-            validated_data.pop("file", None)
+        # Handle file deletion
+        if "file" in validated_data and validated_data["file"] is None:
+            if instance.file:  # Check if file exists
+                instance.file.delete(save=False)  # Delete file from server
+            validated_data["file"] = None  # Set file field to none
 
-        # Update instance
+        # Update instance with new data
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
 
