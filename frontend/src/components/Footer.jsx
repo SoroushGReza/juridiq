@@ -3,14 +3,14 @@ import { Container, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FaLinkedin } from "react-icons/fa";
 import styles from "../../src/styles/Footer.module.css";
-import Logo from "../assets/images/logo.png";
+import Logo from "../assets/images/JQ.svg";
 
 const Footer = () => {
   return (
     <footer className={`bg-dark text-white py-4`}>
       <Container>
-        <Row className="justify-content-center align-items-center">
-          <Col md={4} className="text-center mb-4">
+        <Row className="justify-content-center">
+          <Col xs={6} md={4} className="text-center mb-4">
             <h6 className={`${styles["footerHeadings"]}`}>Snabblänkar</h6>
             <div className="d-flex justify-content-center gap-3">
               <NavLink
@@ -28,14 +28,14 @@ const Footer = () => {
               </NavLink>
             </div>
           </Col>
-          <Col md={4} className="text-center">
+          <Col xs={0} md={4} className="text-center d-none d-md-block">
             <img
               src={Logo}
               alt="JuridiQ Logo"
               className={`${styles["companyLogo"]}`}
             />
           </Col>
-          <Col md={4} className="text-center mb-4">
+          <Col xs={6} md={4} className="text-center mb-4">
             <h6 className={`${styles["footerHeadings"]}`}>Följ oss på</h6>
             <div className="d-flex justify-content-center gap-3">
               <a
