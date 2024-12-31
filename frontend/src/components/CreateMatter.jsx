@@ -6,54 +6,50 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
   const [newMatter, setNewMatter] = useState({
     title: "",
     description: "",
-    file: null,
+    files: [],
   });
 
-  const handleTitleChange = (e) => {
+  const handleChange = (e) => {
     setNewMatter((prev) => ({
       ...prev,
-      title: e.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
-  const handleDescriptionChange = (e) => {
-    setNewMatter((prev) => ({
-      ...prev,
-      description: e.target.value,
-    }));
-  };
-
+  // Handle several files with "multiple"
   const handleFileChange = (e) => {
+    const fileList = Array.from(e.target.files); // FileList -> Array
     setNewMatter((prev) => ({
       ...prev,
-      file: e.target.files[0],
+      files: fileList,
     }));
   };
 
   const handleCreateMatter = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", newMatter.title);
-    formData.append("description", newMatter.description);
-    if (newMatter.file) {
-      formData.append("file", newMatter.file);
-    }
 
     try {
+      const formData = new FormData();
+      formData.append("title", newMatter.title);
+      formData.append("description", newMatter.description);
+      newMatter.files.forEach((file) => {
+        formData.append("new_files", file);
+      });
+
       await axiosReq.post("/matters/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
       // Update list of matters
       fetchMatters();
+
       // Reset form
-      setNewMatter({ title: "", description: "", file: null });
+      setNewMatter({ title: "", description: "", files: [] });
       handleClose();
     } catch (err) {
-      setError(
-        "Kunde inte skapa ärende. Kontrollera din data och försök igen."
-      );
+      setError("Kunde inte skapa ärende. Kontrollera data och försök igen.");
     }
   };
 
@@ -69,8 +65,9 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
             <Form.Control
               type="text"
               placeholder="Ange en kort titel"
+              name="title"
               value={newMatter.title}
-              onChange={handleTitleChange}
+              onChange={handleChange}
               required
             />
           </Form.Group>
@@ -79,16 +76,17 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
             <Form.Label>Beskrivning</Form.Label>
             <Form.Control
               as="textarea"
+              name="description"
               placeholder="Vad gäller ärendet?"
               value={newMatter.description}
-              onChange={handleDescriptionChange}
+              onChange={handleChange}
               required
             />
           </Form.Group>
 
-          <Form.Group controlId="file" className="mt-3">
-            <Form.Label>Fil (valfritt)</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
+          <Form.Group controlId="files" className="mt-3">
+            <Form.Label>Filer (valfritt, kan välja flera)</Form.Label>
+            <Form.Control type="file" multiple onChange={handleFileChange} />
           </Form.Group>
 
           <Button type="submit" className="mt-3">
