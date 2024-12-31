@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { axiosRes } from "../api/axiosDefaults";
 
+// Fetch matter details (inc. files)
+const fetchMatterDetail = async (id) => {
+  const { data } = await axiosRes.get(`/matters/${id}/`);
+  return data;
+};
+
 const UpdateDeleteMatter = ({
   matter,
   showEditModal,
@@ -13,69 +19,76 @@ const UpdateDeleteMatter = ({
 }) => {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
-  const [editFile, setEditFile] = useState(null);
-  const [hasFile, setHasFile] = useState(false);
 
-  // Re-initialize local states each time edit-modal opens
+  // New files to upload
+  const [newFiles, setNewFiles] = useState([]);
+  // List of exisitng files
+  const [existingFiles, setExistingFiles] = useState([]);
+  // Files to delete by ID
+  const [removeFileIds, setRemoveFileIds] = useState([]);
+
+  // Get matter info when modal opens
   useEffect(() => {
-    if (showEditModal && matter) {
-      setEditTitle(matter.title || "");
-      setEditDescription(matter.description || "");
-      setHasFile(!!matter.file);
-      setEditFile(null);
+    const loadMatter = async () => {
+      if (matter && showEditModal) {
+        try {
+          const detail = await fetchMatterDetail(matter.id);
+          setEditTitle(detail.title || "");
+          setEditDescription(detail.description || "");
+          setExistingFiles(detail.files || []);
+          setNewFiles([]);
+          setRemoveFileIds([]);
+        } catch (err) {
+          setError("Kunde inte hämta ärendedetaljer.");
+        }
+      }
+    };
+    if (showEditModal) {
+      loadMatter();
     }
-  }, [showEditModal, matter]);
+  }, [matter, showEditModal, setError]);
 
-  const handleTitleChange = (e) => {
-    setEditTitle(e.target.value);
-  };
+  // Change titel/description
+  const handleChangeTitle = (e) => setEditTitle(e.target.value);
+  const handleChangeDescription = (e) => setEditDescription(e.target.value);
 
-  const handleDescriptionChange = (e) => {
-    setEditDescription(e.target.value);
-  };
-
+  // Add new files
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setEditFile(file);
-    setHasFile(!!file);
+    const fileList = Array.from(e.target.files);
+    setNewFiles(fileList);
   };
 
-  // ---- UPDATE MATTER ----
+  // Add a files ID to removeFileIds
+  const handleRemoveExistingFile = (fileId) => {
+    setRemoveFileIds((prev) => [...prev, fileId]);
+  };
+
+  // ---- Save changes (PATCH) ----
   const handleUpdateMatter = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", editTitle);
-    formData.append("description", editDescription);
-
-    if (editFile) {
-      formData.append("file", editFile);
-    }
-
     try {
-      await axiosRes.patch(`/matters/${matter.id}/`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const formData = new FormData();
+      formData.append("title", editTitle);
+      formData.append("description", editDescription);
+
+      removeFileIds.forEach((id) => {
+        formData.append("remove_file_ids", id);
       });
+
+      newFiles.forEach((file) => {
+        formData.append("new_files", file);
+      });
+
+      await axiosRes.patch(`/matters/${matter.id}/`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      // Update list of matters
       fetchMatters();
+
       handleCloseEdit();
     } catch (err) {
       setError("Kunde inte uppdatera ärendet. Försök igen senare.");
-    }
-  };
-
-  // ---- DELETE FILE ONLY ----
-  const handleDeleteFile = async () => {
-    try {
-      await axiosRes.patch(
-        `/matters/${matter.id}/`,
-        { file: null },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      setHasFile(false);
-      fetchMatters();
-    } catch (err) {
-      setError("Kunde inte ta bort filen. Försök igen senare.");
     }
   };
 
@@ -83,12 +96,17 @@ const UpdateDeleteMatter = ({
   const handleDeleteMatter = async () => {
     try {
       await axiosRes.delete(`/matters/${matter.id}/`);
+      // Uppdate list of matters
       fetchMatters();
       handleCloseDelete();
     } catch (err) {
       setError("Kunde inte ta bort ärendet. Försök igen senare.");
     }
   };
+
+  const visibleExistingFiles = existingFiles.filter(
+    (f) => !removeFileIds.includes(f.id)
+  );
 
   return (
     <>
@@ -107,7 +125,7 @@ const UpdateDeleteMatter = ({
                 <Form.Control
                   type="text"
                   value={editTitle}
-                  onChange={handleTitleChange}
+                  onChange={handleChangeTitle}
                   required
                 />
               </Form.Group>
@@ -117,27 +135,49 @@ const UpdateDeleteMatter = ({
                 <Form.Control
                   as="textarea"
                   value={editDescription}
-                  onChange={handleDescriptionChange}
+                  onChange={handleChangeDescription}
                   required
                 />
               </Form.Group>
 
-              {hasFile ? (
-                <Alert
-                  variant="info"
-                  className="mt-3 d-flex justify-content-between"
-                >
-                  <span>Nuvarande fil uppladdad</span>
-                  <Button variant="danger" size="sm" onClick={handleDeleteFile}>
-                    Ta bort fil
-                  </Button>
-                </Alert>
-              ) : (
-                <Form.Group controlId="editFile" className="mt-3">
-                  <Form.Label>Lägg till/ändra fil (valfritt)</Form.Label>
-                  <Form.Control type="file" onChange={handleFileChange} />
-                </Form.Group>
+              {/* List existing files */}
+              {visibleExistingFiles.length > 0 && (
+                <div className="mt-3">
+                  <h5>Befintliga filer:</h5>
+                  {visibleExistingFiles.map((fileObj) => (
+                    <Alert
+                      key={fileObj.id}
+                      variant="info"
+                      className="d-flex justify-content-between align-items-center"
+                    >
+                      <a
+                        href={fileObj.file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {fileObj.file.split("/").pop()} {/* Show file name */}
+                      </a>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleRemoveExistingFile(fileObj.id)}
+                      >
+                        Ta bort
+                      </Button>
+                    </Alert>
+                  ))}
+                </div>
               )}
+
+              {/* Upload new files */}
+              <Form.Group controlId="editFile" className="mt-3">
+                <Form.Label>Lägg till nya filer (valfritt)</Form.Label>
+                <Form.Control
+                  type="file"
+                  multiple
+                  onChange={handleFileChange}
+                />
+              </Form.Group>
 
               <Button type="submit" className="mt-3">
                 Spara Ändringar
