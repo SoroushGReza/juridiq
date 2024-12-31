@@ -34,7 +34,7 @@ const Register = () => {
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
       // Redirect to another page after successful registration
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       if (error.response?.data) {
         setErrors(error.response.data);
