@@ -8,7 +8,8 @@ MAX_FILE_SIZE_TOTAL = 15 * 1024 * 1024  # Maximum files size 15 MB (Togehter)
 class Matter(models.Model):
     STATUS_CHOICES = [
         ("Pending", "Pending"),
-        ("Ready", "Ready"),
+        ("Ongoing", "Ongoing"),
+        ("Completed", "Completed"),
         ("Cancelled", "Cancelled"),
     ]
 
