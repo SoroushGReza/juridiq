@@ -52,7 +52,7 @@ const UserMatters = () => {
     const processedMatters = processMatters({
       rawMatters,
       statusSortIndex,
-      lastClicked,
+      lastClicked: lastClicked || "status",
       titleSortAscending,
     });
     setMatters(processedMatters);
@@ -128,14 +128,18 @@ const UserMatters = () => {
               {lastClicked === "title" && (titleSortAscending ? "🔼" : "🔽")}
             </th>
             {/* Clickable column "Status" */}
-            <th>
+            <th
+              onClick={() => {
+                setStatusSortIndex((prev) => (prev + 1) % 4);
+                setLastClicked("status");
+              }}
+              style={{ cursor: "pointer" }}
+            >
               <Status
                 isSorting={true}
                 statusSortIndex={statusSortIndex}
-                onSort={() => {
-                  setStatusSortIndex((prev) => (prev + 1) % 4);
-                  setLastClicked("status");
-                }}
+                statusFilter={statusFilter}
+                lastClicked={lastClicked}
               />
             </th>
             <th>Noteringar</th>
