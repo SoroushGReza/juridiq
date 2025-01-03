@@ -3,6 +3,7 @@ import { Table, Alert, Button, Form, Row, Col } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
 import CreateMatter from "./CreateMatter";
 import UpdateDeleteMatter from "./UpdateDeleteMatter";
+import Status, { processMatters } from "./Status";
 
 const UserMatters = () => {
   const [matters, setMatters] = useState([]);
@@ -27,7 +28,7 @@ const UserMatters = () => {
   // State to decide which column was last clicked
   const [lastClicked, setLastClicked] = useState("");
 
-  // Define fecthMatters as functin
+  // Get Data from backend
   const fetchMatters = async () => {
     try {
       let url = "/matters/";
@@ -42,81 +43,40 @@ const UserMatters = () => {
     }
   };
 
-  // Call fetchMatters when status filter changes
+  // Update data when change is made
   useEffect(() => {
     fetchMatters();
   }, [statusFilter]);
 
-  // Sort "raMatters" locally based in sort state
   useEffect(() => {
-    let sorted = [...rawMatters];
+    const processedMatters = processMatters({
+      rawMatters,
+      statusSortIndex,
+      lastClicked,
+      titleSortAscending,
+    });
+    setMatters(processedMatters);
+  }, [rawMatters, statusSortIndex, lastClicked, titleSortAscending]);
 
-    const statusOrders = [
-      ["Pending", "Ready", "Cancelled"], // index 0
-      ["Ready", "Pending", "Cancelled"], // index 1
-      ["Cancelled", "Pending", "Ready"], // index 2
-    ];
-    const customOrder = statusOrders[statusSortIndex];
-
-    // Sortera efter status
-    const statusSorter = (a, b) => {
-      const indexA = customOrder.indexOf(a.status);
-      const indexB = customOrder.indexOf(b.status);
-      return indexA - indexB;
-    };
-
-    // Sortera efter titel
-    const titleSorter = (a, b) => {
-      if (a.title < b.title) return titleSortAscending ? -1 : 1;
-      if (a.title > b.title) return titleSortAscending ? 1 : -1;
-      return 0;
-    };
-
-    if (lastClicked === "status") {
-      sorted.sort(statusSorter);
-    } else if (lastClicked === "title") {
-      sorted.sort(titleSorter);
-    }
-    setMatters(sorted);
-  }, [rawMatters, titleSortAscending, statusSortIndex, lastClicked]);
-
-  // Click handling for sorting
-  const handleSortByStatus = () => {
-    setStatusSortIndex((prev) => (prev + 1) % 3);
-    setLastClicked("status");
-  };
-
-  const handleSortByTitle = () => {
-    setTitleSortAscending((prev) => !prev);
-    setLastClicked("title");
-  };
-
-  // CRUD modal handlers
-  const handleOpenCreate = () => setShowCreateModal(true);
-  const handleCloseCreate = () => setShowCreateModal(false);
-
+  // Handle dsiplay & modals
   const handleOpenEdit = (matter) => {
     setSelectedMatter(matter);
     setShowEditModal(true);
-  };
-  const handleCloseEdit = () => {
-    setSelectedMatter(null);
-    setShowEditModal(false);
   };
 
   const handleOpenDelete = (matter) => {
     setSelectedMatter(matter);
     setShowDeleteModal(true);
   };
+
+  const handleCloseEdit = () => {
+    setSelectedMatter(null);
+    setShowEditModal(false);
+  };
+
   const handleCloseDelete = () => {
     setSelectedMatter(null);
     setShowDeleteModal(false);
-  };
-
-  // Helper to trunkate title
-  const truncateTitle = (fullTitle) => {
-    if (!fullTitle) return "";
-    return fullTitle.length > 20 ? `${fullTitle.slice(0, 20)}...` : fullTitle;
   };
 
   return (
@@ -134,16 +94,21 @@ const UserMatters = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="">Alla</option>
-              <option value="Pending">Pending</option>
-              <option value="Ready">Ready</option>
-              <option value="Cancelled">Cancelled</option>
+              <option value="Pending">I kö</option>
+              <option value="Ongoing">Pågående</option>
+              <option value="Completed">Klar</option>
+              <option value="Cancelled">Avbruten</option>
             </Form.Select>
           </Col>
         </Row>
       </Form>
 
       {/* CREATE MATTER BUTTON */}
-      <Button variant="success" className="mb-3" onClick={handleOpenCreate}>
+      <Button
+        variant="success"
+        className="mb-3"
+        onClick={() => setShowCreateModal(true)}
+      >
         Skapa Ärende
       </Button>
 
@@ -152,15 +117,26 @@ const UserMatters = () => {
         <thead>
           <tr>
             {/* Klickable cloumn "Title" */}
-            <th onClick={handleSortByTitle} style={{ cursor: "pointer" }}>
+            <th
+              onClick={() => {
+                setTitleSortAscending((prev) => !prev);
+                setLastClicked("title");
+              }}
+              style={{ cursor: "pointer" }}
+            >
               Titel{" "}
-              {lastClicked === "title" ? (titleSortAscending ? "▲" : "▼") : ""}
+              {lastClicked === "title" && (titleSortAscending ? "🔼" : "🔽")}
             </th>
             {/* Clickable column "Status" */}
-            <th onClick={handleSortByStatus} style={{ cursor: "pointer" }}>
-              Status
-              {lastClicked === "status" &&
-                ` (steg ${statusSortIndex + 1} av 3)`}
+            <th>
+              <Status
+                isSorting={true}
+                statusSortIndex={statusSortIndex}
+                onSort={() => {
+                  setStatusSortIndex((prev) => (prev + 1) % 4);
+                  setLastClicked("status");
+                }}
+              />
             </th>
             <th>Noteringar</th>
             <th>Åtgärder</th>
@@ -169,14 +145,15 @@ const UserMatters = () => {
         <tbody>
           {matters.map((matter) => (
             <tr key={matter.id}>
-              <td>{truncateTitle(matter.title)}</td>
-              <td>{matter.status}</td>
+              <td>{matter.title}</td>
+              <td>
+                <Status status={matter.status} />
+              </td>
               <td>{matter.notes || "Ingen notering"}</td>
               <td>
                 <Button
                   variant="primary"
                   size="sm"
-                  className="me-2"
                   onClick={() => handleOpenEdit(matter)}
                 >
                   Ändra
@@ -194,15 +171,13 @@ const UserMatters = () => {
         </tbody>
       </Table>
 
-      {/* CREATE MATTER MODAL */}
       <CreateMatter
         show={showCreateModal}
-        handleClose={handleCloseCreate}
+        handleClose={() => setShowCreateModal(false)}
         fetchMatters={fetchMatters}
         setError={setError}
       />
 
-      {/* UPDATE & DELETE MATTERS MODAL */}
       <UpdateDeleteMatter
         matter={selectedMatter}
         showEditModal={showEditModal}
