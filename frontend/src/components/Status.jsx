@@ -24,21 +24,42 @@ const statusOrders = [
 ];
 
 // Status Component
-const Status = ({ status, isSorting, statusSortIndex, onSort }) => {
+const Status = ({
+  status,
+  isSorting,
+  statusSortIndex,
+  onSort,
+  statusFilter,
+  lastClicked,
+}) => {
   const getIcon = () => {
-    if (isSorting) {
+    if (isSorting && lastClicked === "status") {
+      // Display icon only if list sorted by status
+      if (statusFilter && statusIcons[statusFilter]) {
+        return statusIcons[statusFilter];
+      }
       return statusIcons[statusOrders[statusSortIndex][0]];
     }
-    return statusIcons[status] || "";
+    return ""; // Hide icon if not sorted by status
+  };
+
+  const getText = () => {
+    if (isSorting) {
+      return "Status";
+    }
+    return statusTranslations[status] || ""; // Text for specific matter
   };
 
   return (
     <span
       onClick={isSorting ? onSort : null}
       style={isSorting ? { cursor: "pointer" } : {}}
-      title={statusTranslations[status] || status}
+      title={isSorting && lastClicked === "status" ? getText() : ""}
     >
-      {getIcon()} {isSorting ? "" : statusTranslations[status]}
+      {isSorting ? `${getText()} ` : ""}
+      {isSorting
+        ? getIcon()
+        : `${statusIcons[status] || ""} ${statusTranslations[status] || ""}`}
     </span>
   );
 };
