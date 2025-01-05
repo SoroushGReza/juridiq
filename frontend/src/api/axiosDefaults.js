@@ -29,7 +29,7 @@ const getToken = () => {
 };
 
 // Set access-token if it exists
-const setAuthHeader = () => {
+export const setAuthHeader = () => {
   const token = getToken();
   if (token) {
     axios.defaults.headers.common["Authorization"] = token;
