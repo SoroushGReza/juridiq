@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { axiosReq } from "../api/axiosDefaults";
+import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
@@ -30,8 +30,11 @@ const Login = () => {
       // Save tokens in localStorage
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
+      setAuthHeader();
       // Redirect after successful login to the home page
       navigate("/");
+      // Reload the page to re-initialize application state
+      window.location.reload();
     } catch (error) {
       if (error.response?.data) {
         setErrors({ ...error.response.data });
