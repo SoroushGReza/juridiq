@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Table, Alert, Button, Form, Row, Col } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
+import { useNavigate } from "react-router-dom";
+import useAuthStatus from "../hooks/useAuthStatus";
 import CreateMatter from "./CreateMatter";
 import UpdateDeleteMatter from "./UpdateDeleteMatter";
 import Status, { processMatters } from "./Status";
+import styles from "../styles/UserMatters.module.css";
 
 const UserMatters = () => {
+  const { isAdmin, isAuthenticated, loading } = useAuthStatus();
+  const navigate = useNavigate();
   const [matters, setMatters] = useState([]);
   const [error, setError] = useState("");
   const [selectedMatter, setSelectedMatter] = useState(null);
@@ -28,20 +33,23 @@ const UserMatters = () => {
   // State to decide which column was last clicked
   const [lastClicked, setLastClicked] = useState("");
 
-  // Get Data from backend
-  const fetchMatters = async () => {
-    try {
-      let url = "/matters/";
-      if (statusFilter) {
-        url += `?status=${statusFilter}`;
-      }
-      const { data } = await axiosReq.get(url);
-      setRawMatters(data);
-      setError("");
-    } catch (err) {
-      setError("Kunde inte hämta ärenden. Försök igen senare.");
+  // --------------- UseEffects --------------- //
+
+  // Check loading
+  useEffect(() => {
+    // If still loading do nothing
+    if (loading) return;
+    // If not logged in navigate to /login
+    if (!isAuthenticated) {
+      navigate("/login");
     }
-  };
+  }, [isAuthenticated, loading, navigate]);
+
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      fetchMatters();
+    }
+  }, [loading, isAuthenticated]);
 
   // Update data when change is made
   useEffect(() => {
@@ -57,6 +65,23 @@ const UserMatters = () => {
     });
     setMatters(processedMatters);
   }, [rawMatters, statusSortIndex, lastClicked, titleSortAscending]);
+
+  // ----------------------------------------- //
+
+  // Get Data from backend
+  const fetchMatters = async () => {
+    try {
+      let url = "/matters/";
+      if (statusFilter) {
+        url += `?status=${statusFilter}`;
+      }
+      const { data } = await axiosReq.get(url);
+      setRawMatters(data);
+      setError("");
+    } catch (err) {
+      setError("Kunde inte hämta ärenden. Försök igen senare.");
+    }
+  };
 
   // Handle dsiplay & modals
   const handleOpenEdit = (matter) => {
@@ -81,7 +106,7 @@ const UserMatters = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Mina Ärenden</h2>
+      <h2 className={`${styles.pageHeader}`}>{isAdmin ? "Alla Ärenden" : "Mina Ärenden"}</h2>
       {error && <Alert variant="danger">{error}</Alert>}
 
       {/* FILTER FORM (only status) */}
