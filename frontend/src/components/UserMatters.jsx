@@ -106,36 +106,41 @@ const UserMatters = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className={`${styles.pageHeader}`}>{isAdmin ? "Alla Ärenden" : "Mina Ärenden"}</h2>
+      <h2 className={`${styles.pageHeader}`}>
+        {isAdmin ? "Alla Ärenden" : "Mina Ärenden"}
+      </h2>
       {error && <Alert variant="danger">{error}</Alert>}
 
-      {/* FILTER FORM (only status) */}
-      <Form className="mb-3">
-        <Row>
-          <Col xs={12} md={4} className="mb-2">
-            <Form.Label>Status-filter</Form.Label>
-            <Form.Select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="">Alla</option>
-              <option value="Pending">I kö</option>
-              <option value="Ongoing">Pågående</option>
-              <option value="Completed">Klar</option>
-              <option value="Cancelled">Avbruten</option>
-            </Form.Select>
-          </Col>
-        </Row>
-      </Form>
+      <Row className="align-items-end mb-3">
+        {/* Status filter dropdown */}
+        <Col xs={12} md={4}>
+          <Form.Label className={`${styles.filterLabel} mb-1`}>
+            Status-filter
+          </Form.Label>
+          <Form.Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className={`${styles.filterSelecttion}`}
+          >
+            <option value="">Alla</option>
+            <option value="Pending">I kö</option>
+            <option value="Ongoing">Pågående</option>
+            <option value="Completed">Klar</option>
+            <option value="Cancelled">Avbruten</option>
+          </Form.Select>
+        </Col>
 
-      {/* CREATE MATTER BUTTON */}
-      <Button
-        variant="success"
-        className="mb-3"
-        onClick={() => setShowCreateModal(true)}
-      >
-        Skapa Ärende
-      </Button>
+        {/* Create Matter Buttton */}
+        <Col xs="auto">
+          <Button
+            variant="success"
+            className={`${styles.createMatterBtn} mt-3`}
+            onClick={() => setShowCreateModal(true)}
+          >
+            Skapa Ärende
+          </Button>
+        </Col>
+      </Row>
 
       {/* MATTERS LIST */}
       <Table striped bordered hover>
