@@ -1,48 +1,99 @@
 .pageHeader {
-    color: rgb(183, 153, 7);
-    font-family: "Alumni Sans Pinstripe", sans-serif;
-    font-size: 2.8rem;
-    font-weight: 600;
+  color: rgb(183, 153, 7);
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-size: 2.8rem;
+  font-weight: 600;
 }
 
 /* ----- Status Filter Label ----- */
 .filterLabel {
-    color: azure;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 16px;
-    margin-bottom: 0;
+  color: azure;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 16px;
+  margin-bottom: 0;
 }
 
 /* ----- Status Filter Selection ----- */
 .filterSelecttion {
-    background-color: #21262b;
-    color: azure;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border: 1px solid #2e2f00;
-    box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.046);
-    height: 40px;
+  background-color: #21262b;
+  color: azure;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border: 1px solid #2e2f00;
+  box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.046);
+  height: 40px;
 }
 
 .filterSelecttion:focus {
-    border-color: rgba(83, 83, 3, 0.395);
-    box-shadow: 0 0 2px 2px rgba(255, 255, 0, 0.226);
-    outline: none;
+  border-color: rgba(83, 83, 3, 0.395);
+  box-shadow: 0 0 2px 2px rgba(255, 255, 0, 0.226);
+  outline: none;
 }
 
 /* ----- Create Matter Button ----- */
 .createMatterBtn {
-    background-color: rgb(0, 105, 0);
-    color: white;
-    border: none;
-    padding-bottom: 9px;
-    padding-left: 15px;
-    padding-right: 15px;
-    text-align: center !important;
-    height: 40px;
-    letter-spacing: 0.3px;
+  background-color: rgb(0, 105, 0);
+  color: white;
+  border: none;
+  padding-bottom: 9px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center !important;
+  height: 40px;
+  letter-spacing: 0.3px;
 }
 
 .createMatterBtn:hover {
-    background-color: rgb(0, 97, 0);
-    color: rgb(209, 209, 209);
+  background-color: rgb(0, 97, 0);
+  color: rgb(209, 209, 209);
+}
+
+/* ----------------------- List of Matters ----------------------- */
+
+/* ----- Table Header Cells ----- */
+.table th {
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.8px;
+  background-color: #1b1b1b;
+  color: #a6971d;
+}
+
+/* ----- Table left top corner */
+.tableTitle {
+  border-top-left-radius: 5px;
+}
+
+/* ----- Table right top corner */
+.tableActions {
+  border-top-right-radius: 5px;
+}
+
+/* Specific styling for cells */
+.table tbody td {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: #e7e7e7;
+  color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.146);
+}
+
+/* ----- Update Matter Button ----- */
+.updateBtn {
+  background-color: rgb(74, 74, 75);
+  border: none;
+  margin-right: 10px;
+}
+
+.updateBtn:hover {
+  background-color: rgb(43, 43, 43);
+}
+
+/* ----- Delete Matter Button ----- */
+.deleteBtn {
+  background-color: rgb(134, 3, 3);
+  border: none;
+  margin-right: 10px;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(101, 3, 3);
 }

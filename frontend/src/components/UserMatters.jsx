@@ -143,11 +143,12 @@ const UserMatters = () => {
       </Row>
 
       {/* MATTERS LIST */}
-      <Table striped bordered hover>
+      <Table className={`${styles.table}`} striped hover>
         <thead>
           <tr>
             {/* Klickable cloumn "Title" */}
             <th
+              className={`${styles.tableTitle}`}
               onClick={() => {
                 setTitleSortAscending((prev) => !prev);
                 setLastClicked("title");
@@ -173,7 +174,7 @@ const UserMatters = () => {
               />
             </th>
             <th>Noteringar</th>
-            <th>Åtgärder</th>
+            <th className={`${styles.tableActions}`}>Åtgärder</th>
           </tr>
         </thead>
         <tbody>
@@ -186,6 +187,7 @@ const UserMatters = () => {
               <td>{matter.notes || "Ingen notering"}</td>
               <td>
                 <Button
+                  className={`${styles.updateBtn}`}
                   variant="primary"
                   size="sm"
                   onClick={() => handleOpenEdit(matter)}
@@ -193,6 +195,7 @@ const UserMatters = () => {
                   Ändra
                 </Button>
                 <Button
+                  className={`${styles.deleteBtn}`}
                   variant="danger"
                   size="sm"
                   onClick={() => handleOpenDelete(matter)}
