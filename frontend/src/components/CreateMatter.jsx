@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
+import styles from "../styles/CreateMatter.module.css";
 
 const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
   const [newMatter, setNewMatter] = useState({
@@ -54,15 +55,18 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Skapa Ärende</Modal.Title>
+    <Modal className={`${styles.createModal}`} show={show} onHide={handleClose}>
+      <Modal.Header className={`${styles.modalHeader}`} closeButton>
+        <Modal.Title className={`${styles.modalTitle}`}>
+          Skapa Ärende
+        </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className={`${styles.modalBody}`}>
         <Form onSubmit={handleCreateMatter}>
           <Form.Group className="mb-3" controlId="title">
-            <Form.Label>Titel</Form.Label>
+            <Form.Label className={`${styles.modalLabel}`}>Titel</Form.Label>
             <Form.Control
+              className={`${styles.customInput}`}
               type="text"
               placeholder="Ange en kort titel"
               name="title"
@@ -73,8 +77,11 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
           </Form.Group>
 
           <Form.Group controlId="description">
-            <Form.Label>Beskrivning</Form.Label>
+            <Form.Label className={`${styles.modalLabel}`}>
+              Beskrivning
+            </Form.Label>
             <Form.Control
+              className={`${styles.customInput}`}
               as="textarea"
               name="description"
               placeholder="Vad gäller ärendet?"
@@ -85,11 +92,18 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
           </Form.Group>
 
           <Form.Group controlId="files" className="mt-3">
-            <Form.Label>Filer (valfritt, kan välja flera)</Form.Label>
-            <Form.Control type="file" multiple onChange={handleFileChange} />
+            <Form.Label className={`${styles.modalLabel}`}>
+              Filer (valfritt)
+            </Form.Label>
+            <Form.Control
+              className={`${styles.customInput} ${styles.customFileInput}`}
+              type="file"
+              multiple
+              onChange={handleFileChange}
+            />
           </Form.Group>
 
-          <Button type="submit" className="mt-3">
+          <Button type="submit" className={`${styles.createBtn} mt-4 w-100`}>
             Skapa Ärende
           </Button>
         </Form>
