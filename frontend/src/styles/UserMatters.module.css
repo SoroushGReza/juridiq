@@ -49,6 +49,16 @@
 
 /* ----------------------- List of Matters ----------------------- */
 
+/* ---- No matters to show text ---- */
+.noMatters {
+  font-size: 20px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  background-color: #1b1b1b !important;
+  color: #e7e7e7 !important;
+  font-weight: 600;
+}
 /* ----- Table Header Cells ----- */
 .table th {
   font-family: "Alumni Sans Pinstripe", sans-serif;
@@ -74,6 +84,13 @@
   background-color: #e7e7e7;
   color: #000000;
   border: 1px solid rgba(0, 0, 0, 0.146);
+}
+
+/* ---- Keep title and notes on a singel line ---- */
+.singleLine {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 /* ----- Update Matter Button ----- */
@@ -102,14 +119,7 @@
   color: rgb(172, 172, 172);
 }
 
-/* ---- Keep title and notes on a singel line ---- */
-.singleLine {
-  white-space: nowrap; 
-  text-overflow: ellipsis; 
-  max-width: 200px; 
-}
-
-/* ----------------------------------------- MEDIA QUERIES --------------- */ 
+/* ----------------------------------------- MEDIA QUERIES --------------- */
 
 /* ---- Hide Notes on screens smaller than 768px ---- */
 @media (max-width: 768px) {

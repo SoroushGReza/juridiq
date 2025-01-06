@@ -179,43 +179,51 @@ const UserMatters = () => {
           </tr>
         </thead>
         <tbody>
-          {matters.map((matter) => (
-            <tr key={matter.id}>
-              <td className={`${styles.singleLine}`}>
-                {matter.title.length > 20
-                  ? `${matter.title.substring(0, 20)}...`
-                  : matter.title}
-              </td>
-              <td className={`${styles.tableStatus}`}>
-                <Status status={matter.status} />
-              </td>
-              <td className={`${styles.singleLine} ${styles.tableNotes}`}>
-                {matter.notes
-                  ? matter.notes.length > 25
-                    ? `${matter.notes.substring(0, 25)}...`
-                    : matter.notes
-                  : "Ingen notering"}
-              </td>
-              <td>
-                <Button
-                  className={`${styles.updateBtn}`}
-                  variant="primary"
-                  size="sm"
-                  onClick={() => handleOpenEdit(matter)}
-                >
-                  Ändra
-                </Button>
-                <Button
-                  className={`${styles.deleteBtn}`}
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleOpenDelete(matter)}
-                >
-                  Radera
-                </Button>
+          {matters.length === 0 ? (
+            <tr>
+              <td colSpan="4" className={`${styles.noMatters} text-center`}>
+                Det finns inga ärenden att visa
               </td>
             </tr>
-          ))}
+          ) : (
+            matters.map((matter) => (
+              <tr key={matter.id}>
+                <td className={`${styles.singleLine}`}>
+                  {matter.title.length > 20
+                    ? `${matter.title.substring(0, 20)}...`
+                    : matter.title}
+                </td>
+                <td className={`${styles.tableStatus}`}>
+                  <Status status={matter.status} />
+                </td>
+                <td className={`${styles.singleLine} ${styles.tableNotes}`}>
+                  {matter.notes
+                    ? matter.notes.length > 25
+                      ? `${matter.notes.substring(0, 25)}...`
+                      : matter.notes
+                    : "Ingen notering"}
+                </td>
+                <td>
+                  <Button
+                    className={`${styles.updateBtn}`}
+                    variant="primary"
+                    size="sm"
+                    onClick={() => handleOpenEdit(matter)}
+                  >
+                    Ändra
+                  </Button>
+                  <Button
+                    className={`${styles.deleteBtn}`}
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleOpenDelete(matter)}
+                  >
+                    Radera
+                  </Button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </Table>
 
