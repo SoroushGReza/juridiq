@@ -78,22 +78,49 @@
 
 /* ----- Update Matter Button ----- */
 .updateBtn {
-  background-color: rgb(74, 74, 75);
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(11, 11, 141);
   border: none;
   margin-right: 10px;
 }
 
 .updateBtn:hover {
-  background-color: rgb(43, 43, 43);
+  background-color: rgb(8, 8, 107);
+  color: rgb(172, 172, 172);
 }
 
 /* ----- Delete Matter Button ----- */
 .deleteBtn {
-  background-color: rgb(134, 3, 3);
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(132, 6, 6);
   border: none;
   margin-right: 10px;
 }
 
 .deleteBtn:hover {
   background-color: rgb(101, 3, 3);
+  color: rgb(172, 172, 172);
+}
+
+/* ---- Keep title and notes on a singel line ---- */
+.singleLine {
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+  max-width: 200px; 
+}
+
+/* ----------------------------------------- MEDIA QUERIES --------------- */ 
+
+/* ---- Hide Notes on screens smaller than 768px ---- */
+@media (max-width: 768px) {
+  .tableNotes {
+    display: none;
+  }
+}
+
+/* ---- Hide Status on screens smaller than 457px ---- */
+@media (max-width: 457px) {
+  .tableStatus {
+    display: none;
+  }
 }

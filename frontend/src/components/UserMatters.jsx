@@ -160,6 +160,7 @@ const UserMatters = () => {
             </th>
             {/* Clickable column "Status" */}
             <th
+              className={`${styles.tableStatus}`}
               onClick={() => {
                 setStatusSortIndex((prev) => (prev + 1) % 4);
                 setLastClicked("status");
@@ -173,18 +174,28 @@ const UserMatters = () => {
                 lastClicked={lastClicked}
               />
             </th>
-            <th>Noteringar</th>
+            <th className={`${styles.tableNotes}`}>Noteringar</th>
             <th className={`${styles.tableActions}`}>Åtgärder</th>
           </tr>
         </thead>
         <tbody>
           {matters.map((matter) => (
             <tr key={matter.id}>
-              <td>{matter.title}</td>
-              <td>
+              <td className={`${styles.singleLine}`}>
+                {matter.title.length > 20
+                  ? `${matter.title.substring(0, 20)}...`
+                  : matter.title}
+              </td>
+              <td className={`${styles.tableStatus}`}>
                 <Status status={matter.status} />
               </td>
-              <td>{matter.notes || "Ingen notering"}</td>
+              <td className={`${styles.singleLine} ${styles.tableNotes}`}>
+                {matter.notes
+                  ? matter.notes.length > 25
+                    ? `${matter.notes.substring(0, 25)}...`
+                    : matter.notes
+                  : "Ingen notering"}
+              </td>
               <td>
                 <Button
                   className={`${styles.updateBtn}`}
