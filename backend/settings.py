@@ -2,6 +2,7 @@ from pathlib import Path
 import dj_database_url
 import os
 from datetime import timedelta
+from urllib.parse import urlparse
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
@@ -34,19 +35,25 @@ else:
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+# IP URL For development via mac on TV
+MY_IP_URL = os.getenv("MY_IP_URL", "http://localhost:8000/api")
+parsed_url = urlparse(MY_IP_URL)
+ip_host = f"http://{parsed_url.hostname}:5173"
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEVELOPMENT") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", parsed_url.hostname]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    ip_host,
 ]
-
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    ip_host,
 ]
 
 CORS_ALLOW_CREDENTIALS = True

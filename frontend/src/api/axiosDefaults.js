@@ -3,14 +3,16 @@ import Cookies from "js-cookie";
 
 const csrfToken = Cookies.get("csrftoken");
 if (csrfToken) {
-    axios.defaults.headers.common["X-CSRFToken"] = csrfToken;
+  axios.defaults.headers.common["X-CSRFToken"] = csrfToken;
 }
 
 // Dynamically set the base URL based on the environment
 axios.defaults.baseURL =
-  process.env.NODE_ENV === "development" || !process.env.NODE_ENV
-    ? "http://localhost:8000/api"
-    : "";
+  import.meta.env.MODE === "development" // Kolla om vi är i utvecklingsläge
+    ? window.location.hostname === "localhost"
+      ? "http://localhost:8000/api" // För utveckling på Windows
+      : import.meta.env.VITE_BACKEND_URL // För utveckling via Mac (miljövariabel)
+    : ""; // For produktion
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
