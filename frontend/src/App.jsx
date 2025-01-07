@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import UserMatters from "./components/UserMatters";
+import Matter from "./pages/Matter";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user-matters" element={<UserMatters />} />
+          <Route path="/matters/:id" element={<Matter />} />
         </Routes>
       </div>
       <Footer />
