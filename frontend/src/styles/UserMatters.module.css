@@ -47,6 +47,13 @@
   color: rgb(209, 209, 209);
 }
 
+.createMatterBtn:focus,
+.createMatterBtn:active {
+  background-color: rgb(0, 82, 8) !important;
+  outline: none;
+  box-shadow: 0 0 5px rgba(2, 92, 0, 0.5);
+}
+
 /* ----------------------- List of Matters ----------------------- */
 
 /* ---- No matters to show text ---- */
