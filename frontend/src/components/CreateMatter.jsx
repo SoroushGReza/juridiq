@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
-import styles from "../styles/CreateMatter.module.css";
+import styles from "../styles/CreateUpdateModals.module.css";
 
 const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
   const [newMatter, setNewMatter] = useState({

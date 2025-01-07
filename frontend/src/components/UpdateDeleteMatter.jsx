@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { axiosRes } from "../api/axiosDefaults";
+import styles from "../styles/CreateUpdateModals.module.css";
 
 // Fetch matter details (inc. files)
 const fetchMatterDetail = async (id) => {
@@ -47,6 +48,14 @@ const UpdateDeleteMatter = ({
       loadMatter();
     }
   }, [matter, showEditModal, setError]);
+
+  // Truncate file name
+  const trimFileName = (fileName, maxLength = 35) => {
+    if (fileName.length > maxLength) {
+      return `${fileName.substring(0, maxLength)}...`;
+    }
+    return fileName;
+  };
 
   // Change titel/description
   const handleChangeTitle = (e) => setEditTitle(e.target.value);
@@ -111,18 +120,27 @@ const UpdateDeleteMatter = ({
   return (
     <>
       {/* EDIT MODAL */}
-      <Modal show={showEditModal && matter !== null} onHide={handleCloseEdit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Redigera Ärende</Modal.Title>
+      <Modal
+        className={`${styles.createModal}`}
+        show={showEditModal && matter !== null}
+        onHide={handleCloseEdit}
+      >
+        <Modal.Header className={`${styles.modalHeader}`} closeButton>
+          <Modal.Title className={`${styles.modalTitle}`}>
+            Redigera Ärende
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={`${styles.modalBody}`}>
           {!matter ? (
             <p>Något gick fel – inget ärende valt.</p>
           ) : (
             <Form onSubmit={handleUpdateMatter}>
               <Form.Group controlId="editTitle" className="mb-3">
-                <Form.Label>Titel</Form.Label>
+                <Form.Label className={`${styles.modalLabel}`}>
+                  Titel
+                </Form.Label>
                 <Form.Control
+                  className={`${styles.customInput}`}
                   type="text"
                   value={editTitle}
                   onChange={handleChangeTitle}
@@ -131,8 +149,11 @@ const UpdateDeleteMatter = ({
               </Form.Group>
 
               <Form.Group controlId="editDescription">
-                <Form.Label>Beskrivning</Form.Label>
+                <Form.Label className={`${styles.modalLabel}`}>
+                  Beskrivning
+                </Form.Label>
                 <Form.Control
+                  className={`${styles.customInput}`}
                   as="textarea"
                   value={editDescription}
                   onChange={handleChangeDescription}
@@ -143,22 +164,25 @@ const UpdateDeleteMatter = ({
               {/* List existing files */}
               {visibleExistingFiles.length > 0 && (
                 <div className="mt-3">
-                  <h5>Befintliga filer:</h5>
+                  <h5 className={`${styles.modalLabel}`}>Befintliga filer:</h5>
                   {visibleExistingFiles.map((fileObj) => (
                     <Alert
                       key={fileObj.id}
-                      variant="info"
+                      variant="dark"
                       className="d-flex justify-content-between align-items-center"
                     >
                       <a
+                        className={`${styles.fileName}`}
                         href={fileObj.file}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {fileObj.file.split("/").pop()} {/* Show file name */}
+                        {trimFileName(
+                          decodeURIComponent(fileObj.file.split("/").pop())
+                        )}
                       </a>
                       <Button
-                        variant="danger"
+                        className={`${styles.deleteFromList}`}
                         size="sm"
                         onClick={() => handleRemoveExistingFile(fileObj.id)}
                       >
@@ -171,15 +195,21 @@ const UpdateDeleteMatter = ({
 
               {/* Upload new files */}
               <Form.Group controlId="editFile" className="mt-3">
-                <Form.Label>Lägg till nya filer (valfritt)</Form.Label>
+                <Form.Label className={`${styles.modalLabel}`}>
+                  Lägg till nya filer (valfritt)
+                </Form.Label>
                 <Form.Control
+                  className={`${styles.customInput} ${styles.customFileInput}`}
                   type="file"
                   multiple
                   onChange={handleFileChange}
                 />
               </Form.Group>
 
-              <Button type="submit" className="mt-3">
+              <Button
+                type="submit"
+                className={`${styles.updateBtn} mt-4 w-100`}
+              >
                 Spara Ändringar
               </Button>
             </Form>
@@ -189,16 +219,19 @@ const UpdateDeleteMatter = ({
 
       {/* DELETE MATTER MODAL */}
       <Modal
+        className={`${styles.createModal}`}
         show={showDeleteModal && matter !== null}
         onHide={handleCloseDelete}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Bekräfta Radering</Modal.Title>
+        <Modal.Header className={`${styles.deleteModalHeader}`} closeButton>
+          <Modal.Title className={`${styles.deleteModalTitle}`}>
+            Bekräfta Radering
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={`${styles.deleteModalBody}`}>
           <p>Är du säker på att du vill ta bort ärendet?</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className={`${styles.deleteModalFooter}`}>
           <Button variant="secondary" onClick={handleCloseDelete}>
             Avbryt
           </Button>
