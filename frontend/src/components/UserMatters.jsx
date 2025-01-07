@@ -189,9 +189,18 @@ const UserMatters = () => {
             matters.map((matter) => (
               <tr key={matter.id}>
                 <td className={`${styles.singleLine}`}>
-                  {matter.title.length > 20
-                    ? `${matter.title.substring(0, 20)}...`
-                    : matter.title}
+                  <a
+                    href={`/matters/${matter.id}`}
+                    className={`${styles.titleLink}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/matters/${matter.id}`);
+                    }}
+                  >
+                    {matter.title.length > 20
+                      ? `${matter.title.substring(0, 20)}...`
+                      : matter.title}
+                  </a>
                 </td>
                 <td className={`${styles.tableStatus}`}>
                   <Status status={matter.status} />
@@ -204,6 +213,13 @@ const UserMatters = () => {
                     : "Ingen notering"}
                 </td>
                 <td>
+                  <Button
+                    className={`${styles.viewBtn}`}
+                    size="sm"
+                    onClick={() => navigate(`/matters/${matter.id}`)}
+                  >
+                    Öppna
+                  </Button>
                   <Button
                     className={`${styles.updateBtn}`}
                     variant="primary"
