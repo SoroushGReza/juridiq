@@ -17,6 +17,7 @@ const UpdateDeleteMatter = ({
   handleCloseDelete,
   fetchMatters,
   setError,
+  onDeleteSuccess,
 }) => {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
@@ -105,9 +106,12 @@ const UpdateDeleteMatter = ({
   const handleDeleteMatter = async () => {
     try {
       await axiosRes.delete(`/matters/${matter.id}/`);
-      // Uppdate list of matters
-      fetchMatters();
-      handleCloseDelete();
+      fetchMatters(); // Update list of matters
+      handleCloseDelete(); // Close Modal
+
+      if (onDeleteSuccess) {
+        onDeleteSuccess();
+      }
     } catch (err) {
       setError("Kunde inte ta bort ärendet. Försök igen senare.");
     }
