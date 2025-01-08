@@ -32,7 +32,7 @@ class MatterFile(models.Model):
         upload_to="matter_files/",
         validators=[
             FileExtensionValidator(
-                allowed_extensions=["pdf", "docx", "txt", "jpg", "png"]
+                allowed_extensions=["pdf", "txt", "jpg", "png"]
             )
         ],
     )

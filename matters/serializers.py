@@ -18,7 +18,8 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
         child=serializers.FileField(
             validators=[
                 FileExtensionValidator(
-                    allowed_extensions=["pdf", "docx", "txt", "jpg", "png"]
+                    allowed_extensions=["pdf", "txt", "jpg", "png"],
+                    message="Filformat stöds inte! Endast PDF, TXT, JPG och PNG tillåtna.",
                 )
             ]
         ),
