@@ -28,6 +28,14 @@ const UpdateDeleteMatter = ({
   const [existingFiles, setExistingFiles] = useState([]);
   // Files to delete by ID
   const [removeFileIds, setRemoveFileIds] = useState([]);
+  const [localError, setLocalError] = useState("");
+
+  // Reset error whene modal closes
+  useEffect(() => {
+    if (!showEditModal && !showDeleteModal) {
+      setLocalError("");
+    }
+  }, [showEditModal, showDeleteModal]);
 
   // Get matter info when modal opens
   useEffect(() => {
@@ -41,7 +49,7 @@ const UpdateDeleteMatter = ({
           setNewFiles([]);
           setRemoveFileIds([]);
         } catch (err) {
-          setError("Kunde inte hämta ärendedetaljer.");
+          setLocalError("Kunde inte hämta ärendedetaljer.");
         }
       }
     };
@@ -95,10 +103,31 @@ const UpdateDeleteMatter = ({
 
       // Update list of matters
       fetchMatters();
+      setLocalError("");
 
       handleCloseEdit();
     } catch (err) {
-      setError("Kunde inte uppdatera ärendet. Försök igen senare.");
+      if (err.response?.status >= 400 && err.response?.status < 500) {
+        const errorData = err.response.data;
+        let combinedError = "";
+
+        if (errorData.new_files) {
+          Object.values(errorData.new_files).forEach((errorArray) => {
+            if (Array.isArray(errorArray)) {
+              combinedError += errorArray.join(" ") + " ";
+            }
+          });
+        }
+        if (errorData.non_field_errors) {
+          combinedError += errorData.non_field_errors.join(" ") + " ";
+        }
+
+        setLocalError(
+          combinedError.trim() || "Kunde inte uppdatera ärendet. Försök igen."
+        );
+      } else {
+        setLocalError("Kunde inte uppdatera ärendet. Försök igen senare.");
+      }
     }
   };
 
@@ -107,13 +136,14 @@ const UpdateDeleteMatter = ({
     try {
       await axiosRes.delete(`/matters/${matter.id}/`);
       fetchMatters(); // Update list of matters
+      setLocalError("");
       handleCloseDelete(); // Close Modal
 
       if (onDeleteSuccess) {
         onDeleteSuccess();
       }
     } catch (err) {
-      setError("Kunde inte ta bort ärendet. Försök igen senare.");
+      setLocalError("Kunde inte ta bort ärendet. Försök igen senare.");
     }
   };
 
@@ -135,6 +165,7 @@ const UpdateDeleteMatter = ({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={`${styles.modalBody}`}>
+          {localError && <Alert variant="danger">{localError}</Alert>}
           {!matter ? (
             <p>Något gick fel – inget ärende valt.</p>
           ) : (

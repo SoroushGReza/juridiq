@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
 import styles from "../styles/CreateUpdateModals.module.css";
 
@@ -9,6 +9,14 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
     description: "",
     files: [],
   });
+  const [localError, setLocalError] = useState("");
+
+  // Reset error whene modal closes
+  useEffect(() => {
+    if (!show) {
+      setLocalError("");
+    }
+  }, [show]);
 
   const handleChange = (e) => {
     setNewMatter((prev) => ({
@@ -48,9 +56,32 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
 
       // Reset form
       setNewMatter({ title: "", description: "", files: [] });
+      setLocalError("");
       handleClose();
     } catch (err) {
-      setError("Kunde inte skapa ärende. Kontrollera data och försök igen.");
+      if (err.response?.status >= 400 && err.response?.status < 500) {
+        const errorData = err.response.data;
+        let combinedError = "";
+
+        if (errorData.new_files) {
+          Object.values(errorData.new_files).forEach((errorArray) => {
+            if (Array.isArray(errorArray)) {
+              combinedError += errorArray.join(" ") + " ";
+            }
+          });
+        }
+        if (errorData.non_field_errors) {
+          combinedError += errorData.non_field_errors.join(" ") + " ";
+        }
+
+        setLocalError(
+          combinedError.trim() || "Kunde inte skapa ärende. Försök igen."
+        );
+      } else {
+        setLocalError(
+          "Kunde inte skapa ärende. Kontrollera data och försök igen."
+        );
+      }
     }
   };
 
@@ -62,6 +93,7 @@ const CreateMatter = ({ show, handleClose, fetchMatters, setError }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className={`${styles.modalBody}`}>
+        {localError && <Alert variant="danger">{localError}</Alert>}
         <Form onSubmit={handleCreateMatter}>
           <Form.Group className="mb-3" controlId="title">
             <Form.Label className={`${styles.modalLabel}`}>Titel</Form.Label>
