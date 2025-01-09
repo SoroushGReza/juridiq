@@ -7,6 +7,8 @@ import styles from "../styles/Matter.module.css";
 import TXTViewer from "../components/TXTViewer";
 import Status from "../components/Status";
 import LoadingSpinner from "../components/LoadingSpinner";
+import InlineEdit from "../components/InlineEdit";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Matter = () => {
   const { id } = useParams();
@@ -15,6 +17,7 @@ const Matter = () => {
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingSection, setEditingSection] = useState(null);
 
   // Set Page Theme
   const [darkMode, setDarkMode] = useState(() => {
@@ -35,7 +38,7 @@ const Matter = () => {
     fetchMatter();
   }, [id]);
 
-  // Theme 
+  // Theme
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
@@ -86,16 +89,69 @@ const Matter = () => {
       </Row>
       {/* Title */}
       <Row className="align-items-center mb-4">
-        <Col lg={10} md={9} sm={11} xs={11} className="align-self-start">
-          <h1 className={`${styles.title} me-2`}>{matter.title}</h1>
+        <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
+          <div className="d-flex align-items-center">
+            {editingSection === "title" ? (
+              <InlineEdit
+                value={matter.title}
+                sectionName="Titel"
+                darkMode={darkMode} // Skicka darkMode som prop
+                onSave={async (newValue) => {
+                  await axiosReq.patch(`/matters/${id}/`, { title: newValue });
+                  setMatter((prev) => ({ ...prev, title: newValue }));
+                  setEditingSection(null); // Avsluta redigeringsläget
+                }}
+                onCancel={() => setEditingSection(null)} // Avbryt redigering
+              />
+            ) : (
+              <>
+                <button
+                  className={`${styles.editIconButton}`}
+                  onClick={() => setEditingSection("title")}
+                >
+                  <i className="fas fa-edit"></i>
+                </button>
+                <h1 className={`${styles.title} me-2`}>{matter.title}</h1>
+              </>
+            )}
+          </div>
         </Col>
       </Row>
 
       {/* Description */}
       <Row className="mb-4">
-        <Col lg={11} md={10} sm={11} xs={11} className="align-self-start">
-          <h5 className="fw-bold ms-3">Beskrivning</h5>
-          <p className={`${styles.description}`}>{matter.description}</p>
+        <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
+          <div className="d-flex align-items-center">
+            <button
+              className={`${styles.editIconButton}`}
+              onClick={() => setEditingSection("description")}
+            >
+              <i className="fas fa-edit"></i>
+            </button>
+            <h5 className="fw-bold ms-2">Beskrivning</h5>
+          </div>
+          {editingSection === "description" ? (
+            <InlineEdit
+              value={matter.description}
+              sectionName="Beskrivning"
+              darkMode={darkMode} // Send darkmode as prop
+              onSave={async (newValue) => {
+                await axiosReq.patch(`/matters/${id}/`, {
+                  description: newValue,
+                });
+                setMatter((prev) => ({ ...prev, description: newValue }));
+                setEditingSection(null); // Quit edit mode
+              }}
+              onCancel={() => setEditingSection(null)} // Cancel editing
+            />
+          ) : (
+            <p
+              className={`${styles.description}`}
+              style={{ whiteSpace: "pre-line" }}
+            >
+              {matter.description}
+            </p>
+          )}
         </Col>
       </Row>
 
