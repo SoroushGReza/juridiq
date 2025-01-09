@@ -1,0 +1,23 @@
+/* Default styling */
+.input {
+  font-size: 16px;
+  margin-left: 15px;
+  width: calc(100% - 30px);
+  padding: 15px;
+  margin-bottom: 8px;
+  background-color: #e6e6e6;
+  color: #000;
+  border: 1px solid rgba(121, 121, 121, 0.317);
+  border-radius: 8px;
+}
+
+/* Dark mode styling */
+.darkInlineEdit {
+  border: none;
+}
+
+.darkInput {
+  background-color: #444;
+  color: #fff;
+  border: none;
+}
