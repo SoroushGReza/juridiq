@@ -20,13 +20,18 @@
 .title {
   font-size: 1.7rem;
   font-weight: bold;
-  margin-left: 15px;
+  margin-left: 5px;
   margin-right: 45px;
 }
 
 /* ---- Description ---- */
 .description {
-  margin-left: 15px;
+  border: 1px solid rgba(121, 121, 121, 0.317);
+  padding: 15px;
+  border-radius: 8px;
+  width: calc(100% - 30px);
+  margin: 0 auto;
+  background-color: #e6e6e6;
 }
 
 /* ------- File List Previews ------- */
@@ -99,23 +104,63 @@
   transition: background-color 0.3s ease;
 }
 
+/* ------------ Fontawesome Icon for on Edit ------------ */
+.editIconButton {
+  background: none;
+  border: none;
+  margin-left: 15px;
+  font-size: 1.3rem;
+  color: #383838b1;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 9px;
+}
+
+.editIconButton:hover {
+  color: #242424b1;
+}
+
+.editIconButton:focus {
+  outline: none;
+}
+
 /* ------------------------------------------ DARK MODE ------------------------------------------ */
+
+/* ---- Dark page container ---- */
 .pageContainer.dark {
   background-color: #1a1a1a;
   color: #f1f1f1;
 }
 
+/* ---- Divider Line ---- */
 .pageContainer.dark .dividerLine {
   background-color: #444;
 }
 
+/* ---- Status ---- */
 .pageContainer.dark .status {
-  background-color: #333;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.26);
+  background-color: #7d7d7d;
+  color: #181818;
 }
 
+/* ---- No files ---- */
 .pageContainer.dark .noFiles {
   background-color: #333;
   color: rgba(255, 80, 80, 0.8);
+}
+
+/* ---- Fontawesome icon for edit ---- */
+.pageContainer.dark .editIconButton {
+  color: #686868;
+}
+
+.pageContainer.dark .editIconButton:hover {
+  color: #b0b0b0;
+}
+
+/* ---- Description ---- */
+.pageContainer.dark .description {
+  border: 1px solid rgba(121, 121, 121, 0.174);
+  background-color: #333;
+  color: #fff;
 }
