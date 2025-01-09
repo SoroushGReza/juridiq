@@ -7,6 +7,7 @@ import CreateMatter from "./CreateMatter";
 import UpdateDeleteMatter from "./UpdateDeleteMatter";
 import Status, { processMatters } from "./Status";
 import styles from "../styles/UserMatters.module.css";
+import LoadingSpinner from "./LoadingSpinner";
 
 const UserMatters = () => {
   const { isAdmin, isAuthenticated, loading } = useAuthStatus();
@@ -82,6 +83,11 @@ const UserMatters = () => {
       setError("Kunde inte hämta ärenden. Försök igen senare.");
     }
   };
+
+  // Show spinner if page is loading
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   // Handle dsiplay & modals
   const handleOpenEdit = (matter) => {
