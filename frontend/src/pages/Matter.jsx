@@ -5,6 +5,8 @@ import { axiosReq } from "../api/axiosDefaults";
 import UpdateDeleteMatter from "../components/UpdateDeleteMatter";
 import styles from "../styles/Matter.module.css";
 import TXTViewer from "../components/TXTViewer";
+import Status from "../components/Status";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Matter = () => {
   const { id } = useParams();
@@ -13,6 +15,12 @@ const Matter = () => {
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Set Page Theme
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem("darkMode");
+    return savedMode === "true"; // Dark mode as default
+  });
 
   // Fetch specific matter
   useEffect(() => {
@@ -27,6 +35,11 @@ const Matter = () => {
     fetchMatter();
   }, [id]);
 
+  // Theme 
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
   // Update Matter after update
   const handleUpdate = (updatedMatter) => {
     setMatter(updatedMatter);
@@ -38,54 +51,60 @@ const Matter = () => {
   }
 
   if (!matter) {
-    return <p className="text-center mt-4">Laddar ärendet...</p>;
+    return <LoadingSpinner />;
   }
 
   return (
-    <Container className="mt-4">
-      {/* Title & status */}
+    <Container
+      fluid
+      className={`${styles.pageContainer} ${darkMode ? styles.dark : ""}`}
+    >
+      <Row>
+        {/* Status */}
+        <Col
+          lg={2}
+          md={3}
+          sm={4}
+          xs={5}
+          className="d-flex justify-content-start"
+        >
+          <p className={`${styles.status} text-center mt-4`}>
+            <span className="fw-bold">Status: </span>
+            <Status status={matter.status} />
+          </p>
+        </Col>
+        {/* Page Theme */}
+        <Col className="d-flex justify-content-end mt-4 me-3">
+          <Button
+            className={`${styles.modeBtn} text-center`}
+            variant={darkMode ? "light" : "dark"}
+            onClick={() => setDarkMode((prev) => !prev)}
+          >
+            {darkMode ? "☀️ Ljust läge" : "🌙 Mörkt läge"}
+          </Button>
+        </Col>
+      </Row>
+      {/* Title */}
       <Row className="align-items-center mb-4">
-        <Col>
-          <h1 className={styles.title}>{matter.title}</h1>
-          <p className={styles.status}>Status: {matter.status}</p>
-        </Col>
-        <Col xs="auto">
-          <Button
-            className={`${styles.updateBtn} me-2`}
-            variant="primary"
-            onClick={() => setShowEditModal(true)}
-          >
-            Ändra
-          </Button>
-          <Button
-            className={styles.deleteBtn}
-            variant="danger"
-            onClick={() => setShowDeleteModal(true)}
-          >
-            Radera
-          </Button>
+        <Col lg={10} md={9} sm={11} xs={11} className="align-self-start">
+          <h1 className={`${styles.title} me-2`}>{matter.title}</h1>
         </Col>
       </Row>
-      {/* Notes */}
-      <Row className="mb-4">
-        <Col>
-          <h4>Noteringar</h4>
-          <p>{matter.notes ? matter.notes : "Ingen notering"}</p>
-        </Col>
-      </Row>
+
       {/* Description */}
       <Row className="mb-4">
-        <Col>
-          <h4>Beskrivning</h4>
-          <p>{matter.description}</p>
+        <Col lg={11} md={10} sm={11} xs={11} className="align-self-start">
+          <h5 className="fw-bold ms-3">Beskrivning</h5>
+          <p className={`${styles.description}`}>{matter.description}</p>
         </Col>
       </Row>
+
       {/* Files */}
       <Row>
-        <Col>
-          <h4>Filer</h4>
+        <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
+          <h5 className="fw-bold ms-3">Filer</h5>
           {matter.files && matter.files.length > 0 ? (
-            <div className={styles.fileList}>
+            <div className={`${styles.fileList}`}>
               {matter.files.map((fileObj, index) => {
                 const fileUrl =
                   typeof fileObj === "string" ? fileObj : fileObj.file;
@@ -94,31 +113,25 @@ const Matter = () => {
                 const isTxt = /\.txt$/i.test(fileUrl);
 
                 return (
-                  <div key={index} className={styles.filePreview}>
+                  <div key={index} className={`${styles.filePreview} mb-4`}>
                     {isImage ? (
-                      // Preview of images
                       <img
                         src={fileUrl}
                         alt={`Fil ${index + 1}`}
-                        className={styles.fileImage}
-                        style={{ maxWidth: "100%", height: "auto" }}
+                        className={`${styles.imagePreview} img-fluid`}
                       />
                     ) : isPDF ? (
-                      // Preview of PDFs
                       <iframe
                         src={fileUrl}
                         title={`PDF ${index + 1}`}
-                        style={{
-                          width: "100%",
-                          height: "500px",
-                          border: "none",
-                        }}
+                        className={`${styles.pdfPreview}`}
                       />
                     ) : isTxt ? (
-                      <TXTViewer fileUrl={fileUrl} />
+                      <div className={`${styles.txtPreview}`}>
+                        <TXTViewer fileUrl={fileUrl} />
+                      </div>
                     ) : (
-                      // If filetype not supported
-                      <div className={styles.unsupportedFile}>
+                      <div className={`${styles.unsupportedFile}`}>
                         <p>Kan inte förhandsvisa denna filtyp.</p>
                         <a
                           href={fileUrl}
@@ -134,10 +147,50 @@ const Matter = () => {
               })}
             </div>
           ) : (
-            <p>Inga uppladdade filer</p>
+            <p className={`${styles.noFiles} ms-3`}>Inga uppladdade filer</p>
           )}
         </Col>
       </Row>
+
+      {/* Notes */}
+      <Row className="mb-4">
+        <Col
+          lg={11}
+          md={11}
+          sm={11}
+          xs={11}
+          className={`${styles.notesCol} align-self-start ms-3`}
+        >
+          <h5 className={`${styles.notesHeader} fw-bold mt-4`}>Noteringar</h5>
+          <p className={`${styles.notes} mb-4`}>
+            {matter.notes ? matter.notes : "Ingen notering"}
+          </p>
+        </Col>
+      </Row>
+
+      {/* Divider Line */}
+      <div className={`${styles.dividerLine} mx-auto`}></div>
+
+      {/* Action Buttons */}
+      <Row className="mt-3">
+        <Col className="justify-content-center d-flex">
+          <Button
+            className={`me-2 ${styles.updateBtn}`}
+            variant="primary"
+            onClick={() => setShowEditModal(true)}
+          >
+            Ändra
+          </Button>
+          <Button
+            className={styles.deleteBtn}
+            variant="danger"
+            onClick={() => setShowDeleteModal(true)}
+          >
+            Radera
+          </Button>
+        </Col>
+      </Row>
+
       {/* Modals */}
       <UpdateDeleteMatter
         showEditModal={showEditModal}

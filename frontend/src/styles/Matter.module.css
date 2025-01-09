@@ -1,0 +1,121 @@
+/* ---- Page Container ---- */
+.pageContainer {
+  background-color: rgb(240, 240, 240);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  padding-bottom: 30px;
+}
+
+/* ---- Status ---- */
+.status {
+  font-size: 0.8rem;
+  margin-left: 15px;
+  background-color: rgb(36, 36, 36);
+  padding: 10px;
+  border-radius: 8px;
+  color: rgb(215, 215, 215);
+}
+
+/* ---- Title ---- */
+.title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-right: 45px;
+}
+
+/* ---- Description ---- */
+.description {
+  margin-left: 15px;
+}
+
+/* ------- File List Previews ------- */
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filePreview {
+  width: 100%;
+}
+
+/* ---- Image files ---- */
+.imagePreview {
+  max-width: 100%;
+  margin-left: 15px;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- PDF files ---- */
+.pdfPreview {
+  width: calc(100% - 30px);
+  margin: 0 15px;
+  height: 800px;
+  border-radius: 8px;
+  border: none;
+}
+
+/* ---- TXT files ---- */
+.txtPreview {
+  width: calc(100% - 30px);
+  border: 1px solid #ccc;
+  margin: 0 15px;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  font-family: monospace;
+}
+
+.noFiles {
+  color: rgba(255, 0, 0, 0.637);
+  background-color: rgba(0, 0, 0, 0.918);
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+/* ---- Unsupported files ---- */
+.unsupportedFile {
+  text-align: center;
+}
+
+.unsupportedFile a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* ---- Divider Line ---- */
+.dividerLine {
+  width: 98%;
+  height: 2px;
+  background-color: #e0e0e0;
+  margin: 20px auto 30px;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+}
+
+/* ------------------------------------------ DARK MODE ------------------------------------------ */
+.pageContainer.dark {
+  background-color: #1a1a1a;
+  color: #f1f1f1;
+}
+
+.pageContainer.dark .dividerLine {
+  background-color: #444;
+}
+
+.pageContainer.dark .status {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.pageContainer.dark .noFiles {
+  background-color: #333;
+  color: rgba(255, 80, 80, 0.8);
+}
