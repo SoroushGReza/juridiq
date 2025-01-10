@@ -9,11 +9,13 @@ import Status from "../components/Status";
 import LoadingSpinner from "../components/LoadingSpinner";
 import InlineEdit from "../components/InlineEdit";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import useAuthStatus from "../hooks/useAuthStatus";
 
 const Matter = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [matter, setMatter] = useState(null);
+  const { isAdmin } = useAuthStatus();
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -69,13 +71,57 @@ const Matter = () => {
           md={3}
           sm={4}
           xs={5}
-          className="d-flex justify-content-start"
+          className={`${styles.statusCol} d-flex justify-content-start`}
         >
-          <p className={`${styles.status} text-center mt-4`}>
-            <span className="fw-bold">Status: </span>
-            <Status status={matter.status} />
-          </p>
+          {isAdmin ? (
+            <div className="position-relative">
+              <p
+                className={`${styles.status} text-center mt-4`}
+                onClick={() =>
+                  setEditingSection(
+                    editingSection === "status" ? null : "status"
+                  )
+                }
+                style={{ cursor: "pointer" }}
+                title="Redigera status"
+              >
+                <span className="fw-bold">Status: </span>
+                <Status status={matter.status} />{" "}
+                <i className="fas fa-chevron-down ms-2"></i>
+              </p>
+
+              {editingSection === "status" && (
+                <div className={`${styles.dropdownMenu}`}>
+                  {["Pending", "Ongoing", "Completed", "Cancelled"].map(
+                    (status) => (
+                      <p
+                        key={status}
+                        onClick={async () => {
+                          await axiosReq.patch(`/matters/${id}/`, { status });
+                          setMatter((prev) => ({ ...prev, status }));
+                          setEditingSection(null);
+                        }}
+                        className={
+                          status === matter.status
+                            ? `${styles.activeItem}`
+                            : undefined
+                        }
+                      >
+                        {status}
+                      </p>
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <p className={`${styles.status} text-center mt-4`}>
+              <span className="fw-bold">Status: </span>
+              <Status status={matter.status} />
+            </p>
+          )}
         </Col>
+
         {/* Page Theme */}
         <Col className="d-flex justify-content-end mt-4 me-3">
           <Button
@@ -210,17 +256,38 @@ const Matter = () => {
 
       {/* Notes */}
       <Row className="mb-4">
-        <Col
-          lg={11}
-          md={11}
-          sm={11}
-          xs={11}
-          className={`${styles.notesCol} align-self-start ms-3`}
-        >
-          <h5 className={`${styles.notesHeader} fw-bold mt-4`}>Noteringar</h5>
-          <p className={`${styles.notes} mb-4`}>
-            {matter.notes ? matter.notes : "Ingen notering"}
-          </p>
+        <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
+          <div className="d-flex align-items-center">
+            {isAdmin && (
+              <button
+                className={`${styles.editIconButton}`}
+                onClick={() =>
+                  setEditingSection(editingSection === "notes" ? null : "notes")
+                }
+                title="Redigera noteringar"
+              >
+                <i className="fas fa-edit"></i>
+              </button>
+            )}
+            <h5 className="fw-bold ms-2">Noteringar</h5>
+          </div>
+          {editingSection === "notes" && isAdmin ? (
+            <InlineEdit
+              value={matter.notes || ""}
+              sectionName="Noteringar"
+              darkMode={darkMode}
+              onSave={async (newValue) => {
+                await axiosReq.patch(`/matters/${id}/`, { notes: newValue });
+                setMatter((prev) => ({ ...prev, notes: newValue }));
+                setEditingSection(null);
+              }}
+              onCancel={() => setEditingSection(null)}
+            />
+          ) : (
+            <p className={`${styles.notes} mt-1 ms-3`}>
+              {matter.notes ? matter.notes : "Ingen notering"}
+            </p>
+          )}
         </Col>
       </Row>
 

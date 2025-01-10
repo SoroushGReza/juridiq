@@ -7,6 +7,10 @@
 }
 
 /* ---- Status ---- */
+
+.statusCol {
+  min-width: fit-content;
+}
 .status {
   font-size: 0.8rem;
   margin-left: 15px;
@@ -14,6 +18,32 @@
   padding: 10px;
   border-radius: 8px;
   color: rgb(215, 215, 215);
+}
+
+/* ---- Status Dropdown Styling ---- */
+.dropdownMenu {
+  position: absolute;
+  margin-left: 15px;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  padding: 0;
+  color: #000;
+}
+
+.dropdownMenu p {
+  margin: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+.dropdownMenu p:hover {
+  background-color: #f0f0f0;
 }
 
 /* ---- Title ---- */
@@ -163,4 +193,21 @@
   border: 1px solid rgba(121, 121, 121, 0.174);
   background-color: #333;
   color: #fff;
+}
+
+/* ---- Dropdown Styling ---- */
+.pageContainer.dark .dropdownMenu {
+  background-color: #333;
+  border: 1px solid #555;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  color: #f1f1f1;
+}
+
+.pageContainer.dark .dropdownMenu p {
+  background-color: transparent;
+  color: #f1f1f1;
+}
+
+.pageContainer.dark .dropdownMenu p:hover {
+  background-color: #555;
 }
