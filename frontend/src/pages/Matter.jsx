@@ -10,6 +10,10 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import InlineEdit from "../components/InlineEdit";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import useAuthStatus from "../hooks/useAuthStatus";
+import StatusSection from "../components/StatusSection";
+import TitleSection from "../components/TitleSection";
+import DescriptionSection from "../components/DescriptionSection";
+import NotesSection from "../components/NotesSection";
 
 const Matter = () => {
   const { id } = useParams();
@@ -26,6 +30,32 @@ const Matter = () => {
     const savedMode = localStorage.getItem("darkMode");
     return savedMode === "true"; // Dark mode as default
   });
+
+  // Status Change
+  const handleStatusChange = (newStatus) => {
+    setMatter((prev) => ({ ...prev, status: newStatus }));
+  };
+
+  // Title Change
+  const handleTitleSave = async (newTitle) => {
+    await axiosReq.patch(`/matters/${id}/`, { title: newTitle });
+    setMatter((prev) => ({ ...prev, title: newTitle }));
+    setEditingSection(null);
+  };
+
+  // Description change
+  const handleDescriptionSave = async (newDescription) => {
+    await axiosReq.patch(`/matters/${id}/`, { description: newDescription });
+    setMatter((prev) => ({ ...prev, description: newDescription }));
+    setEditingSection(null);
+  };
+
+  // Notes change
+  const handleNotesSave = async (newNotes) => {
+    await axiosReq.patch(`/matters/${id}/`, { notes: newNotes });
+    setMatter((prev) => ({ ...prev, notes: newNotes }));
+    setEditingSection(null);
+  };
 
   // Fetch specific matter
   useEffect(() => {
@@ -66,60 +96,14 @@ const Matter = () => {
     >
       <Row>
         {/* Status */}
-        <Col
-          lg={2}
-          md={3}
-          sm={4}
-          xs={5}
-          className={`${styles.statusCol} d-flex justify-content-start`}
-        >
-          {isAdmin ? (
-            <div className="position-relative">
-              <p
-                className={`${styles.status} text-center mt-4`}
-                onClick={() =>
-                  setEditingSection(
-                    editingSection === "status" ? null : "status"
-                  )
-                }
-                style={{ cursor: "pointer" }}
-                title="Redigera status"
-              >
-                <span className="fw-bold">Status: </span>
-                <Status status={matter.status} />{" "}
-                <i className="fas fa-chevron-down ms-2"></i>
-              </p>
-
-              {editingSection === "status" && (
-                <div className={`${styles.dropdownMenu}`}>
-                  {["Pending", "Ongoing", "Completed", "Cancelled"].map(
-                    (status) => (
-                      <p
-                        key={status}
-                        onClick={async () => {
-                          await axiosReq.patch(`/matters/${id}/`, { status });
-                          setMatter((prev) => ({ ...prev, status }));
-                          setEditingSection(null);
-                        }}
-                        className={
-                          status === matter.status
-                            ? `${styles.activeItem}`
-                            : undefined
-                        }
-                      >
-                        {status}
-                      </p>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
-          ) : (
-            <p className={`${styles.status} text-center mt-4`}>
-              <span className="fw-bold">Status: </span>
-              <Status status={matter.status} />
-            </p>
-          )}
+        <Col lg={2} md={3} sm={4} xs={5}>
+          <StatusSection
+            matter={matter}
+            isAdmin={isAdmin}
+            editingSection={editingSection}
+            setEditingSection={setEditingSection}
+            onStatusChange={handleStatusChange}
+          />
         </Col>
 
         {/* Page Theme */}
@@ -136,68 +120,26 @@ const Matter = () => {
       {/* Title */}
       <Row className="align-items-center mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
-          <div className="d-flex align-items-center">
-            {editingSection === "title" ? (
-              <InlineEdit
-                value={matter.title}
-                sectionName="Titel"
-                darkMode={darkMode} // Skicka darkMode som prop
-                onSave={async (newValue) => {
-                  await axiosReq.patch(`/matters/${id}/`, { title: newValue });
-                  setMatter((prev) => ({ ...prev, title: newValue }));
-                  setEditingSection(null); // Avsluta redigeringsläget
-                }}
-                onCancel={() => setEditingSection(null)} // Avbryt redigering
-              />
-            ) : (
-              <>
-                <button
-                  className={`${styles.editIconButton}`}
-                  onClick={() => setEditingSection("title")}
-                >
-                  <i className="fas fa-edit"></i>
-                </button>
-                <h1 className={`${styles.title} me-2`}>{matter.title}</h1>
-              </>
-            )}
-          </div>
+          <TitleSection
+            title={matter.title}
+            isEditing={editingSection === "title"}
+            darkMode={darkMode}
+            setEditingSection={setEditingSection}
+            onSaveTitle={handleTitleSave}
+          />
         </Col>
       </Row>
 
       {/* Description */}
       <Row className="mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
-          <div className="d-flex align-items-center">
-            <button
-              className={`${styles.editIconButton}`}
-              onClick={() => setEditingSection("description")}
-            >
-              <i className="fas fa-edit"></i>
-            </button>
-            <h5 className="fw-bold ms-2">Beskrivning</h5>
-          </div>
-          {editingSection === "description" ? (
-            <InlineEdit
-              value={matter.description}
-              sectionName="Beskrivning"
-              darkMode={darkMode} // Send darkmode as prop
-              onSave={async (newValue) => {
-                await axiosReq.patch(`/matters/${id}/`, {
-                  description: newValue,
-                });
-                setMatter((prev) => ({ ...prev, description: newValue }));
-                setEditingSection(null); // Quit edit mode
-              }}
-              onCancel={() => setEditingSection(null)} // Cancel editing
-            />
-          ) : (
-            <p
-              className={`${styles.description}`}
-              style={{ whiteSpace: "pre-line" }}
-            >
-              {matter.description}
-            </p>
-          )}
+          <DescriptionSection
+            description={matter.description}
+            isEditing={editingSection === "description"}
+            darkMode={darkMode}
+            setEditingSection={setEditingSection}
+            onSaveDescription={handleDescriptionSave}
+          />
         </Col>
       </Row>
 
@@ -257,37 +199,14 @@ const Matter = () => {
       {/* Notes */}
       <Row className="mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
-          <div className="d-flex align-items-center">
-            {isAdmin && (
-              <button
-                className={`${styles.editIconButton}`}
-                onClick={() =>
-                  setEditingSection(editingSection === "notes" ? null : "notes")
-                }
-                title="Redigera noteringar"
-              >
-                <i className="fas fa-edit"></i>
-              </button>
-            )}
-            <h5 className="fw-bold ms-2">Noteringar</h5>
-          </div>
-          {editingSection === "notes" && isAdmin ? (
-            <InlineEdit
-              value={matter.notes || ""}
-              sectionName="Noteringar"
-              darkMode={darkMode}
-              onSave={async (newValue) => {
-                await axiosReq.patch(`/matters/${id}/`, { notes: newValue });
-                setMatter((prev) => ({ ...prev, notes: newValue }));
-                setEditingSection(null);
-              }}
-              onCancel={() => setEditingSection(null)}
-            />
-          ) : (
-            <p className={`${styles.notes} mt-1 ms-3`}>
-              {matter.notes ? matter.notes : "Ingen notering"}
-            </p>
-          )}
+          <NotesSection
+            notes={matter.notes}
+            isEditing={editingSection === "notes"}
+            isAdmin={isAdmin}
+            darkMode={darkMode}
+            setEditingSection={setEditingSection}
+            onSaveNotes={handleNotesSave}
+          />
         </Col>
       </Row>
 
