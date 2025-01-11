@@ -1,0 +1,62 @@
+.uploadButton {
+  font-size: 1.5rem;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.uploadButton:hover {
+  color: #0056b3;
+}
+
+.fileList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.filePreview {
+  position: relative;
+  width: 200px;
+}
+
+.imagePreview {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.pdfPreview {
+  width: 100%;
+  height: 150px;
+  border: none;
+  border-radius: 8px;
+  margin-left: 15px;
+}
+
+.txtPreview {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.unsupportedFile {
+  text-align: center;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: red;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: darkred;
+}
+
+.noFiles {
+  color: #777;
+}

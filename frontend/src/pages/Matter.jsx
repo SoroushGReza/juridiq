@@ -14,6 +14,7 @@ import StatusSection from "../components/StatusSection";
 import TitleSection from "../components/TitleSection";
 import DescriptionSection from "../components/DescriptionSection";
 import NotesSection from "../components/NotesSection";
+import FilesSection from "../components/FilesSection";
 
 const Matter = () => {
   const { id } = useParams();
@@ -48,6 +49,37 @@ const Matter = () => {
     await axiosReq.patch(`/matters/${id}/`, { description: newDescription });
     setMatter((prev) => ({ ...prev, description: newDescription }));
     setEditingSection(null);
+  };
+
+  // Handle files
+  const handleUploadFile = async (newFiles) => {
+    try {
+      const formData = new FormData();
+      newFiles.forEach((file) => formData.append("new_files", file));
+
+      const { data } = await axiosReq.patch(`/matters/${id}/`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (Array.isArray(data.new_files)) {
+        setMatter((prev) => ({
+          ...prev,
+          files: [...prev.files, ...data.new_files], // Add new files
+        }));
+      } else if (Array.isArray(data.files)) {
+        setMatter((prev) => ({
+          ...prev,
+          files: data.files,
+        }));
+      } else {
+        console.warn(
+          "Inga giltiga fildata i API-svaret. Kontrollera backend-svaret:",
+          data
+        );
+      }
+    } catch (err) {
+      console.error("Fel vid uppladdning av filer:", err);
+    }
   };
 
   // Notes change
@@ -146,53 +178,23 @@ const Matter = () => {
       {/* Files */}
       <Row>
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
-          <h5 className="fw-bold ms-3">Filer</h5>
-          {matter.files && matter.files.length > 0 ? (
-            <div className={`${styles.fileList}`}>
-              {matter.files.map((fileObj, index) => {
-                const fileUrl =
-                  typeof fileObj === "string" ? fileObj : fileObj.file;
-                const isImage = /\.(jpeg|jpg|png|gif|webp)$/i.test(fileUrl);
-                const isPDF = /\.pdf$/i.test(fileUrl);
-                const isTxt = /\.txt$/i.test(fileUrl);
-
-                return (
-                  <div key={index} className={`${styles.filePreview} mb-4`}>
-                    {isImage ? (
-                      <img
-                        src={fileUrl}
-                        alt={`Fil ${index + 1}`}
-                        className={`${styles.imagePreview} img-fluid`}
-                      />
-                    ) : isPDF ? (
-                      <iframe
-                        src={fileUrl}
-                        title={`PDF ${index + 1}`}
-                        className={`${styles.pdfPreview}`}
-                      />
-                    ) : isTxt ? (
-                      <div className={`${styles.txtPreview}`}>
-                        <TXTViewer fileUrl={fileUrl} />
-                      </div>
-                    ) : (
-                      <div className={`${styles.unsupportedFile}`}>
-                        <p>Kan inte förhandsvisa denna filtyp.</p>
-                        <a
-                          href={fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Ladda ner filen här
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className={`${styles.noFiles} ms-3`}>Inga uppladdade filer</p>
-          )}
+          <FilesSection
+            files={matter.files}
+            onDeleteFile={async (fileId) => {
+              try {
+                await axiosReq.patch(`/matters/${id}/`, {
+                  remove_file_ids: [fileId],
+                });
+                setMatter((prev) => ({
+                  ...prev,
+                  files: prev.files.filter((file) => file.id !== fileId),
+                }));
+              } catch (err) {
+                console.error("Kunde inte ta bort filen:", err);
+              }
+            }}
+            onUploadFile={handleUploadFile}
+          />
         </Col>
       </Row>
 
