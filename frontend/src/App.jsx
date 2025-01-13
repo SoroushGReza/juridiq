@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import UserMatters from "./components/UserMatters";
 import Matter from "./pages/Matter";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/user-matters" element={<UserMatters />} />
           <Route path="/matters/:id" element={<Matter />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
       <Footer />

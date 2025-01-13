@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { axiosReq } from "../api/axiosDefaults";
+import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
@@ -33,8 +33,11 @@ const Register = () => {
       // Save tokens in localStorage
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
-      // Redirect to another page after successful registration
+      setAuthHeader(); // Update with new access token
+
+      // Redirect to home page after successful registration
       navigate("/");
+      setTimeout(() => window.location.reload(), 0);
     } catch (error) {
       if (error.response?.data) {
         setErrors(error.response.data);
