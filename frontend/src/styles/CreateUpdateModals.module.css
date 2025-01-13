@@ -14,7 +14,7 @@
 
 /* ---- Modal Title ---- */
 .modalTitle {
-  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
   font-size: 32px;
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -24,7 +24,7 @@
 /* ---- Modal Body ---- */
 .modalBody {
   background-color: #bcbcbc;
-  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
   border-top: none;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -105,7 +105,7 @@
 
 /* ---- Delete Modal Title ---- */
 .deleteModalTitle {
-  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
   font-size: 32px;
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -115,7 +115,7 @@
 /* ---- delete Modal Body ---- */
 .deleteModalBody {
   background-color: #1e1e1e;
-  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
   color: rgb(231, 230, 230);
   font-size: 25px;
 }

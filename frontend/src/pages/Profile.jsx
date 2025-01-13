@@ -5,6 +5,7 @@ import ProfileForm from "../components/ProfileForm";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import DeleteAccountModal from "../components/DeleteAccountModal";
 import Alerts from "../components/Alerts";
+import styles from "../styles/Profile.module.css";
 
 function Profile() {
   // State to store user profile info
@@ -153,7 +154,9 @@ function Profile() {
           {/* ---------- Alerts ---------- */}
           <Alerts successMessage={successMessage} errorMessage={errorMessage} />
 
-          <h1 className="mb-4 text-center">Min Profil</h1>
+          <h1 className={`${styles.pageHeader} mb-4 text-center`}>
+            Min Profil
+          </h1>
 
           {/* ---------- Update profile ---------- */}
           <ProfileForm
