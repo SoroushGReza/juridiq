@@ -9,7 +9,7 @@
 /* ---- Status ---- */
 
 .statusCol {
-  min-width: fit-content;
+  min-width: max-content;
 }
 .status {
   font-size: 0.8rem;
@@ -46,6 +46,15 @@
   background-color: #f0f0f0;
 }
 
+/* ---- Theme Button ---- */
+.modeBtn {
+  height: 40px; 
+  padding: 5px 15px; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
 /* ---- Title ---- */
 .title {
   font-size: 1.7rem;
@@ -62,66 +71,6 @@
   width: calc(100% - 30px);
   margin: 0 auto;
   background-color: #e6e6e6;
-}
-
-/* ------- File List Previews ------- */
-.fileList {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.filePreview {
-  width: 100%;
-}
-
-/* ---- Image files ---- */
-.imagePreview {
-  max-width: 100%;
-  margin-left: 15px;
-  display: block;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* ---- PDF files ---- */
-.pdfPreview {
-  width: calc(100% - 30px);
-  margin: 0 15px;
-  height: 800px;
-  border-radius: 8px;
-  border: none;
-}
-
-/* ---- TXT files ---- */
-.txtPreview {
-  width: calc(100% - 30px);
-  border: 1px solid #ccc;
-  margin: 0 15px;
-  border-radius: 5px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  font-family: monospace;
-}
-
-.noFiles {
-  color: rgba(255, 0, 0, 0.637);
-  background-color: rgba(0, 0, 0, 0.918);
-  width: 250px;
-  padding: 20px;
-  text-align: center;
-  font-weight: 600;
-  border-radius: 2px;
-}
-
-/* ---- Unsupported files ---- */
-.unsupportedFile {
-  text-align: center;
-}
-
-.unsupportedFile a {
-  color: #007bff;
-  text-decoration: underline;
 }
 
 /* ---- Divider Line ---- */
@@ -173,11 +122,7 @@
   color: #181818;
 }
 
-/* ---- No files ---- */
-.pageContainer.dark .noFiles {
-  background-color: #333;
-  color: rgba(255, 80, 80, 0.8);
-}
+
 
 /* ---- Fontawesome icon for edit ---- */
 .pageContainer.dark .editIconButton {
