@@ -13,6 +13,7 @@ const NotesSection = ({
   return (
     <>
       <div className="d-flex align-items-center">
+        <h4 className="fw-bold ms-3">Noteringar</h4>
         {isAdmin && (
           <button
             className={`${styles.editIconButton}`}
@@ -22,7 +23,6 @@ const NotesSection = ({
             <i className="fas fa-edit"></i>
           </button>
         )}
-        <h5 className="fw-bold ms-2">Noteringar</h5>
       </div>
       {isEditing ? (
         <InlineEdit

@@ -21,13 +21,13 @@ const TitleSection = ({
         />
       ) : (
         <>
+          <h1 className={`${styles.title} me-1 ms-3`}>{title}</h1>
           <button
             className={`${styles.editIconButton}`}
             onClick={() => setEditingSection("title")}
           >
             <i className="fas fa-edit"></i>
           </button>
-          <h1 className={`${styles.title} me-2`}>{title}</h1>
         </>
       )}
     </div>

@@ -36,7 +36,7 @@ const FilesSection = ({ files, onDeleteFile, onUploadFile, darkMode }) => {
     <div className={`${styles.filesSection} ${darkMode ? styles.dark : ""}`}>
       {/* Titel & Upload Button */}
       <div className="d-flex align-items-center">
-        <h5 className={`fw-bold ms-3 ${darkMode ? styles.dark : ""}`}>Filer</h5>
+        <h4 className={`fw-bold ms-3 ${darkMode ? styles.dark : ""}`}>Filer</h4>
         <label
           htmlFor="fileUpload"
           className={`${styles.uploadButton} ${

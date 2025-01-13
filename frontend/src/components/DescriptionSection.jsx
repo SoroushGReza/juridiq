@@ -12,13 +12,13 @@ const DescriptionSection = ({
   return (
     <>
       <div className="d-flex align-items-center">
+        <h4 className="fw-bold ms-3">Beskrivning</h4>
         <button
           className={`${styles.editIconButton}`}
           onClick={() => setEditingSection("description")}
         >
           <i className="fas fa-edit"></i>
         </button>
-        <h5 className="fw-bold ms-2">Beskrivning</h5>
       </div>
       {isEditing ? (
         <InlineEdit
