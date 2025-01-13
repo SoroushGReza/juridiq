@@ -65,12 +65,9 @@
 
 /* ---- Description ---- */
 .description {
-  border: 1px solid rgba(121, 121, 121, 0.317);
-  padding: 15px;
   border-radius: 8px;
   width: calc(100% - 30px);
   margin: 0 auto;
-  background-color: #e6e6e6;
 }
 
 /* ---- Divider Line ---- */
@@ -135,8 +132,6 @@
 
 /* ---- Description ---- */
 .pageContainer.dark .description {
-  border: 1px solid rgba(121, 121, 121, 0.174);
-  background-color: #333;
   color: #fff;
 }
 

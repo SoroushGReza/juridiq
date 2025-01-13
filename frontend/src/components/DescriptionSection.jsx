@@ -30,7 +30,7 @@ const DescriptionSection = ({
         />
       ) : (
         <p
-          className={`${styles.description}`}
+          className={`${styles.description} mt-2`}
           style={{ whiteSpace: "pre-line" }}
         >
           {description}

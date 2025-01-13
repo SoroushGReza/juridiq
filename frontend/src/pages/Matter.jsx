@@ -126,6 +126,7 @@ const Matter = () => {
       fluid
       className={`${styles.pageContainer} ${darkMode ? styles.dark : ""}`}
     >
+      {/* Status & Page Theme */}
       <Row>
         {/* Status */}
         <Col lg={2} md={3} sm={4} xs={5}>
@@ -175,6 +176,9 @@ const Matter = () => {
         </Col>
       </Row>
 
+      {/* Divider Line */}
+      <div className={`${styles.dividerLine} mx-auto`}></div>
+
       {/* Files */}
       <Row>
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
@@ -199,6 +203,9 @@ const Matter = () => {
         </Col>
       </Row>
 
+      {/* Divider Line */}
+      <div className={`${styles.dividerLine} mx-auto`}></div>
+      
       {/* Notes */}
       <Row className="mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
