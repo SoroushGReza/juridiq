@@ -150,7 +150,7 @@ const Matter = () => {
         </Col>
       </Row>
       {/* Title */}
-      <Row className="align-items-center mb-4">
+      <Row className="align-items-center mt-4 mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
           <TitleSection
             title={matter.title}
@@ -180,6 +180,7 @@ const Matter = () => {
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
           <FilesSection
             files={matter.files}
+            darkMode={darkMode}
             onDeleteFile={async (fileId) => {
               try {
                 await axiosReq.patch(`/matters/${id}/`, {
