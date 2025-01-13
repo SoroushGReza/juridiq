@@ -1,9 +1,13 @@
 # JuridiQ
-A user-friendly website built with Django REST Framework (DRF) and React, designed to provide legal advice and assistance with writing appeals for individuals in Sweden.
+
+**Status: Under Development**  
+This project is actively being developed. Features may change and the codebase is not yet stable.
+
 
 ## Overview
-This project consists of a Django-based backend and a React frontend:
+A user-friendly website built with Django REST Framework (DRF) and React, designed to provide legal advice and assistance with writing appeals for individuals in Sweden.
 
+## Tech Stack
 ### Backend: 
 - Django 
 - Django REST Framework
@@ -17,9 +21,8 @@ This project consists of a Django-based backend and a React frontend:
 ## Prerequisites
  - Python 3.9+
  - Node.js (LTS recommended, e.g. Node 20)
-Setup
 
-## Backend (Django & DRF)
+## Backend Setup (Django & DRF)
 1. Create a virtual environment: <br>
 `python -m venv venv`
 2. Activate the virtual enviroment (windows): <br>
