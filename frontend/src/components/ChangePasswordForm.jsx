@@ -1,12 +1,17 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import styles from "../styles/Profile.module.css";
 
 function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
   return (
-    <Form onSubmit={onSubmit}>
+    <Form className={`${styles.profileForm} mb-4`} onSubmit={onSubmit}>
+      <h1 className={`${styles["formHeader"]} text-center`}>Ändra Lösenord</h1>
       <Form.Group controlId="oldPassword" className="mb-3">
-        <Form.Label>Gammalt lösenord</Form.Label>
+        <Form.Label className={`${styles.formLabel}`}>
+          Gammalt lösenord
+        </Form.Label>
         <Form.Control
+          className={`${styles.formInput}`}
           type="password"
           name="old_password"
           value={passwordData.old_password}
@@ -15,8 +20,9 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
         />
       </Form.Group>
       <Form.Group controlId="newPassword" className="mb-3">
-        <Form.Label>Nytt lösenord</Form.Label>
+        <Form.Label className={`${styles.formLabel}`}>Nytt lösenord</Form.Label>
         <Form.Control
+          className={`${styles.formInput}`}
           type="password"
           name="new_password"
           value={passwordData.new_password}
@@ -24,7 +30,11 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
           required
         />
       </Form.Group>
-      <Button variant="warning" type="submit">
+      <Button
+        className={`${styles.updatePasswordButton} mb-3`}
+        variant="warning"
+        type="submit"
+      >
         Byt lösenord
       </Button>
     </Form>

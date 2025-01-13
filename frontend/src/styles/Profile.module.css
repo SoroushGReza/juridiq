@@ -4,3 +4,101 @@
   font-size: 3.8rem;
   font-weight: 600;
 }
+
+.profileForm {
+  background-color: #1a1a1a82;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.formHeader {
+  font-family: "MouldyCheeseRegular", "adventpro-regular" !important;
+  color: antiquewhite;
+  letter-spacing: 1px;
+  font-size: 190%;
+}
+
+.formLabel {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-weight: 400;
+  color: bisque;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 24px !important;
+}
+
+.formInput {
+  margin-top: 0 !important;
+  margin-bottom: 7px;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 21px !important;
+  color: black !important;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.formInput:focus {
+  border-color: #ffb700 !important;
+  box-shadow: 0 0 5px rgba(255, 213, 0, 0.705) !important;
+}
+
+.updateProfileButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #3563ae !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.updateProfileButton:hover {
+  background-color: #2b508d !important;
+}
+
+.updatePasswordButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #aea635 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.updatePasswordButton:hover {
+  background-color: #8b852a !important;
+}
+
+.deleteAccountParagraph {
+  font-family: "adventpro-regular" !important;
+  font-size: 21px;
+  font-weight: 400;
+  color: bisque;
+}
+
+.deleteAccountButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #ae3535 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.deleteAccountButton:hover {
+  background-color: #902c2c !important;
+}

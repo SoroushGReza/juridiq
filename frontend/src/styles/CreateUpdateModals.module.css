@@ -176,3 +176,18 @@
   box-shadow: 0 0 5px rgba(2, 0, 92, 0.5);
 }
 /* ----------------------------------------------------------------------------- */
+
+.customInput {
+  margin-top: 0 !important;
+  margin-bottom: 7px;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 21px !important;
+  color: black !important;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.customInput:focus {
+  border-color: #ff0000 !important;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.705) !important;
+}

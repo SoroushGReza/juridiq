@@ -150,7 +150,7 @@ function Profile() {
   return (
     <Container className="my-5">
       <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
+        <Col xs={12} md={10} lg={8} xl={6}>
           {/* ---------- Alerts ---------- */}
           <Alerts successMessage={successMessage} errorMessage={errorMessage} />
 
@@ -173,7 +173,6 @@ function Profile() {
           <hr className="my-4" />
 
           {/* ---------- Change Password ---------- */}
-          <h3>Byt lösenord</h3>
           <ChangePasswordForm
             passwordData={passwordData}
             onChange={(e) =>
@@ -188,14 +187,22 @@ function Profile() {
           <hr className="my-4" />
 
           {/* ---------- Delete Account ---------- */}
-          <h3>Radera konto</h3>
-          <p>
-            Om du vill radera ditt konto klicka på knappen nedan. Du kommer bli
-            ombedd att fylla i ditt lösenord för att bekräfta.
-          </p>
-          <Button variant="danger" onClick={handleShowDeleteModal}>
-            Radera konto
-          </Button>
+          <div className={`${styles.profileForm} mb-4`}>
+            <h1 className={`${styles["formHeader"]} text-center`}>
+              Radera Konto
+            </h1>
+            <p className={`${styles.deleteAccountParagraph} text-center`}>
+              Om du vill radera ditt konto klicka på knappen nedan. Du kommer
+              bli ombedd att fylla i ditt lösenord för att bekräfta.
+            </p>
+            <Button
+              className={`${styles.deleteAccountButton} mb-3`}
+              variant="danger"
+              onClick={handleShowDeleteModal}
+            >
+              Radera konto
+            </Button>
+          </div>
         </Col>
       </Row>
 
