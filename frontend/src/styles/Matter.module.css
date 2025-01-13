@@ -20,6 +20,10 @@
   color: rgb(215, 215, 215);
 }
 
+.statusIcon:hover {
+  color: #da9f1d;
+}
+
 /* ---- Status Dropdown Styling ---- */
 .dropdownMenu {
   position: absolute;

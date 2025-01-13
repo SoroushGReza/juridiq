@@ -1,14 +1,14 @@
 import React from "react";
 
 // Icons & Translations for status
-const statusIcons = {
+export const statusIcons = {
   Pending: "⏳",
   Ongoing: "⚙️",
   Completed: "✅",
   Cancelled: "❌",
 };
 
-const statusTranslations = {
+export const statusTranslations = {
   Pending: "I kö",
   Ongoing: "Pågående",
   Completed: "Klar",

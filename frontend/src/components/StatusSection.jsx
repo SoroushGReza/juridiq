@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../styles/Matter.module.css";
 import Status from "./Status";
 import { axiosReq } from "../api/axiosDefaults";
+import { statusTranslations, statusIcons } from "./Status";
 
 const StatusSection = ({
   matter,
@@ -10,16 +11,32 @@ const StatusSection = ({
   setEditingSection,
   onStatusChange,
 }) => {
+  const dropdownRef = useRef(null);
+
   const handleStatusUpdate = async (status) => {
     await axiosReq.patch(`/matters/${matter.id}/`, { status });
     onStatusChange(status);
     setEditingSection(null);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setEditingSection(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setEditingSection]);
+
   return (
     <div className={`${styles.statusCol} d-flex justify-content-start`}>
       {isAdmin ? (
-        <div className="position-relative">
+        <div className="position-relative" ref={dropdownRef}>
           <p
             className={`${styles.status} text-center mt-4`}
             onClick={() =>
@@ -30,23 +47,30 @@ const StatusSection = ({
           >
             <span className="fw-bold">Status: </span>
             <Status status={matter.status} />{" "}
-            <i className="fas fa-chevron-down ms-2"></i>
+            <i 
+            className={`${styles.statusIcon} fas fa-chevron-down ms-2`}></i>
           </p>
 
           {editingSection === "status" && (
             <div className={`${styles.dropdownMenu}`}>
-              {["Pending", "Ongoing", "Completed", "Cancelled"].map(
-                (status) => (
+              {Object.entries(statusTranslations).map(
+                ([statusKey, statusValue]) => (
                   <p
-                    key={status}
-                    onClick={() => handleStatusUpdate(status)}
+                    key={statusKey}
+                    onClick={() => handleStatusUpdate(statusKey)}
                     className={
-                      status === matter.status
+                      statusKey === matter.status
                         ? `${styles.activeItem}`
                         : undefined
                     }
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
                   >
-                    {status}
+                    <span>{statusIcons[statusKey]}</span>
+                    {statusValue}
                   </p>
                 )
               )}
