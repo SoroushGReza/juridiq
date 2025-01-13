@@ -21,9 +21,8 @@ A user-friendly website built with Django REST Framework (DRF) and React, design
 ## Prerequisites
  - Python 3.9+
  - Node.js (LTS recommended, e.g. Node 20)
-Setup
 
-## Backend (Django & DRF)
+## Backend Setup (Django & DRF)
 1. Create a virtual environment: <br>
 `python -m venv venv`
 2. Activate the virtual enviroment (windows): <br>
