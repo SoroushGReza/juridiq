@@ -62,13 +62,13 @@
 }
 /* ----------------------------------------------------------------- */
 
+/* ------- Preview of list of files ------- */
 .fileList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   justify-content: center;
 }
-
 
 .filePreview {
   position: relative;
@@ -80,7 +80,9 @@
   background-color: #f4f4f4;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+/* ---------------------------------------- */
 
+/* ---- Image Preview ---- */
 .imagePreview {
   width: 100%;
   height: 100%;
@@ -90,6 +92,7 @@
   background-color: #fff;
 }
 
+/* ---- PDF Preview ---- */
 .pdfPreview {
   width: 100%;
   height: 100%;
@@ -99,6 +102,7 @@
   border-radius: 10px;
 }
 
+/* ---- TXT Preview ---- */
 .txtPreview {
   display: flex;
   justify-content: center;
@@ -117,6 +121,7 @@
   box-sizing: border-box;
 }
 
+/* ---- Unsupported file ---- */
 .unsupportedFile {
   display: flex;
   justify-content: center;
@@ -130,6 +135,7 @@
   border-radius: 5px;
 }
 
+/* ---- When there is no files ---- */
 .noFiles {
   text-align: start;
   margin-left: 15px;
@@ -213,3 +219,4 @@
 .openButton.dark:hover {
   background-color: white;
 }
+/* ----------------------------------------------- */
