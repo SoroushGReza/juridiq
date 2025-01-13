@@ -227,7 +227,7 @@ const Matter = () => {
       <Row className="mt-3">
         <Col className="justify-content-center d-flex">
           <Button
-            className={`me-2 ${styles.updateBtn}`}
+            className={`me-3 ${styles.updateBtn}`}
             variant="primary"
             onClick={() => setShowEditModal(true)}
           >

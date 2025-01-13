@@ -100,6 +100,35 @@
   outline: none;
 }
 
+/* ------ Edit Button ------ */
+.updateBtn {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: rgb(12, 12, 161);
+  border: none;
+  padding: 10px 50px;
+  font-size: 17px;
+}
+
+.updateBtn:hover {
+  background-color: rgb(68, 68, 182);
+  color: #c2c2c2;
+}
+
+/* ------ Delete Button ------ */
+.deleteBtn {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: rgb(141, 11, 11);
+  border: none;
+  padding: 10px 50px;
+  font-size: 17px;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(182, 68, 68);
+  color: #c2c2c2;
+}
+
+
 /* ------------------------------------------ DARK MODE ------------------------------------------ */
 
 /* ---- Dark page container ---- */
