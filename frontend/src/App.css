@@ -4,12 +4,24 @@ body {
   padding: 0;
   height: 100%;
   overflow-x: hidden;
+  overflow: -moz-scrollbars-none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar but makes page scrollable */
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari och Edge */
 }
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.navbar {
+  z-index: 999;
 }
 
 .main-content {
