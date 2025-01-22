@@ -105,16 +105,16 @@
 }
 
 /* ------ Edit Button ------ */
-.updateBtn {
+.backBtn {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: rgb(12, 12, 161);
+  background-color: rgb(86, 86, 86);
   border: none;
   padding: 10px 50px;
   font-size: 17px;
 }
 
-.updateBtn:hover {
-  background-color: rgb(68, 68, 182);
+.backBtn:hover {
+  background-color: rgb(63, 63, 63);
   color: #c2c2c2;
 }
 

@@ -11,6 +11,12 @@
   border-radius: 8px;
 }
 
+/* Focus styling */
+.input:focus {
+  border: 2px solid #a0882b; 
+  box-shadow: 0 0 5px #a0882b;
+}
+
 /* Dark mode styling */
 .darkInlineEdit {
   border: none;
@@ -18,6 +24,12 @@
 
 .darkInput {
   background-color: #444;
+  color: #fff;
+  border: none;
+}
+
+.darkInput:focus {
+  background-color: #333333;
   color: #fff;
   border: none;
 }
