@@ -23,7 +23,9 @@ const StatusSection = ({
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setEditingSection(null);
+        if (editingSection === "status") {
+          setEditingSection(null);
+        }
       }
     };
 
@@ -31,7 +33,7 @@ const StatusSection = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [setEditingSection]);
+  }, [editingSection, setEditingSection]);
 
   return (
     <div className={`${styles.statusCol} d-flex justify-content-start`}>
@@ -47,8 +49,7 @@ const StatusSection = ({
           >
             <span className="fw-bold">Status: </span>
             <Status status={matter.status} />{" "}
-            <i 
-            className={`${styles.statusIcon} fas fa-chevron-down ms-2`}></i>
+            <i className={`${styles.statusIcon} fas fa-chevron-down ms-2`}></i>
           </p>
 
           {editingSection === "status" && (
