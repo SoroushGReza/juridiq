@@ -205,7 +205,7 @@ const Matter = () => {
 
       {/* Divider Line */}
       <div className={`${styles.dividerLine} mx-auto`}></div>
-      
+
       {/* Notes */}
       <Row className="mb-4">
         <Col lg={12} md={12} sm={12} xs={12} className="align-self-start">
@@ -227,11 +227,11 @@ const Matter = () => {
       <Row className="mt-3">
         <Col className="justify-content-center d-flex">
           <Button
-            className={`me-3 ${styles.updateBtn}`}
-            variant="primary"
-            onClick={() => setShowEditModal(true)}
+            className={`${styles.backBtn} me-3`}
+            variant="secondary"
+            onClick={() => navigate("/user-matters")}
           >
-            Ändra
+            Tillbaka
           </Button>
           <Button
             className={styles.deleteBtn}
