@@ -71,21 +71,21 @@ axiosReq.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refresh");
+        if (!refreshToken) throw new Error("No refresh token available");
+
         const { data } = await axios.post("/auth/token/refresh/", {
           refresh: refreshToken,
         });
-
         localStorage.setItem("access", data.access);
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${data.access}`;
-
         return axiosReq(originalRequest);
       } catch (refreshError) {
-        console.error("Failed to refresh token", refreshError);
+        console.error("Failed to refresh token:", refreshError);
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
-        window.location.href = "/login";
+        return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);
