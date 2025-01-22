@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 function App() {
   return (
     <Router>
-      <NavBar />
+      <NavBar className="navbar"/>
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,0 +1,172 @@
+/* ---------- Container ---------- */
+.profileContainer {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Profile Background Image ---------- */
+.profileBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; 
+  height: 100vh; 
+  background-image: url("../assets/images/profileBG.svg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- BG Overlay ---- */
+.profileBackground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1; 
+}
+
+/* ---------- Form Wrapper ---------- */
+.formWrapper {
+  border-radius: 10px;
+  box-shadow: 0 1px 12px rgba(158, 158, 158, 0.178);
+  width: 100%;
+  margin: 20px 0;
+}
+
+/* ---------- Form Col ---------- */
+
+.formCol {
+  position: relative;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ---------- Page Header ---------- */
+.pageHeader {
+  color: rgb(183, 153, 7);
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
+  font-size: 3.8rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgb(62, 62, 62);
+}
+
+/* ---------- Profile Form ---------- */
+.profileForm {
+  background-color: #21262b91;
+  padding: 20px 30px;
+  border-radius: 10px;
+  border: 5px inset rgba(145, 129, 81, 0.062);
+}
+
+/* ---------- Form Header ---------- */
+
+.formHeader {
+  font-family: "MouldyCheeseRegular", "adventpro-regular" !important;
+  color: rgb(255, 255, 255);
+  letter-spacing: 1px;
+  font-size: 190%;
+}
+
+/* ---------- Form Label ---------- */
+.formLabel {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-weight: 400;
+  color: bisque;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 24px !important;
+}
+
+/* ---------- Form Input ---------- */
+.formInput {
+  margin-top: 0 !important;
+  margin-bottom: 7px;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 21px !important;
+  color: black !important;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.formInput:focus {
+  border-color: #ffb700 !important;
+  box-shadow: 0 0 5px rgba(255, 213, 0, 0.705) !important;
+}
+
+/* ---------- Update Profile Button ---------- */
+.updateProfileButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #3563ae !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.updateProfileButton:hover {
+  background-color: #2b508d !important;
+}
+
+/* ---------- Update Password Button ---------- */
+.updatePasswordButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #aea635 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.updatePasswordButton:hover {
+  background-color: #8b852a !important;
+}
+
+/* ---------- Delete Account Button ---------- */
+.deleteAccountParagraph {
+  font-family: "adventpro-regular" !important;
+  font-size: 21px;
+  font-weight: 400;
+  color: bisque;
+}
+
+.deleteAccountButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #ae3535 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 25px !important;
+  width: 100% !important;
+}
+
+.deleteAccountButton:hover {
+  background-color: #902c2c !important;
+}

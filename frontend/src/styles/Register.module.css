@@ -32,14 +32,14 @@ html {
 }
 
 .formHeader {
-  font-family: "MouldyCheeseRegular", sans-serif !important;
+  font-family: "MouldyCheeseRegular", "adventpro-regular" !important;
   color: antiquewhite;
   letter-spacing: 1px;
   font-size: 210%;
 }
 
 .customLabel {
-  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
   font-weight: 400;
   color: bisque;
   margin: 0 !important;
@@ -50,7 +50,7 @@ html {
 .customInput {
   margin-top: 0 !important;
   margin-bottom: 7px;
-  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
   font-size: 21px !important;
   color: black !important;
   font-weight: 600;
@@ -63,7 +63,7 @@ html {
 }
 
 .customBtn {
-  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
   font-size: 24px !important;
   font-weight: 700;
   letter-spacing: 2px;
@@ -82,7 +82,7 @@ html {
 }
 
 .textAndLink {
-  font-family: "Alumni Sans Pinstripe", sans-serif !important;
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
