@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
 import LoginImg from "../assets/images/login.png";
 
@@ -33,13 +33,14 @@ const Login = () => {
       setAuthHeader();
       // Redirect after successful login to the home page
       navigate("/");
+      setTimeout(() => window.location.reload(), 0);
       // Reload the page to re-initialize application state
-      window.location.reload();
     } catch (error) {
       if (error.response?.data) {
         setErrors({ ...error.response.data });
       } else {
-        console.error("An unexpected error occurred:", error);
+        console.error("Unexpected error:", error.message);
+        setErrors({ message: "Fel E-post eller Lösenord angivet. Försök igen." });
       }
     }
   };
@@ -56,7 +57,9 @@ const Login = () => {
         >
           <div className={styles.formWrapper}>
             <Form onSubmit={handleSubmit}>
-              <h1 className={`${styles["formHeader"]} text-center`}>Logga in</h1>
+              <h1 className={`${styles["formHeader"]} text-center`}>
+                Logga in
+              </h1>
               <Form.Group className="mt-4" controlId="formEmail">
                 <Form.Label className={`${styles["customLabel"]} text-start`}>
                   E-post
@@ -106,13 +109,6 @@ const Login = () => {
               </p>
             </Form>
           </div>
-          {Object.keys(errors).length > 0 && (
-            <Alert variant="danger" className="mt-3">
-              {errors.message
-                ? errors.message
-                : "Please check the form for errors."}
-            </Alert>
-          )}
         </Col>
       </Row>
       {/* Login Image */}

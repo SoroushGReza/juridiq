@@ -170,6 +170,12 @@ const Register = () => {
                 </Form.Control.Feedback>
               </Form.Group>
 
+              {Object.keys(errors).length > 0 && (
+                <Alert variant="danger" className="mt-4">
+                  Kontrollera errors i formuläret.
+                </Alert>
+              )}
+
               <Button
                 variant="primary"
                 type="submit"
@@ -183,11 +189,6 @@ const Register = () => {
               </p>
             </Form>
           </div>
-          {Object.keys(errors).length > 0 && (
-            <Alert variant="danger" className="mt-3">
-              Please check the form for errors.
-            </Alert>
-          )}
         </Col>
       </Row>
       <img src={RegisterImg} alt="Login" className={styles.registerImage} />
