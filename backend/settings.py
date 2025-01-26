@@ -75,8 +75,10 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework.authtoken",
     "rest_framework",
+    # Custom Apps
     "accounts",
     "matters",
+    "payments",
 ]
 
 SITE_ID = 1
@@ -202,7 +204,7 @@ STATIC_URL = "static/"
 # Media Management
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-X_FRAME_OPTIONS = 'ALLOWALL'
+X_FRAME_OPTIONS = "ALLOWALL"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
