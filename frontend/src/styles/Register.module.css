@@ -112,7 +112,58 @@ html {
   pointer-events: none;
 }
 
-/* Register Page Image */
+/* Register Page Logo Images */
+.LogoImage {
+  position: absolute;
+  top: 10%;
+  left: 3%;
+  width: 200px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+.LogoImage2 {
+  position: absolute;
+  top: 30%;
+  right: 7%;
+  width: 150px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+.LogoImage3 {
+  position: absolute;
+  top: 45%;
+  left: 2%;
+  width: 100px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+.LogoImage4 {
+  position: absolute;
+  top: 5%;
+  right: 7%;
+  width: 80px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+.LogoImage5 {
+  position: absolute;
+  bottom: 15%;
+  left: 13%;
+  width: 100px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.04;
+}
+
+/* Register Page Bottom Image */
 .registerImage {
   position: absolute;
   bottom: 0;

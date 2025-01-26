@@ -46,6 +46,9 @@ const NavBar = () => {
                 <Nav.Link as={NavLink} to="/about" className={`${styles["navBarLinks"]}`}>
                   Om oss
                 </Nav.Link>
+                <Nav.Link as={NavLink} to="/prices" className={`${styles["navBarLinks"]}`}>
+                  Priser
+                </Nav.Link>
                 <Nav.Link onClick={handleLogout} className={`${styles["navBarLinks"]}`}>Logga ut</Nav.Link>
               </>
             ) : (
@@ -61,6 +64,9 @@ const NavBar = () => {
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/about" className={`${styles["navBarLinks"]}`}>
                   Om oss
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/prices" className={`${styles["navBarLinks"]}`}>
+                  Priser
                 </Nav.Link>
               </>
             )}

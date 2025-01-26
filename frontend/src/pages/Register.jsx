@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/Register.module.css";
 import RegisterImg from "../assets/images/register.png";
+import LOGO from "../assets/images/LOGO.svg";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +50,12 @@ const Register = () => {
 
   return (
     <Container fluid className={styles.registerContainer}>
+      {/* ------------- Logo Images -------------  */}
+      <img src={LOGO} alt="Logo Image" className={styles.LogoImage} />
+      <img src={LOGO} alt="Logo Image" className={styles.LogoImage2} />
+      <img src={LOGO} alt="Logo Image" className={styles.LogoImage3} />
+      <img src={LOGO} alt="Logo Image" className={styles.LogoImage4} />
+      <img src={LOGO} alt="Logo Image" className={styles.LogoImage5} />
       <Row className="justify-content-center mt-3 mb-3">
         <Col
           xs={12}
