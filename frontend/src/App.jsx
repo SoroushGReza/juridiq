@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import UserMatters from "./components/UserMatters";
 import Matter from "./pages/Matter";
 import Profile from "./pages/Profile";
+import Price from "./pages/Price";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/user-matters" element={<UserMatters />} />
           <Route path="/matters/:id" element={<Matter />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/prices" element={<Price />} />
         </Routes>
       </div>
       <Footer />
