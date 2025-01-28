@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http import HttpResponse
+from payments.views import stripe_webhook
+
 # from django.views.generic import TemplateView
 
 
@@ -11,7 +13,7 @@ urlpatterns = [
     # path("", TemplateView.as_view(template_name="index.html")),
     path("secure-admin/", admin.site.urls),  # Admin Panel
     path("api/accounts/", include("accounts.urls")),
-    path('api/matters/', include('matters.urls')),
+    path("api/matters/", include("matters.urls")),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
@@ -23,6 +25,8 @@ urlpatterns = [
     path(
         "api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
     ),  # JWT Token refresh
+    path("api/payments/webhook/", stripe_webhook, name="stripe_webhook"),
+    path("api/payments/", include("payments.urls")),
 ]
 
 if settings.DEBUG:

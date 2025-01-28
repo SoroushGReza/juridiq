@@ -44,7 +44,7 @@ ip_host = f"http://{parsed_url.hostname}:5173"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEVELOPMENT") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", parsed_url.hostname]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".ngrok-free.app", parsed_url.hostname]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
