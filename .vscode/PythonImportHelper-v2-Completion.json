@@ -353,6 +353,14 @@
         "documentation": {}
     },
     {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "get_user_model",
         "importPath": "django.contrib.auth",
         "description": "django.contrib.auth",
@@ -470,6 +478,22 @@
         "description": "rest_framework.permissions",
         "isExtraImport": true,
         "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "IsAuthenticated",
+        "importPath": "rest_framework.permissions",
+        "description": "rest_framework.permissions",
+        "isExtraImport": true,
+        "detail": "rest_framework.permissions",
+        "documentation": {}
+    },
+    {
+        "label": "APIView",
+        "importPath": "rest_framework.views",
+        "description": "rest_framework.views",
+        "isExtraImport": true,
+        "detail": "rest_framework.views",
         "documentation": {}
     },
     {
@@ -652,7 +676,23 @@
         "documentation": {}
     },
     {
+        "label": "PaymentViewSet",
+        "importPath": "payments.views",
+        "description": "payments.views",
+        "isExtraImport": true,
+        "detail": "payments.views",
+        "documentation": {}
+    },
+    {
         "label": "stripe_webhook",
+        "importPath": "payments.views",
+        "description": "payments.views",
+        "isExtraImport": true,
+        "detail": "payments.views",
+        "documentation": {}
+    },
+    {
+        "label": "PaymentCreateView",
         "importPath": "payments.views",
         "description": "payments.views",
         "isExtraImport": true,
@@ -783,19 +823,19 @@
         "documentation": {}
     },
     {
+        "label": "DefaultRouter",
+        "importPath": "rest_framework.routers",
+        "description": "rest_framework.routers",
+        "isExtraImport": true,
+        "detail": "rest_framework.routers",
+        "documentation": {}
+    },
+    {
         "label": "PaymentSerializer",
         "importPath": "payments.serializers",
         "description": "payments.serializers",
         "isExtraImport": true,
         "detail": "payments.serializers",
-        "documentation": {}
-    },
-    {
-        "label": "action",
-        "importPath": "rest_framework.decorators",
-        "description": "rest_framework.decorators",
-        "isExtraImport": true,
-        "detail": "rest_framework.decorators",
         "documentation": {}
     },
     {
@@ -813,6 +853,14 @@
         "description": "django.views.decorators.csrf",
         "isExtraImport": true,
         "detail": "django.views.decorators.csrf",
+        "documentation": {}
+    },
+    {
+        "label": "action",
+        "importPath": "rest_framework.decorators",
+        "description": "rest_framework.decorators",
+        "isExtraImport": true,
+        "detail": "rest_framework.decorators",
         "documentation": {}
     },
     {
@@ -1693,8 +1741,26 @@
         "kind": 5,
         "importPath": "payments.urls",
         "description": "payments.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"api/payments/webhook/\", stripe_webhook, name=\"stripe_webhook\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"webhook/\", stripe_webhook, name=\"stripe_webhook\"),\n    path(\"create/<int:matter_id>/\", PaymentCreateView.as_view(), name=\"create_payment\"),\n]\n# 2) DRF Router approach (concise, automatically creates list/retrieve/etc.)\nrouter = DefaultRouter()\nrouter.register(r\"\", PaymentViewSet, basename=\"payment\")\n# Combine both sets of URL patterns\nurlpatterns += router.urls",
         "detail": "payments.urls",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "payments.urls",
+        "description": "payments.urls",
+        "peekOfCode": "router = DefaultRouter()\nrouter.register(r\"\", PaymentViewSet, basename=\"payment\")\n# Combine both sets of URL patterns\nurlpatterns += router.urls",
+        "detail": "payments.urls",
+        "documentation": {}
+    },
+    {
+        "label": "PaymentCreateView",
+        "kind": 6,
+        "importPath": "payments.views",
+        "description": "payments.views",
+        "peekOfCode": "class PaymentCreateView(APIView):\n    permission_classes = [permissions.IsAuthenticated]\n    def post(self, request, matter_id, *args, **kwargs):\n        if not request.user.is_staff:\n            raise PermissionDenied(\"Endast admin kan skapa betalningar.\")\n        amount = request.data.get(\"amount\")\n        if not amount:\n            return Response(\n                {\"error\": \"Belopp är obligatoriskt.\"},\n                status=status.HTTP_400_BAD_REQUEST,",
+        "detail": "payments.views",
         "documentation": {}
     },
     {
@@ -1702,7 +1768,7 @@
         "kind": 6,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "class IsAdminOrReadOwn(permissions.BasePermission):\n    def has_permission(self, request, view):\n        if request.user.is_staff:\n            return True\n        return request.method in permissions.SAFE_METHODS\n    def has_object_permission(self, request, view, obj):\n        if request.user.is_staff:\n            return True\n        return (\n            obj.user == request.user",
+        "peekOfCode": "class IsAdminOrReadOwn(permissions.BasePermission):\n    def has_permission(self, request, view):\n        if request.user.is_staff:\n            return True\n        return request.method in permissions.SAFE_METHODS\n    def has_object_permission(self, request, view, obj):\n        if request.user.is_staff:\n            return True\n        return obj.user == request.user\nclass PaymentViewSet(viewsets.ModelViewSet):",
         "detail": "payments.views",
         "documentation": {}
     },
@@ -1711,7 +1777,7 @@
         "kind": 6,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "class PaymentViewSet(viewsets.ModelViewSet):\n    serializer_class = PaymentSerializer\n    permission_classes = [IsAdminOrReadOwn]\n    def get_queryset(self):\n        # If admin, return all payments, else only user own payments\n        if self.request.user.is_staff:\n            return Payment.objects.all()\n        return Payment.objects.filter(user=self.request.user)\n    def perform_create(self, serializer):\n        # Only admins allowed to create payments",
+        "peekOfCode": "class PaymentViewSet(viewsets.ModelViewSet):\n    serializer_class = PaymentSerializer\n    permission_classes = [IsAuthenticated]\n    def get_queryset(self):\n        if self.request.user.is_staff:\n            return Payment.objects.all()\n        return Payment.objects.filter(user=self.request.user)\n    @action(detail=True, methods=[\"post\"], permission_classes=[IsAuthenticated])\n    def create_checkout_session(self, request, pk=None):\n        payment = self.get_object()",
         "detail": "payments.views",
         "documentation": {}
     },
@@ -1720,7 +1786,7 @@
         "kind": 2,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "def stripe_webhook(request):\n    print(\"Webhook hit!\")  # Log when webhook is hit\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        # Verify incoming event with webhook signature\n        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)\n        print(f\"Webhook event type: {event['type']}\")  # Log event type\n    except ValueError:\n        # If the payload is invalid",
+        "peekOfCode": "def stripe_webhook(request):\n    print(\"Webhook hit!\")\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)\n        print(f\"Webhook event type: {event['type']}\")\n    except ValueError:\n        print(\"Invalid payload\")\n        return HttpResponseBadRequest(\"Invalid payload\")",
         "detail": "payments.views",
         "documentation": {}
     },
@@ -1729,7 +1795,7 @@
         "kind": 2,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "def handle_checkout_session_completed(session):\n    # Get Stripe payment ID\n    stripe_payment_id = session.get(\"payment_intent\")\n    # Get user & matter information from session metadata\n    user_id = session.get(\"client_reference_id\")  # User ID from Stripe session\n    matter_id = session.get(\"metadata\", {}).get(\"matter_id\")  # Matter ID from metadata\n    # Retrieve user & matter from database based on IDs\n    user = CustomUser.objects.filter(id=user_id).first()\n    matter = Matter.objects.filter(id=matter_id).first()\n    if not user or not matter:",
+        "peekOfCode": "def handle_checkout_session_completed(session):\n    stripe_payment_id = session.get(\"payment_intent\")\n    user_id = session.get(\"client_reference_id\")\n    matter_id = session.get(\"metadata\", {}).get(\"matter_id\")\n    user = CustomUser.objects.filter(id=user_id).first()\n    matter = Matter.objects.filter(id=matter_id).first()\n    if not user or not matter:\n        print(\"No user or matter available to create payment.\")\n        return\n    payment, created = Payment.objects.get_or_create(",
         "detail": "payments.views",
         "documentation": {}
     },
@@ -1738,7 +1804,7 @@
         "kind": 5,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "stripe.api_key = os.getenv(\"STRIPE_SECRET_KEY\")\nendpoint_secret = os.getenv(\"STRIPE_WEBHOOK_SECRET\")\n# Stripe Webhook to processes incoming webhook events\n@csrf_exempt\ndef stripe_webhook(request):\n    print(\"Webhook hit!\")  # Log when webhook is hit\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        # Verify incoming event with webhook signature",
+        "peekOfCode": "stripe.api_key = os.getenv(\"STRIPE_SECRET_KEY\")\nendpoint_secret = os.getenv(\"STRIPE_WEBHOOK_SECRET\")\n@csrf_exempt\ndef stripe_webhook(request):\n    print(\"Webhook hit!\")\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)\n        print(f\"Webhook event type: {event['type']}\")",
         "detail": "payments.views",
         "documentation": {}
     },
@@ -1747,7 +1813,7 @@
         "kind": 5,
         "importPath": "payments.views",
         "description": "payments.views",
-        "peekOfCode": "endpoint_secret = os.getenv(\"STRIPE_WEBHOOK_SECRET\")\n# Stripe Webhook to processes incoming webhook events\n@csrf_exempt\ndef stripe_webhook(request):\n    print(\"Webhook hit!\")  # Log when webhook is hit\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        # Verify incoming event with webhook signature\n        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)",
+        "peekOfCode": "endpoint_secret = os.getenv(\"STRIPE_WEBHOOK_SECRET\")\n@csrf_exempt\ndef stripe_webhook(request):\n    print(\"Webhook hit!\")\n    payload = request.body\n    sig_header = request.headers.get(\"Stripe-Signature\")\n    try:\n        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)\n        print(f\"Webhook event type: {event['type']}\")\n    except ValueError:",
         "detail": "payments.views",
         "documentation": {}
     },
