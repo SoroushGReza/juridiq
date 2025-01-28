@@ -26,6 +26,7 @@ urlpatterns = [
         "api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
     ),  # JWT Token refresh
     path("api/payments/webhook/", stripe_webhook, name="stripe_webhook"),
+    path("api/payments/", include("payments.urls")),
 ]
 
 if settings.DEBUG:
