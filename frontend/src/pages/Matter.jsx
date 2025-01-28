@@ -15,12 +15,13 @@ import TitleSection from "../components/TitleSection";
 import DescriptionSection from "../components/DescriptionSection";
 import NotesSection from "../components/NotesSection";
 import FilesSection from "../components/FilesSection";
+import PaymentButton from "../components/PaymentButton";
 
 const Matter = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [matter, setMatter] = useState(null);
-  const { isAdmin } = useAuthStatus();
+  const { isAdmin, userId } = useAuthStatus();
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -137,6 +138,11 @@ const Matter = () => {
             setEditingSection={setEditingSection}
             onStatusChange={handleStatusChange}
           />
+        </Col>
+
+        {/* Payment Button */}
+        <Col className="d-flex justify-content-end mt-4 me-3 text-center">
+          <PaymentButton />
         </Col>
 
         {/* Page Theme */}
