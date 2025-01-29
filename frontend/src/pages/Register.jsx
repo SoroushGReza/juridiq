@@ -81,6 +81,8 @@ const Register = () => {
                   isInvalid={!!errors.email}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="username"
+
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -135,6 +137,7 @@ const Register = () => {
                   isInvalid={!!errors.phone_number}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="tel"
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.phone_number}
@@ -153,6 +156,7 @@ const Register = () => {
                   isInvalid={!!errors.password}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="new-password"
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.password}
@@ -171,6 +175,7 @@ const Register = () => {
                   isInvalid={!!errors.password2}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="new-password"
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.password2}
