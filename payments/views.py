@@ -175,10 +175,17 @@ class PaymentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # If admin, return all payments, else only user own payments
-        if self.request.user.is_staff:
-            return Payment.objects.all()
-        return Payment.objects.filter(user=self.request.user)
+        queryset = Payment.objects.all()
+
+        matter_id = self.request.query_params.get("matter", None)
+        if matter_id:
+            queryset = queryset.filter(matter_id=matter_id)
+
+        # If not admin, show only logged in user's payments
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(user=self.request.user)
+
+        return queryset
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def create_checkout_session(self, request, pk=None):
