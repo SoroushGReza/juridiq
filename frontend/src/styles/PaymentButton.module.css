@@ -1,0 +1,77 @@
+/* ---- Request Payment BTN (ADMIN) ---- */
+.adminBtns {
+  height: 50px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e1960d;
+  border: none;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 10px 25px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 17px;
+}
+
+.adminBtns:hover {
+  background-color: #ffab0f;
+  color: black;
+}
+
+/* ---- Payment Requested BTN (ADMIN) ---- */
+.adminBtns:disabled {
+  background-color: #0a3d00;
+  padding: 10px 25px;
+  height: 50px;
+  color: rgb(212, 212, 212);
+  border-radius: 5px;
+  font-weight: 100;
+}
+
+/* ---- Paid ADMIN & USER ---- */
+.paidContainer {
+  height: 50px;
+  padding: 10px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  border-radius: 5px;
+  background-color: rgb(15, 152, 2) !important;
+  border: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 17px;
+}
+
+.paidIcon {
+  font-size: 17px;
+  color: white;
+  padding-left: 7px;
+}
+
+.paidText {
+  font-size: 17px;
+}
+
+/* ---- Pay Button (USER) ---- */
+.payBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #008910;
+  border: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 10px 50px;
+  font-size: 17px;
+}
+
+.payBtn:hover {
+    background-color: #01650d;
+  }
+
+.payBtn:disabled {
+    background-color: #004308;
+    border-radius: 5px;
+    font-weight: 400;
+}

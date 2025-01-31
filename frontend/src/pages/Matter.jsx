@@ -140,11 +140,6 @@ const Matter = () => {
           />
         </Col>
 
-        {/* Payment Button */}
-        <Col className="d-flex justify-content-end mt-4 me-3 text-center">
-          <PaymentButton />
-        </Col>
-
         {/* Page Theme */}
         <Col className="d-flex justify-content-end mt-4 me-3">
           <Button
@@ -231,7 +226,9 @@ const Matter = () => {
 
       {/* Action Buttons */}
       <Row className="mt-3">
-        <Col className="justify-content-center d-flex">
+        <Col className={`d-flex justify-content-center ${styles.buttonGroup}`}>
+          {/* Payment Button */}
+          <PaymentButton />
           <Button
             className={`${styles.backBtn} me-3`}
             variant="secondary"
