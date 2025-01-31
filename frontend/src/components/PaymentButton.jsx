@@ -3,6 +3,9 @@ import { Button, Alert } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
 import { useParams, useNavigate } from "react-router-dom";
 import useAuthStatus from "../hooks/useAuthStatus";
+import styles from "../styles/PaymentButton.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 const PaymentButton = () => {
   const { id } = useParams(); // Matter ID
@@ -52,16 +55,25 @@ const PaymentButton = () => {
 
   if (loading)
     return (
-      <Button variant="secondary" disabled>
+      <Button className={styles.button} variant="secondary" disabled>
         Laddar...
       </Button>
     );
   if (error) return <Alert variant="danger">{error}</Alert>;
 
+  if (payment?.status === "paid") {
+    return (
+      <Button className={`${styles.paidContainer} me-3`}disabled>
+        Betald{" "}
+        <FontAwesomeIcon icon={faCheckCircle} className={styles.paidIcon} />
+      </Button>
+    );
+  }
+
   if (isAdmin) {
     return (
       <Button
-        variant="warning"
+        className={`${styles.adminBtns} me-3`}
         disabled={!!payment}
         onClick={handleRequestPayment}
       >
@@ -72,15 +84,15 @@ const PaymentButton = () => {
 
   if (payment && payment.status === "pending" && payment.user === userId) {
     return (
-      <Button variant="primary" onClick={handlePay}>
+      <Button className={`${styles.payBtn} me-3`} onClick={handlePay}>
         Betala
       </Button>
     );
   }
 
   return (
-    <Button variant="secondary" disabled>
-      {payment?.status === "paid" ? "Betald" : "Betala"}
+    <Button className={`${styles.payBtn}`} disabled>
+      Betala
     </Button>
   );
 };
