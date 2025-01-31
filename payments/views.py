@@ -103,10 +103,13 @@ class PaymentCreateView(APIView):
                 success_url="http://localhost:5173/success",
                 cancel_url="http://localhost:5173/cancel",
                 client_reference_id=str(matter.user.id),
-                metadata={"matter_id": str(matter.id)},
+                metadata={
+                    "matter_id": str(matter.id),
+                    "payment_id": str(payment.id),
+                },
             )
 
-            payment.stripe_payment_id = session.id
+            payment.stripe_payment_id = session["payment_intent"]
             payment.save()
 
             return Response(
@@ -122,36 +125,29 @@ class PaymentCreateView(APIView):
 
 def handle_checkout_session_completed(session):
     # Get Stripe payment ID
-    stripe_payment_id = session.get("payment_intent")
+    payment_id = session["metadata"].get("payment_id")
     # Get user & matter information from session metadata
+    payment_intent = session.get("payment_intent")
     user_id = session.get("client_reference_id")  # User ID from Stripe session
-    matter_id = session.get("metadata", {}).get("matter_id")  # Matter ID from metadata
-
+    matter_id = session["metadata"].get("matter_id")  # Matter ID from metadata
     # Retrieve user & matter from database based on IDs
     user = CustomUser.objects.filter(id=user_id).first()
     matter = Matter.objects.filter(id=matter_id).first()
-
     if not user or not matter:
         print("No user or matter available to create payment.")
         return
 
-    # Create or update payment record in database
-    payment, created = Payment.objects.get_or_create(
-        stripe_payment_id=stripe_payment_id,
-        defaults={
-            "user": user,  # Assign user to payment
-            "matter": matter,  # Assign matter to payment
-            "amount": session.get("amount_total", 0)
-            / 100,  # Convert amount to correct unit
-            "status": "paid",  # Set status to paid
-        },
-    )
-    if created:
-        print(f"New payment created: {payment}")
-    else:
-        payment.status = "paid"
-        payment.save()
-        print(f"Payment updated: {payment}")
+    try:
+        payment = Payment.objects.get(id=payment_id)
+    except Payment.DoesNotExist:
+        print(f"No Payment with id={payment_id} found.")
+        return
+
+    payment.status = "paid"
+    payment.stripe_payment_id = payment_intent
+    payment.save()
+
+    print(f"Payment updated: {payment}")
 
 
 # Allow access only to admins or the object owner
@@ -175,10 +171,17 @@ class PaymentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # If admin, return all payments, else only user own payments
-        if self.request.user.is_staff:
-            return Payment.objects.all()
-        return Payment.objects.filter(user=self.request.user)
+        queryset = Payment.objects.all()
+
+        matter_id = self.request.query_params.get("matter", None)
+        if matter_id:
+            queryset = queryset.filter(matter_id=matter_id)
+
+        # If not admin, show only logged in user's payments
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(user=self.request.user)
+
+        return queryset
 
     @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def create_checkout_session(self, request, pk=None):
@@ -209,7 +212,10 @@ class PaymentViewSet(viewsets.ModelViewSet):
                 success_url="http://localhost:5173/success",
                 cancel_url="http://localhost:5173/cancel",
                 client_reference_id=str(payment.user.id),
-                metadata={"matter_id": str(payment.matter.id)},
+                metadata={
+                    "matter_id": str(payment.matter.id),
+                    "payment_id": str(payment.id),
+                },
             )
 
             return Response({"url": session.url}, status=status.HTTP_200_OK)
