@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
+import styles from "../styles/AdminCreatePayment.module.css";
+import stylesFromProfile from "../styles/Profile.module.css";
+import stripeLogo from "../assets/images/stripe.svg";
 
 const AdminCreatePayment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const matterId = searchParams.get("matter_id"); // Get matter_id from URL
+  const matterId = searchParams.get("matter_id");
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -23,7 +27,6 @@ const AdminCreatePayment = () => {
     }
 
     try {
-      // Check if a payment already exists
       const { data: payments } = await axiosReq.get(
         `/payments/?matter=${matterId}`
       );
@@ -38,14 +41,11 @@ const AdminCreatePayment = () => {
         return;
       }
 
-      // Create payment
       await axiosReq.post(`/payments/create/${matterId}/`, {
         amount: parseFloat(amount),
       });
 
       setSuccess("Betalningsbegäran skapad!");
-
-      // Update localStorage to disable the button
       localStorage.setItem(`payment_status_${matterId}`, "pending");
 
       setTimeout(() => {
@@ -57,21 +57,61 @@ const AdminCreatePayment = () => {
   };
 
   return (
-    <div>
-      <h2>Skapa Betalning</h2>
+    <Container fluid className={styles.paymentContainer}>
+      {/* --------------- Background Image --------------- */}
+      <div className={styles.paymentBackground}></div>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
+      <Row className="justify-content-center">
+        <Col
+          xs={9}
+          md={6}
+          lg={5}
+          xl={4}
+          className={`${styles.formCol} mt-4 mb-4`}
+        >
+          <h1 className={`${styles.pageHeader} text-center mb-4`}>
+            Begär Betalning
+          </h1>
+          {/* Success Massage */}
+          {success && <Alert variant="success">{success}</Alert>}
+          
+          <div className={stylesFromProfile.formWrapper}>
+            <Form className={`${stylesFromProfile.profileForm}`}>
+              {/* Stripe Payment Methods Image */}
+              <div className="text-center mb-3">
+                <img
+                  src={stripeLogo}
+                  alt="Stripe Logo"
+                  className={styles.stripeLogo}
+                />
+              </div>
+              <Form.Group className="mb-3">
+                <Form.Label className={`${stylesFromProfile.formLabel}`}>
+                  Ange Belopp (SEK)
+                </Form.Label>
+                <Form.Control
+                  className={`${stylesFromProfile.formInput}`}
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  isInvalid={!!error}
+                />
+                {error && (
+                  <Form.Text className="text-danger">{error}</Form.Text>
+                )}
+              </Form.Group>
 
-      <label>Belopp:</label>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-
-      <button onClick={handleCreatePayment}>Skapa Betalning</button>
-    </div>
+              <Button
+                className={`${styles.createPaymentButton} mb-3`}
+                onClick={handleCreatePayment}
+              >
+                Skapa Betalning
+              </Button>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
