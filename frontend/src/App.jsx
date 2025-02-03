@@ -15,6 +15,9 @@ import PaymentList from "./pages/PaymentList";
 import AdminCreatePayment from "./pages/AdminCreatePayment";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+// Cookie Banner & Policy Page
+import CookieBanner from "./components/CookieBanner";
+import CookiePolicy from "./pages/CookiePolicy";
 
 function App() {
   return (
@@ -36,8 +39,10 @@ function App() {
           />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
         </Routes>
       </div>
+      <CookieBanner />
       <Footer />
     </Router>
   );
