@@ -91,7 +91,7 @@ const PaymentButton = () => {
   }
 
   return (
-    <Button className={`${styles.payBtn}`} disabled>
+    <Button className={`${styles.payBtn} me-3`} disabled>
       Betala
     </Button>
   );

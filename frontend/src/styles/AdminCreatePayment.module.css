@@ -1,0 +1,73 @@
+.paymentBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../assets/images/darkwood.svg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- BG Overlay ---- */
+.paymentBackground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* ---- Stripe Payments Image ---- */
+.stripeLogo {
+  max-width: 140px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* ---------- Page Header ---------- */
+.pageHeader {
+  color: rgb(183, 153, 7);
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular";
+  font-size: 3.8rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgb(62, 62, 62);
+}
+
+.formCol {
+  z-index: 2;
+}
+
+/* ----- Create Payment Button ----- */
+.createPaymentButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #aea635 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  width: 100% !important;
+}
+
+.createPaymentButton:hover {
+  background-color: #8b852a !important;
+}
+
+/* -------------------- MEDIA QUERIES -------------------- */
+
+/* ---- Page Header ---- */
+@media (max-width: 408px) {
+  .pageHeader {
+    font-size: 3rem;
+  }
+}

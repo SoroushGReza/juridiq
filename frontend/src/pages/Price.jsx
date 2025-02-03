@@ -1,15 +1,15 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Price.module.css";
 
 const Price = () => {
   return (
-    <Container fluid className={`${styles.homeContainer} p-0`}>
-      <div className={styles.homeBackground}></div>
-      <div className={styles.homeContent}>
-        <Row className="text-center p-3 m-3">
+    <Container fluid className={`${styles.priceContainer} p-0`}>
+      <div className={styles.priceBackground}></div>
+      <div className={styles.priceContent}>
+        <Row className="text-center">
           <Col xs={12}>
-            <h1 className={styles.homeHeading}>Priser för våra tjänster</h1>
+            <h1 className={`${styles.priceHeading} p-0 mt-4`}>Våra Priser</h1>
           </Col>
         </Row>
         <Row className="g-3">

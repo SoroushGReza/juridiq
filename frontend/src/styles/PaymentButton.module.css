@@ -72,6 +72,7 @@
 
 .payBtn:disabled {
     background-color: #004308;
+    color: #686a69;
     border-radius: 5px;
     font-weight: 400;
 }
