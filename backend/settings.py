@@ -12,6 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.exists("env.py"):
     import env  # noqa F401
 
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
 # Use SQLite during Dvelopment
 if os.getenv("DJANGO_DEVELOPMENT") == "True":
     # Use SQLite
@@ -79,6 +87,7 @@ INSTALLED_APPS = [
     "accounts",
     "matters",
     "payments",
+    "contact",
 ]
 
 SITE_ID = 1
