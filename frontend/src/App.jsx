@@ -10,6 +10,7 @@ import UserMatters from "./components/UserMatters";
 import Matter from "./pages/Matter";
 import Profile from "./pages/Profile";
 import Price from "./pages/Price";
+import Contact from "./pages/Contact";
 // Payment components
 import PaymentList from "./pages/PaymentList";
 import AdminCreatePayment from "./pages/AdminCreatePayment";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/prices" element={<Price />} />
           <Route path="/payments" element={<PaymentList />} />
+          <Route path="/contact" element={<Contact />} />
           <Route
             path="/admin-create-payment"
             element={<AdminCreatePayment />}
