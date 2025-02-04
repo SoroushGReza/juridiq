@@ -27,6 +27,7 @@ urlpatterns = [
     ),  # JWT Token refresh
     path("api/payments/webhook/", stripe_webhook, name="stripe_webhook"),
     path("api/payments/", include("payments.urls")),
+    path("api/contact/", include("contact.urls")),
 ]
 
 if settings.DEBUG:
