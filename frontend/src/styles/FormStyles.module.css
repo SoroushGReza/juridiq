@@ -58,6 +58,13 @@
   font-size: 24px !important;
 }
 
+/* ----- Mandatory Field ----- */
+.labelSpan {
+  font-size: 1.35rem;
+  color: rgb(255, 0, 0);
+  font-weight: 600 !important;
+}
+
 /* ---------- Form Input ---------- */
 .formInput {
   margin-top: 0 !important;
