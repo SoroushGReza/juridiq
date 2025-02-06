@@ -99,7 +99,7 @@ function Contact() {
               </h1>
               <Form.Group className="mt-4" controlId="formFirstName">
                 <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
-                  Förnamn (obligatoriskt)
+                  Förnamn <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -113,7 +113,7 @@ function Contact() {
 
               <Form.Group className="mb-3" controlId="formLastName">
                 <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
-                  Efternamn (obligatoriskt)
+                  Efternamn <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -127,7 +127,7 @@ function Contact() {
 
               <Form.Group className="mb-3" controlId="formEmail">
                 <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
-                  E-post (obligatoriskt)
+                  E-post <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="email"
@@ -141,7 +141,7 @@ function Contact() {
 
               <Form.Group className="mb-3" controlId="formPhone">
                 <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
-                  Telefonnummer (valfritt)
+                  Telefonnummer
                 </Form.Label>
                 <Form.Control
                   type="tel"
@@ -154,7 +154,7 @@ function Contact() {
 
               <Form.Group className="mb-3" controlId="formMessage">
                 <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
-                  Meddelande
+                  Meddelande <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   as="textarea"
