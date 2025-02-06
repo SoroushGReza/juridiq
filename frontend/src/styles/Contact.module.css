@@ -1,0 +1,140 @@
+/* ---------- Profile Background Image ---------- */
+.contactBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../assets/images/contactbg.svg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ---- BG Overlay ---- */
+.contactBackground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* ---- Facebook Image ---- */
+.fbImage {
+  position: absolute;
+  background-color: url("../assets/images/facebook.png");
+  top: 20%;
+  right: 10%;
+  max-width: 10%;
+  z-index: 2;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+/* ---- Email Image ---- */
+.emailImage {
+  position: absolute;
+  background-color: url("../assets/images/email.png");
+  top: 15%;
+  left: 8%;
+  max-width: 10%;
+  z-index: 2;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.5;
+}
+
+/* ---- Phone Image ---- */
+.phoneImage {
+  position: absolute;
+  background-color: url("../assets/images/phone.png");
+  bottom: 25%;
+  left: 0;
+  max-width: 10%;
+  z-index: 2;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.5;
+}
+
+/* ---- LinkedIn Image ---- */
+.LIImg {
+  position: absolute;
+  background-color: url("../assets/images/linkedin.png");
+  bottom: 25%;
+  right: 0;
+  max-width: 10%;
+  z-index: 2;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+/* -------- MEDIA QUERIES -------- */
+@media (max-width: 716px) {
+  .fbImage {
+    top: 20%;
+    right: 5%;
+  }
+
+  .emailImage {
+    top: 32%;
+    left: 14%;
+  }
+
+  .phoneImage {
+    top: 20%;
+    left: 0;
+  }
+
+  .LIImg {
+    top: 30%;
+    right: 20%;
+  }
+}
+
+@media (max-width: 547px) {
+  .fbImage {
+    top: 30%;
+    right: 5%;
+  }
+
+  .emailImage {
+    top: 32%;
+    left: 9%;
+  }
+
+  .phoneImage {
+    top: 20%;
+    left: 0;
+  }
+
+  .LIImg {
+    top: 18%;
+    right: 20%;
+  }
+}
+
+@media (max-width: 490px) {
+  .fbImage {
+    display: none;
+  }
+
+  .emailImage {
+    display: none;
+  }
+
+  .phoneImage {
+    display: none;
+  }
+
+  .LIImg {
+    display: none;
+  }
+}
