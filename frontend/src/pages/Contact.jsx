@@ -180,50 +180,48 @@ function Contact() {
           {/* Phone */}
           <div className={FormStyles.formWrapper}>
             <Row className="justify-content-center">
-              <Col xs={12} md={8} lg={6} xl={4} className={FormStyles.formCol}>
-                <h2 className={`${FormStyles.formHeader} text-center`}>
-                  Ring oss
-                </h2>
-                <Row className="mt-1 g-3 text-center align-items-center">
-                  <Col
-                    xs={12}
-                    sm={5}
-                    md={5}
-                    className="d-flex flex-column align-items-center"
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <FaPhone className={styles.phoneIcon} />
-                      <p className={styles.label}>Mobil:</p>
-                    </div>
-                    <span className={styles.phoneNumber}>073 977 55 86</span>
-                  </Col>
+              <h2 className={`${FormStyles.formHeader} text-center`}>
+                Ring oss
+              </h2>
+              <Row className="mt-1 g-3 text-center align-items-center">
+                <Col
+                  xs={12}
+                  sm={5}
+                  md={5}
+                  className="d-flex flex-column align-items-center"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <FaPhone className={styles.phoneIcon} />
+                    <p className={styles.label}>Mobil:</p>
+                  </div>
+                  <span className={styles.phoneNumber}>073 977 55 86</span>
+                </Col>
 
-                  {/* Vertical Line */}
-                  <Col xs={12} sm={2} className="d-flex justify-content-center">
-                    <div className={styles.verticalLine}></div>
-                  </Col>
+                {/* Separator Line */}
+                <Col xs={12} sm={2} className="d-flex justify-content-center">
+                  <div className={styles.seperateLine}></div>
+                </Col>
 
-                  <Col
-                    xs={12}
-                    sm={5}
-                    md={5}
-                    className="d-flex flex-column align-items-center"
+                <Col
+                  xs={12}
+                  sm={5}
+                  md={5}
+                  className="d-flex flex-column align-items-center"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <FaWhatsapp className={`${styles.icon} text-success`} />
+                    <p className={styles.label}>WhatsApp:</p>
+                  </div>
+                  <a
+                    href="https://wa.me/46739775586"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.phoneNumber}
                   >
-                    <div className="d-flex align-items-center gap-2">
-                      <FaWhatsapp className={`${styles.icon} text-success`} />
-                      <p className={styles.label}>WhatsApp:</p>
-                    </div>
-                    <a
-                      href="https://wa.me/46739775586"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.phoneNumber}
-                    >
-                      +46 73 977 55 86
-                    </a>
-                  </Col>
-                </Row>
-              </Col>
+                    +46 73 977 55 86
+                  </a>
+                </Col>
+              </Row>
             </Row>
           </div>
 

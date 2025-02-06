@@ -106,7 +106,7 @@
 }
 
 /* ----- Vertical Line ----- */
-.verticalLine {
+.seperateLine {
   width: 2px;
   height: 50px;
   background-color: rgba(255, 255, 255, 0.121);
@@ -137,8 +137,10 @@
 }
 
 @media (max-width: 576px) {
-  .verticalLine {
-    display: none;
+  .seperateLine {
+    width: 15%;
+    height: 2px;
+    margin: 15px 0;
   }
 }
 
