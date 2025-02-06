@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
+// Components
 import ProfileForm from "../components/ProfileForm";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import DeleteAccountModal from "../components/DeleteAccountModal";
 import Alerts from "../components/Alerts";
+// Styling
 import styles from "../styles/Profile.module.css";
+import FormStyles from "../styles/FormStyles.module.css";
 
 function Profile() {
   // State to store user profile info
@@ -148,7 +151,7 @@ function Profile() {
   };
 
   return (
-    <Container fluid className={styles.profileContainer}>
+    <Container fluid className={FormStyles.pageContainer}>
       {/* --------------- Background Image --------------- */}
       <div className={styles.profileBackground}></div>
       <Row className="justify-content-center">
@@ -157,12 +160,12 @@ function Profile() {
           md={10}
           lg={8}
           xl={6}
-          className={`${styles["formCol"]} mt-4 mb-4`}
+          className={`${FormStyles["formCol"]} mt-4 mb-4`}
         >
           {/* ---------- Alerts ---------- */}
           <Alerts successMessage={successMessage} errorMessage={errorMessage} />
 
-          <h1 className={`${styles.pageHeader} mb-4 text-center`}>
+          <h1 className={`${FormStyles.pageHeader} mb-4 text-center`}>
             Min Profil
           </h1>
 
@@ -195,23 +198,21 @@ function Profile() {
           <hr className="my-4" />
 
           {/* ---------- Delete Account ---------- */}
-          <div className={styles.formWrapper}>
-            <div className={`${styles.profileForm}`}>
-              <h1 className={`${styles["formHeader"]} text-center`}>
-                Radera Konto
-              </h1>
-              <p className={`${styles.deleteAccountParagraph} text-center`}>
-                Om du vill radera ditt konto klicka på knappen nedan. Du kommer
-                bli ombedd att fylla i ditt lösenord för att bekräfta.
-              </p>
-              <Button
-                className={`${styles.deleteAccountButton} mb-3`}
-                variant="danger"
-                onClick={handleShowDeleteModal}
-              >
-                Radera konto
-              </Button>
-            </div>
+          <div className={FormStyles.formWrapper}>
+            <h1 className={`${FormStyles["formHeader"]} text-center`}>
+              Radera Konto
+            </h1>
+            <p className={`${styles.deleteAccountParagraph} text-center`}>
+              Om du vill radera ditt konto klicka på knappen nedan. Du kommer
+              bli ombedd att fylla i ditt lösenord för att bekräfta.
+            </p>
+            <Button
+              className={`${FormStyles.redBtn} mb-3`}
+              variant="danger"
+              onClick={handleShowDeleteModal}
+            >
+              Radera konto
+            </Button>
           </div>
         </Col>
       </Row>

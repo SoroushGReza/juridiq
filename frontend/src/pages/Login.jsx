@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import styles from "../styles/Register.module.css";
+import styles from "../styles/RegisterLogin.module.css";
+import FormStyles from "../styles/FormStyles.module.css";
 import LoginImg from "../assets/images/login.png";
 
 const Login = () => {
@@ -40,7 +41,9 @@ const Login = () => {
         setErrors({ ...error.response.data });
       } else {
         console.error("Unexpected error:", error.message);
-        setErrors({ message: "Fel E-post eller Lösenord angivet. Försök igen." });
+        setErrors({
+          message: "Fel E-post eller Lösenord angivet. Försök igen.",
+        });
       }
     }
   };
@@ -53,15 +56,15 @@ const Login = () => {
           md={10}
           lg={8}
           xl={6}
-          className={`${styles["formCol"]} mt-4 mb-4`}
+          className={`${FormStyles["formCol"]} mt-4 mb-4`}
         >
-          <div className={styles.formWrapper}>
+          <div className={FormStyles.formWrapper}>
             <Form onSubmit={handleSubmit}>
-              <h1 className={`${styles["formHeader"]} text-center`}>
+              <h1 className={`${FormStyles["formHeader"]} text-center`}>
                 Logga in
               </h1>
               <Form.Group className="mt-4" controlId="formEmail">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
                   E-post
                 </Form.Label>
                 <Form.Control
@@ -71,7 +74,7 @@ const Login = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.email || !!errors.message}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="username"
                 />
                 <Form.Control.Feedback type="invalid">
@@ -80,7 +83,7 @@ const Login = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
                   Lösenord
                 </Form.Label>
                 <Form.Control
@@ -90,7 +93,7 @@ const Login = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.password || !!errors.message}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="current-password"
                 />
                 <Form.Control.Feedback type="invalid">
@@ -101,7 +104,7 @@ const Login = () => {
               <Button
                 variant="primary"
                 type="submit"
-                className={`${styles["customBtn"]} text-center`}
+                className={`${FormStyles["yellowBtn"]} text-center`}
               >
                 Logga in
               </Button>

@@ -81,6 +81,8 @@
   box-shadow: 0 0 5px rgba(255, 213, 0, 0.705) !important;
 }
 
+/* ---------------------------- BUTTONS -------------------------------- */
+
 /* ---------- Green Button ---------- */
 .greenBtn {
   font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
@@ -99,4 +101,62 @@
 .greenBtn:hover {
   background-color: #196420 !important;
   color: black !important;
+}
+
+/* ---------- Yellow Button ---------- */
+.yellowBtn {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #ae8c35 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 5px !important;
+  width: 100% !important;
+}
+
+.yellowBtn:hover {
+  background-color: #846e40 !important;
+  color: black !important;
+}
+
+/* ---------- Blue Button ---------- */
+.blueButton {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #3563ae !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 5px !important;
+  width: 100% !important;
+}
+
+.blueButton:hover {
+  background-color: #2b508d !important;
+}
+
+/* ---------- Red Button ---------- */
+.redBtn {
+  font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
+  font-size: 24px !important;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: #ae3535 !important;
+  color: black !important;
+  border: none !important;
+  border-radius: 5px !important;
+  padding: 5px 10px !important;
+  margin-top: 5px !important;
+  width: 100% !important;
+}
+
+.redBtn:hover {
+  background-color: #902c2c !important;
 }
