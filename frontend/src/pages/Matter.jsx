@@ -15,12 +15,13 @@ import TitleSection from "../components/TitleSection";
 import DescriptionSection from "../components/DescriptionSection";
 import NotesSection from "../components/NotesSection";
 import FilesSection from "../components/FilesSection";
+import PaymentButton from "../components/PaymentButton";
 
 const Matter = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [matter, setMatter] = useState(null);
-  const { isAdmin } = useAuthStatus();
+  const { isAdmin, userId } = useAuthStatus();
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -225,7 +226,9 @@ const Matter = () => {
 
       {/* Action Buttons */}
       <Row className="mt-3">
-        <Col className="justify-content-center d-flex">
+        <Col className={`d-flex justify-content-center ${styles.buttonGroup}`}>
+          {/* Payment Button */}
+          <PaymentButton />
           <Button
             className={`${styles.backBtn} me-3`}
             variant="secondary"

@@ -72,6 +72,7 @@ const Login = () => {
                   isInvalid={!!errors.email || !!errors.message}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="username"
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email || errors.message}
@@ -90,6 +91,7 @@ const Login = () => {
                   isInvalid={!!errors.password || !!errors.message}
                   required
                   className={`${styles["customInput"]} text-start`}
+                  autoComplete="current-password"
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.password || errors.message}

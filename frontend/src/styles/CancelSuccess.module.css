@@ -1,0 +1,49 @@
+.pageContainer {
+  min-height: calc(100vh - 70px - 160px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+/* --- Success Animation Icon --- */
+.animationIcon {
+  width: 210px;
+  height: 210px;
+}
+
+/* --- Cancel Animation Icon --- */
+.animationXIcon {
+  width: 140px;
+  height: 140px;
+}
+
+/* --- Static Icons --- */
+.icon {
+  width: 100px;
+  height: 100px;
+}
+
+.textContainer {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+h2 {
+  font-weight: 600;
+  color: white;
+  transition: opacity 0.5s ease-in-out;
+}

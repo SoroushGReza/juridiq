@@ -48,6 +48,7 @@ function App() {
           <Route path="/cookie-policy" element={<CookiePolicy />} />
         </Routes>
       </div>
+      <CookieBanner />
       <Footer />
     </Router>
   );

@@ -12,6 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.exists("env.py"):
     import env  # noqa F401
 
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
 # Use SQLite during Dvelopment
 if os.getenv("DJANGO_DEVELOPMENT") == "True":
     # Use SQLite
@@ -44,7 +52,7 @@ ip_host = f"http://{parsed_url.hostname}:5173"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEVELOPMENT") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", parsed_url.hostname]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".ngrok-free.app", parsed_url.hostname]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -79,6 +87,7 @@ INSTALLED_APPS = [
     "accounts",
     "matters",
     "payments",
+    "contact",
 ]
 
 SITE_ID = 1
