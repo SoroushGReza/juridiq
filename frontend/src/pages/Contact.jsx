@@ -1,5 +1,14 @@
 import React, { useState } from "react";
+import Alerts from "../components/Alerts";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+// Styles
+import FormStyles from "../styles/FormStyles.module.css";
+import styles from "../styles/Contact.module.css";
+// Images
+import FbImg from "../assets/images/facebook.png";
+import EmailImage from "../assets/images/email.png";
+import PhoneImage from "../assets/images/phone.png";
+import LinkedinImg from "../assets/images/linkedin.png";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,8 +19,9 @@ function Contact() {
     message: "",
   });
 
-  const [responseMessage, setResponseMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // Success and Error messages
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +33,7 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResponseMessage(null);
+    setSuccessMessage(null);
     setErrorMessage(null);
 
     try {
@@ -40,7 +50,7 @@ function Contact() {
         setErrorMessage(JSON.stringify(errorData));
       } else {
         const data = await response.json();
-        setResponseMessage(data.message);
+        setSuccessMessage(data.message);
         // Reset form
         setFormData({
           first_name: "",
@@ -56,81 +66,114 @@ function Contact() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container fluid className={FormStyles.pageContainer}>
+      {/* --------------- Background Image --------------- */}
+      <div className={styles.contactBackground}>
+        {/* --------------- Logo Images --------------- */}
+        <img src={FbImg} alt="Facebook Logo" className={styles.fbImage} />
+        <img src={EmailImage} alt="Email Logo" className={styles.emailImage} />
+        <img src={PhoneImage} alt="Phone Logo" className={styles.phoneImage} />
+        <img src={LinkedinImg} alt="Phone Logo" className={styles.LIImg} />
+      </div>
       <Row className="justify-content-center">
-        <Col md={6}>
-          <h1>Kontakta oss</h1>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formFirstName">
-              <Form.Label>Förnamn (obligatoriskt)</Form.Label>
-              <Form.Control
-                type="text"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+        <Col
+          xs={12}
+          md={8}
+          lg={6}
+          xl={4}
+          className={`${FormStyles["formCol"]} mt-4 mb-4`}
+        >
+          <h1 className={`${FormStyles.pageHeader} mb-4 text-center`}>
+            Kontakta oss
+          </h1>
 
-            <Form.Group className="mb-3" controlId="formLastName">
-              <Form.Label>Efternamn (obligatoriskt)</Form.Label>
-              <Form.Control
-                type="text"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+          {/* ---------- Alerts ---------- */}
+          <Alerts successMessage={successMessage} errorMessage={errorMessage} />
 
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>E-post (obligatoriskt)</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+          <div className={FormStyles.formWrapper}>
+            <Form onSubmit={handleSubmit}>
+              <h1 className={`${FormStyles["formHeader"]} text-center`}>
+                Via E-Post
+              </h1>
+              <Form.Group className="mt-4" controlId="formFirstName">
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Förnamn (obligatoriskt)
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                  className={`${FormStyles["formInput"]} text-start`}
+                  required
+                />
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formPhone">
-              <Form.Label>Telefonnummer (valfritt)</Form.Label>
-              <Form.Control
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="formLastName">
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Efternamn (obligatoriskt)
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleChange}
+                  className={`${FormStyles["formInput"]} text-start`}
+                  required
+                />
+              </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formMessage">
-              <Form.Label>Meddelande</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={4}
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  E-post (obligatoriskt)
+                </Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`${FormStyles["formInput"]} text-start`}
+                  required
+                />
+              </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Skicka
-            </Button>
-          </Form>
+              <Form.Group className="mb-3" controlId="formPhone">
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Telefonnummer (valfritt)
+                </Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={`${FormStyles["formInput"]} text-start`}
+                />
+              </Form.Group>
 
-          {responseMessage && (
-            <div className="alert alert-success mt-3" role="alert">
-              {responseMessage}
-            </div>
-          )}
-          {errorMessage && (
-            <div className="alert alert-danger mt-3" role="alert">
-              {errorMessage}
-            </div>
-          )}
+              <Form.Group className="mb-3" controlId="formMessage">
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Meddelande
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className={`${FormStyles["formInput"]} text-start`}
+                  required
+                />
+              </Form.Group>
+
+              <Button
+                className={`${FormStyles["greenBtn"]} text-center`}
+                variant="primary"
+                type="submit"
+              >
+                Skicka
+              </Button>
+            </Form>
+          </div>
         </Col>
       </Row>
     </Container>
