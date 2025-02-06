@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
@@ -11,6 +12,7 @@ import Matter from "./pages/Matter";
 import Profile from "./pages/Profile";
 import Price from "./pages/Price";
 import Contact from "./pages/Contact";
+import About from "./pages/About";
 // Payment components
 import PaymentList from "./pages/PaymentList";
 import AdminCreatePayment from "./pages/AdminCreatePayment";
@@ -24,6 +26,7 @@ function App() {
   return (
     <Router>
       <NavBar className="navbar" />
+      <ScrollToTop />
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -35,6 +38,7 @@ function App() {
           <Route path="/prices" element={<Price />} />
           <Route path="/payments" element={<PaymentList />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/admin-create-payment"
             element={<AdminCreatePayment />}

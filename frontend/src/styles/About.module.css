@@ -1,0 +1,110 @@
+.aboutContainer {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* ----- Background Image ----- */
+.aboutBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/images/aboutbg.svg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* ----- Background Overlay ----- */
+.aboutBackground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+/* ---- Logo Image ---- */
+.LogoImage {
+  position: relative;
+  width: 120px;
+  z-index: 1;
+  pointer-events: none;
+  margin-bottom: 5%;
+  opacity: 0.4;
+}
+
+/* ----- Columns ----- */
+.customCol {
+  background-color: #1a1a1aad;
+  border-radius: 10px;
+  padding: 35px;
+  z-index: 2;
+  box-shadow: 0 4px 25px rgba(53, 53, 53, 0.9);
+}
+
+/* ----- Content Div ----- */
+.aboutContent {
+  margin-top: 0;
+  padding: 20px;
+  z-index: 2;
+}
+
+/* ----- Page Heading ----- */
+.aboutHeading {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffff;
+  z-index: 2;
+}
+
+/* ----- Introduction Text ----- */
+.introText {
+  font-size: 1.25rem;
+  color: #c0c0c0;
+  margin-top: 20px;
+  z-index: 2;
+}
+
+/* ----- Section Title ----- */
+.sectionTitle {
+  font-size: 2rem;
+  color: #bfd7ea;
+  margin-bottom: 15px;
+  z-index: 2;
+}
+
+/* ----- Section Paragraphs ----- */
+.sectionParagraph {
+  font-size: 1rem;
+  color: #cfcfcf;
+  line-height: 1.6;
+  z-index: 2;
+}
+
+.link {
+  color: #649ac6;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+/* -------------- MEDIA QUERIES -------------- */
+@media (max-width: 768px) {
+  .aboutHeading {
+    font-size: 2.5rem;
+  }
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+}
