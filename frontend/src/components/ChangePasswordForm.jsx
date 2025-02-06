@@ -1,20 +1,20 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import styles from "../styles/Profile.module.css";
+import FormStyles from "../styles/FormStyles.module.css";
 
 function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
   return (
-    <div className={styles.formWrapper}>
-      <Form className={`${styles.profileForm}`} onSubmit={onSubmit}>
-        <h1 className={`${styles["formHeader"]} text-center`}>
+    <div className={FormStyles.formWrapper}>
+      <Form onSubmit={onSubmit}>
+        <h1 className={`${FormStyles["formHeader"]} text-center`}>
           Ändra Lösenord
         </h1>
         <Form.Group controlId="oldPassword" className="mb-3">
-          <Form.Label className={`${styles.formLabel}`}>
-            Gammalt lösenord
+          <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+            Gammalt lösenord <span className={FormStyles.labelSpan}>*</span>
           </Form.Label>
           <Form.Control
-            className={`${styles.formInput}`}
+            className={`${FormStyles["formInput"]} text-start`}
             type="password"
             name="old_password"
             value={passwordData.old_password}
@@ -23,11 +23,11 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
           />
         </Form.Group>
         <Form.Group controlId="newPassword" className="mb-3">
-          <Form.Label className={`${styles.formLabel}`}>
-            Nytt lösenord
+          <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+            Nytt lösenord <span className={FormStyles.labelSpan}>*</span>
           </Form.Label>
           <Form.Control
-            className={`${styles.formInput}`}
+            className={`${FormStyles["formInput"]} text-start`}
             type="password"
             name="new_password"
             value={passwordData.new_password}
@@ -36,7 +36,7 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
           />
         </Form.Group>
         <Button
-          className={`${styles.updatePasswordButton} mb-3`}
+          className={`${FormStyles["yellowBtn"]} mb-3`}
           variant="warning"
           type="submit"
         >

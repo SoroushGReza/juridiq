@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
-import styles from "../styles/Register.module.css";
+import styles from "../styles/RegisterLogin.module.css";
+import FormStyles from "../styles/FormStyles.module.css";
 import RegisterImg from "../assets/images/register.png";
 import LOGO from "../assets/images/LOGO.svg";
 
@@ -62,16 +63,16 @@ const Register = () => {
           md={10}
           lg={8}
           xl={6}
-          className={`${styles["formCol"]} mt-4 mb-4`}
+          className={`${FormStyles["formCol"]} mt-4 mb-4`}
         >
-          <div className={styles.formWrapper}>
+          <div className={FormStyles.formWrapper}>
             <Form onSubmit={handleSubmit}>
-              <h1 className={`${styles["formHeader"]} text-center`}>
+              <h1 className={`${FormStyles["formHeader"]} text-center`}>
                 Registrera
               </h1>
               <Form.Group className="mt-4" controlId="formEmail">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  E-post
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  E-post <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="email"
@@ -80,9 +81,8 @@ const Register = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.email}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="username"
-
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -90,8 +90,8 @@ const Register = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formName">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Förnamn
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Förnamn <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -100,7 +100,7 @@ const Register = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.name}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.name}
@@ -108,8 +108,8 @@ const Register = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formSurname">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Efternamn
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Efternamn <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -118,7 +118,7 @@ const Register = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.surname}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.surname}
@@ -126,8 +126,8 @@ const Register = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPhoneNumber">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Telefon nummer
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Telefon nummer <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -135,9 +135,9 @@ const Register = () => {
                   value={formData.phone_number}
                   onChange={handleChange}
                   isInvalid={!!errors.phone_number}
-                  required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="tel"
+                  required
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.phone_number}
@@ -145,8 +145,8 @@ const Register = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Ange lösenord
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Ange lösenord <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -155,7 +155,7 @@ const Register = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.password}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="new-password"
                 />
                 <Form.Control.Feedback type="invalid">
@@ -164,8 +164,9 @@ const Register = () => {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPassword2">
-                <Form.Label className={`${styles["customLabel"]} text-start`}>
-                  Verifiera lösenord
+                <Form.Label className={`${FormStyles["formLabel"]} text-start`}>
+                  Verifiera lösenord{" "}
+                  <span className={FormStyles.labelSpan}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="password"
@@ -174,7 +175,7 @@ const Register = () => {
                   onChange={handleChange}
                   isInvalid={!!errors.password2}
                   required
-                  className={`${styles["customInput"]} text-start`}
+                  className={`${FormStyles["formInput"]} text-start`}
                   autoComplete="new-password"
                 />
                 <Form.Control.Feedback type="invalid">
@@ -191,7 +192,7 @@ const Register = () => {
               <Button
                 variant="primary"
                 type="submit"
-                className={`${styles["customBtn"]} text-center`}
+                className={`${FormStyles["yellowBtn"]} text-center`}
               >
                 Registrera
               </Button>
