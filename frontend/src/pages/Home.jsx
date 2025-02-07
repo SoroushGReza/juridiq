@@ -104,7 +104,7 @@ const Home = () => {
               </div>
             </div>
           </Col>
-          <Col xs={12} sm={8} md={6} lg={6} className="p-3 text-white mx-auto">
+          <Col xs={12} sm={8} md={6} lg={4} className="p-3 text-white mx-auto">
             <div className={`${styles.sectionBox}`}>
               <h4 className="text-center">Brottmål</h4>
               <p>Vi erbjuder rådgivning för både misstänkta och brottsoffer:</p>
