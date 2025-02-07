@@ -28,3 +28,8 @@ h4 {
   text-decoration: underline;
   font-weight: bold;
 }
+
+.link:hover {
+  color: #007bff;
+  text-decoration: none;
+}
