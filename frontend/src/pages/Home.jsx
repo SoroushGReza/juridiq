@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import styles from "../styles/Home.module.css";
 import AppealIcon from "../assets/icons/appeal.svg";
 import DocumentIcon from "../assets/icons/document.svg";
+import HandcuffsIcon from "../assets/icons/handcuffs.svg";
 
 const Home = () => {
   return (
@@ -99,6 +100,32 @@ const Home = () => {
                   src={DocumentIcon}
                   alt="Överklaganden"
                   className={`${styles.documentIcon}`}
+                />
+              </div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={6} className="p-3 text-white mx-auto">
+            <div className={`${styles.sectionBox}`}>
+              <h4 className="text-center">Brottmål</h4>
+              <p>Vi erbjuder rådgivning för både misstänkta och brottsoffer:</p>
+              <ul className={`${styles.serviceList}`}>
+                <li>Genomgång av ditt ärende</li>
+                <li>Förberedelse inför polisförhör</li>
+                <li>
+                  Polisförhörsstrategi – hur du bäst bemöter frågor och undviker
+                  missförstånd
+                </li>
+                <li>
+                  Förmedling av ditt ärende till en erfaren advokat som är bäst
+                  lämpad för ditt fall – ett tryggare alternativ än att bli
+                  tilldelad en slumpmässig offentlig försvarare.
+                </li>
+              </ul>
+              <div className={`${styles.iconDiv}`}>
+                <img
+                  src={HandcuffsIcon}
+                  alt="Handbojor (Ikon)"
+                  className={`${styles.handcuffsIcon}`}
                 />
               </div>
             </div>
