@@ -96,13 +96,11 @@ const Price = () => {
                 <li>Genomgång av ditt fall</li>
                 <li>Förberedelse inför polisförhör</li>
                 <li>
-                  Polisförhörsstrategi – hur du bäst bemöter frågor och undviker
-                  missförstånd
+                  Strategisk rådgivning för hur du bäst bemöter frågor och
+                  undviker missförstånd
                 </li>
                 <li>
-                  Förmedling av ditt ärende till en erfaren advokat som är bäst
-                  lämpad för ditt fall – ett tryggare alternativ än att bli
-                  tilldelad en slumpmässig offentlig försvarare.
+                  Koppling till en erfaren advokat specialiserad inom brottmål
                 </li>
               </ul>
               <p>
