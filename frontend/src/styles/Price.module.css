@@ -114,6 +114,12 @@
   list-style-type: square;
 }
 
+/* ----- Deal for 15 free minutes ----- */
+.deal15Min {
+  font-size: 14px;
+  color: rgb(160, 231, 153) !important;
+}
+
 /* --- Services Icons --- */
 
 .iconDiv {

@@ -23,7 +23,10 @@ const Price = () => {
                 <li>Uppföljning och rådgivning</li>
               </ul>
               <p>
-                <b>Pris:</b> från 2000 kr/timme
+                <b>Pris:</b> från 1595 kr/timme
+              </p>
+              <p className={`${styles.deal15Min}`}>
+                Fast pris kan erbjudas vid enklare ärenden.
               </p>
             </div>
           </Col>
@@ -32,16 +35,16 @@ const Price = () => {
               <h4 className="text-center">Avtal och kontrakt</h4>
               <ul>
                 <li>
-                  <b>Samboavtal:</b> 3200 kr
+                  <b>Samboavtal:</b> 485 kr
                 </li>
                 <li>
-                  <b>Bodelning:</b> 4000 kr
+                  <b>Bodelning:</b> 1950 kr
                 </li>
                 <li>
-                  <b>Företagskontrakt:</b> 4500 kr
+                  <b>Företagskontrakt:</b> 950 kr
                 </li>
                 <li>
-                  <b>Sekretessavtal:</b> 3000 kr
+                  <b>Sekretessavtal:</b> 375 kr
                 </li>
               </ul>
             </div>
@@ -56,7 +59,10 @@ const Price = () => {
                 <li>Affärsjuridik</li>
               </ul>
               <p>
-                <b>Pris:</b> 2000 kr/timme
+                <b>Pris:</b> 1985 kr/timme
+              </p>
+              <p className={`${styles.deal15Min}`}>
+                Första 15 minuterna är kostnadsfria.
               </p>
             </div>
           </Col>
@@ -65,21 +71,46 @@ const Price = () => {
               <h4 className="text-center">Dokumentservice</h4>
               <ul>
                 <li>
-                  <b>Testamente:</b> 5500 kr
+                  <b>Testamente:</b> 485 kr
                 </li>
                 <li>
-                  <b>Framtidsfullmakt:</b> 5000 kr
+                  <b>Framtidsfullmakt:</b> 385 kr
                 </li>
                 <li>
-                  <b>Arbetsavtal:</b> 3500 kr
+                  <b>Arbetsavtal:</b> 250 kr
                 </li>
                 <li>
-                  <b>Hyresavtal:</b> 3000 kr
+                  <b>Hyresavtal:</b> 250 kr
                 </li>
                 <li>
-                  <b>Tjänsteavtal:</b> 4000 kr
+                  <b>Tjänsteavtal:</b> 499 kr
                 </li>
               </ul>
+            </div>
+          </Col>
+          <Col xs={12} sm={6} md={6} lg={6} className="p-3 text-white mx-auto">
+            <div className={`${styles.sectionBox}`}>
+              <h4 className="text-center">Brottmål</h4>
+              <p>Rådgivning för misstänkta och brottsoffer:</p>
+              <ul className="mb-3">
+                <li>Genomgång av ditt fall</li>
+                <li>Förberedelse inför polisförhör</li>
+                <li>
+                  Polisförhörsstrategi – hur du bäst bemöter frågor och undviker
+                  missförstånd
+                </li>
+                <li>
+                  Förmedling av ditt ärende till en erfaren advokat som är bäst
+                  lämpad för ditt fall – ett tryggare alternativ än att bli
+                  tilldelad en slumpmässig offentlig försvarare.
+                </li>
+              </ul>
+              <p>
+                <b>Pris:</b> 1985 kr/timme
+              </p>
+              <p className={`${styles.deal15Min}`}>
+                Första 15 minuterna är kostnadsfria.
+              </p>
             </div>
           </Col>
         </Row>
