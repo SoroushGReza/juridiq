@@ -1,17 +1,15 @@
 import React from "react";
 import { Container, Row, Col, ListGroup } from "react-bootstrap";
-import styles from "../styles/CookiePolicy.module.css";
-import GreyLogo from "../assets/images/greylogo.svg";
+import styles from "../styles/CookieNIntegrityPolicy.module.css";
 
 const CookiePolicy = () => {
   return (
     <div className={styles.fullPage}>
-      <Container className={`${styles.cookiePolicyPage} mt-2`}>
+      <Container className={`${styles.pageContainer} mt-2`}>
         <Row>
           <Col>
             <div className="d-flex align-items-center mb-3">
-              <h2 className="mb-0 me-2">JuridiQ Cookiepolicy</h2>
-              <img src={GreyLogo} alt="JuridiQ Logo" className={styles.logo} />
+              <h2 className="mb-0">JuridiQ Cookiepolicy</h2>
             </div>
 
             <p className="mb-4">
