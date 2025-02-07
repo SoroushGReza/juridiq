@@ -194,7 +194,7 @@ function Contact() {
                     <FaPhone className={styles.phoneIcon} />
                     <p className={styles.label}>Mobil:</p>
                   </div>
-                  <span className={styles.phoneNumber}>073 977 55 86</span>
+                  <span className={styles.phoneNumber}>0720 24 68 60</span>
                 </Col>
 
                 {/* Separator Line */}
@@ -213,12 +213,12 @@ function Contact() {
                     <p className={styles.label}>WhatsApp:</p>
                   </div>
                   <a
-                    href="https://wa.me/46739775586"
+                    href="https://wa.me/46720246860"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.phoneNumber}
                   >
-                    +46 73 977 55 86
+                    +46 720 24 68 60
                   </a>
                 </Col>
               </Row>
