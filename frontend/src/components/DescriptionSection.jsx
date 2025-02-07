@@ -12,7 +12,7 @@ const DescriptionSection = ({
   return (
     <>
       <div className="d-flex align-items-center">
-        <h4 className="fw-bold ms-3">Beskrivning</h4>
+        <h4 className={`${styles.sectionHeader} fw-bold ms-3`}>Beskrivning</h4>
         <button
           className={`${styles.editIconButton}`}
           onClick={() => setEditingSection("description")}

@@ -75,6 +75,11 @@
   margin: 0 auto;
 }
 
+/* ---- Section Headers ---- */
+.sectionHeader {
+  color: #000;
+}
+
 /* ---- Divider Line ---- */
 .dividerLine {
   width: 98%;
@@ -153,6 +158,10 @@
   color: #181818;
 }
 
+/* ---- Section Headers ---- */
+.pageContainer.dark .sectionHeader {
+  color: #fff;
+}
 
 
 /* ---- Fontawesome icon for edit ---- */
