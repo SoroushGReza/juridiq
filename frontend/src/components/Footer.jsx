@@ -54,7 +54,7 @@ const Footer = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${styles.linkedIn} text-white`}
+                className={`${styles.socialLinks} text-white`}
                 aria-label="Följ oss på LinkedIn"
               >
                 <FaLinkedin size={18} />
@@ -63,7 +63,7 @@ const Footer = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${styles.facebook} text-white`}
+                className={`${styles.socialLinks} text-white`}
                 aria-label="Följ oss på Facebook"
               >
                 <FaFacebook size={18} />
