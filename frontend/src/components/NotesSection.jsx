@@ -13,7 +13,7 @@ const NotesSection = ({
   return (
     <>
       <div className="d-flex align-items-center">
-        <h4 className="fw-bold ms-3">Noteringar</h4>
+        <h4 className={`${styles.sectionHeader} fw-bold ms-3`}>Noteringar</h4>
         {isAdmin && (
           <button
             className={`${styles.editIconButton}`}
