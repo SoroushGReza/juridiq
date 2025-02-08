@@ -8,11 +8,7 @@ if (csrfToken) {
 
 // Dynamically set the base URL based on the environment
 axios.defaults.baseURL =
-  import.meta.env.MODE === "development" // Kolla om vi är i utvecklingsläge
-    ? window.location.hostname === "localhost"
-      ? "http://localhost:8000/api" // För utveckling på Windows
-      : import.meta.env.VITE_BACKEND_URL // För utveckling via Mac (miljövariabel)
-    : "/api"; // For produktion
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/api";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
@@ -39,15 +35,8 @@ export const setAuthHeader = () => {
 };
 
 // Create Axios instance for requests
-export const axiosReq = axios.create({
-  baseURL: axios.defaults.baseURL,
-  withCredentials: true,
-});
-
-export const axiosRes = axios.create({
-  baseURL: axios.defaults.baseURL,
-  withCredentials: true,
-});
+export const axiosReq = axios.create();
+export const axiosRes = axios.create();
 
 // Set token for each request
 axiosReq.interceptors.request.use(
