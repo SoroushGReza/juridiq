@@ -12,7 +12,7 @@ axios.defaults.baseURL =
     ? window.location.hostname === "localhost"
       ? "http://localhost:8000/api" // För utveckling på Windows
       : import.meta.env.VITE_BACKEND_URL // För utveckling via Mac (miljövariabel)
-    : ""; // For produktion
+    : "/api"; // For produktion
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
