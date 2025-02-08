@@ -39,8 +39,15 @@ export const setAuthHeader = () => {
 };
 
 // Create Axios instance for requests
-export const axiosReq = axios.create();
-export const axiosRes = axios.create();
+export const axiosReq = axios.create({
+  baseURL: axios.defaults.baseURL,
+  withCredentials: true,
+});
+
+export const axiosRes = axios.create({
+  baseURL: axios.defaults.baseURL,
+  withCredentials: true,
+});
 
 // Set token for each request
 axiosReq.interceptors.request.use(
