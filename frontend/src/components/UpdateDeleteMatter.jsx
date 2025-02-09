@@ -5,7 +5,7 @@ import styles from "../styles/CreateUpdateModals.module.css";
 
 // Fetch matter details (inc. files)
 const fetchMatterDetail = async (id) => {
-  const { data } = await axiosRes.get(`/matters/${id}/`);
+  const { data } = await axiosReq.get(`/matters/${id}/`);
   return data;
 };
 
