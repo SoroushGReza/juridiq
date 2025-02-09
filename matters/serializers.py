@@ -1,15 +1,23 @@
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
-
 from .models import Matter, MatterFile, MAX_FILE_SIZE_TOTAL
 
 
 class MatterFileSerializer(serializers.ModelSerializer):
+    # Get absolute URL
+    file = serializers.SerializerMethodField()
+
     class Meta:
         model = MatterFile
         fields = ["id", "file", "uploaded_at"]
         read_only_fields = ["id", "uploaded_at"]
+
+    def get_file(self, obj):
+        request = self.context.get("request")
+        if request:
+            return request.build_absolute_uri(obj.file.url)
+        return obj.file.url
 
 
 class MatterCreateUpdateSerializer(serializers.ModelSerializer):
