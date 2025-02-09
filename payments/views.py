@@ -100,8 +100,10 @@ class PaymentCreateView(APIView):
                     }
                 ],
                 mode="payment",
-                success_url="http://localhost:5173/success",
-                cancel_url="http://localhost:5173/cancel",
+                # success_url="http://localhost:5173/success",
+                # cancel_url="http://localhost:5173/cancel",
+                success_url="https://juridiq.nu/success",
+                cancel_url="https://juridiq.nu/cancel",
                 client_reference_id=str(matter.user.id),
                 metadata={
                     "matter_id": str(matter.id),
