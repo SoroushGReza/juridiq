@@ -8,7 +8,11 @@ if (csrfToken) {
 
 // Dynamically set the base URL based on the environment
 axios.defaults.baseURL =
-  import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/api";
+  import.meta.env.MODE === "development" // Kolla om vi är i utvecklingsläge
+    ? window.location.hostname === "localhost"
+      ? "http://localhost:8000/api" // För utveckling på min Windows
+      : import.meta.env.VITE_BACKEND_URL // För att använda Mac som extra skärm (miljövariabel)
+    : "/api"; // For produktion
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
