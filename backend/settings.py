@@ -58,6 +58,7 @@ ALLOWED_HOSTS = [
     ".ngrok-free.app",
     "juridiq.nu",
     "www.juridiq.nu",
+    "api.juridiq.nu",
     parsed_url.hostname,
 ]
 CORS_ALLOWED_ORIGINS = [
