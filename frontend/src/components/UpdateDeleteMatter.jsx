@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Alert } from "react-bootstrap";
-import { axiosRes } from "../api/axiosDefaults";
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import styles from "../styles/CreateUpdateModals.module.css";
 
 // Fetch matter details (inc. files)
@@ -97,7 +97,7 @@ const UpdateDeleteMatter = ({
         formData.append("new_files", file);
       });
 
-      await axiosRes.patch(`/matters/${matter.id}/`, formData, {
+      await axiosReq.patch(`/matters/${matter.id}/`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -134,7 +134,7 @@ const UpdateDeleteMatter = ({
   // ---- DELETE WHOLE MATTER ----
   const handleDeleteMatter = async () => {
     try {
-      await axiosRes.delete(`/matters/${matter.id}/`);
+      await axiosReq.delete(`/matters/${matter.id}/`);
       fetchMatters(); // Update list of matters
       setLocalError("");
       handleCloseDelete(); // Close Modal
