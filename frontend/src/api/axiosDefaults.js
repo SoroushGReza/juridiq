@@ -10,7 +10,7 @@ if (csrfToken) {
 axios.defaults.baseURL =
   import.meta.env.MODE === "development"
     ? "http://localhost:8000/api"
-    : import.meta.env.VITE_BACKEND_URL || "https://api.juridiq.nu";
+    : import.meta.env.VITE_BACKEND_URL || "https://api.juridiq.nu/api";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
