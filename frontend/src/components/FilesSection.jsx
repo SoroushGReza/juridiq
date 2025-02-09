@@ -61,9 +61,9 @@ const FilesSection = ({ files, onDeleteFile, onUploadFile, darkMode }) => {
           files.map((fileObj, index) => {
             const fileUrl =
               typeof fileObj === "string" ? fileObj : fileObj.file;
-            const isImage = /\.(jpeg|jpg|png|gif|webp)$/i.test(fileUrl);
-            const isPDF = /\.pdf$/i.test(fileUrl);
-            const isTxt = /\.txt$/i.test(fileUrl);
+            const isImage = /\.(jpeg|jpg|png|gif|webp)(\?.*)?$/i.test(fileUrl);
+            const isPDF = /\.pdf(\?.*)?$/i.test(fileUrl);
+            const isTxt = /\.txt(\?.*)?$/i.test(fileUrl);
 
             return (
               <div
