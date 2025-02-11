@@ -107,4 +107,12 @@ html {
   pointer-events: none;
 }
 
-
+/* -------------- MEDIA QUERIES -------------- */
+@media (max-width: 1000px) {
+  .loginImage {
+    opacity: 0.1;
+  }
+  .registerImage {
+    opacity: 0.1;
+  }
+}
