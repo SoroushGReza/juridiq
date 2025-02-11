@@ -25,7 +25,7 @@ const About = () => {
 
         {/* Mission and Vision Section */}
         <Row className="p-3">
-          <Col xs={12} md={5} className={`${styles.customCol} mx-auto`}>
+          <Col xs={12} md={5} className={`${styles.customCol} mx-auto mb-4`}>
             <h2 className={`${styles.sectionTitle} text-center`}>
               Vårt Uppdrag
             </h2>
@@ -36,7 +36,7 @@ const About = () => {
               behov.
             </p>
           </Col>
-          <Col xs={12} md={5} className={`${styles.customCol} mx-auto`}>
+          <Col xs={12} md={5} className={`${styles.customCol} mx-auto mb-4`}>
             <h2 className={`${styles.sectionTitle} text-center`}>Vår Vision</h2>
             <p className={styles.sectionParagraph}>
               Vår vision är att vara den ledande aktören inom juridiska tjänster
@@ -48,7 +48,7 @@ const About = () => {
 
         {/* Values and History Section */}
         <Row className="p-3">
-          <Col xs={12} md={5} className={`${styles.customCol} mx-auto`}>
+          <Col xs={12} md={5} className={`${styles.customCol} mx-auto mb-4`}>
             <h2 className={`${styles.sectionTitle} text-center`}>
               Våra Värderingar
             </h2>
@@ -58,7 +58,7 @@ const About = () => {
               omsorg, vilket garanterar en trygg och transparent process.
             </p>
           </Col>
-          <Col xs={12} md={5} className={`${styles.customCol} mx-auto`}>
+          <Col xs={12} md={5} className={`${styles.customCol} mx-auto mb-4`}>
             <h2 className={`${styles.sectionTitle} text-center`}>
               Vår Historia
             </h2>
