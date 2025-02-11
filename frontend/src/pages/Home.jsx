@@ -12,7 +12,6 @@ const Home = () => {
       <div className={styles.homeContent}>
         <Row className="text-center p-3 m-3">
           <Col xs={12}>
-            <h1 className="text-warning">THIS WEBSITE IS STILL UNDER DEVELOPMENT</h1>
             <h1 className={styles.homeHeading}>
               Vi hjälper dig med juridiska dokument och vägledning.
             </h1>

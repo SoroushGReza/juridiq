@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { axiosReq } from "../api/axiosDefaults";
 import Alerts from "./Alerts";
 import FormStyles from "../styles/FormStyles.module.css";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
@@ -41,34 +42,24 @@ const EmailForm = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:8000/api/contact/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      await axiosReq.post("/contact/", formData);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrorMessage(JSON.stringify(errorData));
-      } else {
-        await response.json();
-        // Default success message
-        setSuccessMessage(
-          "Tack! Ditt meddelande har skickats. Vi kontaktar dig vanligtvis inom 1 arbetsdag."
-        );
-        // Reset form
-        setFormData({
-          first_name: "",
-          last_name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-      }
+      setSuccessMessage(
+        "Tack! Ditt meddelande har skickats. Vi kontaktar dig vanligtvis inom 1 arbetsdag."
+      );
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
     } catch (error) {
-      setErrorMessage("Något gick fel, försök igen senare.");
+      if (error.response && error.response.data) {
+        setErrorMessage(JSON.stringify(error.response.data));
+      } else {
+        setErrorMessage("Något gick fel, försök igen senare.");
+      }
     }
   };
 
