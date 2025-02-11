@@ -211,8 +211,10 @@ class PaymentViewSet(viewsets.ModelViewSet):
                     }
                 ],
                 mode="payment",
-                success_url="http://localhost:5173/success",
-                cancel_url="http://localhost:5173/cancel",
+                # success_url="http://localhost:5173/success",
+                # cancel_url="http://localhost:5173/cancel",
+                success_url="https://juridiq.nu/success",
+                cancel_url="https://juridiq.nu/cancel",
                 client_reference_id=str(payment.user.id),
                 metadata={
                     "matter_id": str(payment.matter.id),
