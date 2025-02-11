@@ -155,8 +155,10 @@ const PrivacyPolicy = () => {
                 </a>
               </li>
               <li>
-                <strong>Telefon:</strong> [Fyller i när jag reggat
-                företagsnummer]
+                <strong>Telefon:</strong> 0720 24 68 60
+              </li>
+              <li>
+                <strong>WhatsApp:</strong> +46 720 24 68 60
               </li>
             </ul>
           </Col>
