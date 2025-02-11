@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { axiosReq } from "../api/axiosDefaults";
 import styles from "../styles/AdminCreatePayment.module.css";
-import stylesFromProfile from "../styles/Profile.module.css";
+import formStyles from "../styles/FormStyles.module.css";
 import stripeLogo from "../assets/images/stripe.svg";
 
 const AdminCreatePayment = () => {
@@ -75,8 +75,8 @@ const AdminCreatePayment = () => {
           {/* Success Massage */}
           {success && <Alert variant="success">{success}</Alert>}
           
-          <div className={stylesFromProfile.formWrapper}>
-            <Form className={`${stylesFromProfile.profileForm}`}>
+          <div className={formStyles.formWrapper}>
+            <Form className={`${formStyles.profileForm}`}>
               {/* Stripe Payment Methods Image */}
               <div className="text-center mb-3">
                 <img
@@ -86,11 +86,11 @@ const AdminCreatePayment = () => {
                 />
               </div>
               <Form.Group className="mb-3">
-                <Form.Label className={`${stylesFromProfile.formLabel}`}>
+                <Form.Label className={`${formStyles.formLabel}`}>
                   Ange Belopp (SEK)
                 </Form.Label>
                 <Form.Control
-                  className={`${stylesFromProfile.formInput}`}
+                  className={`${formStyles.formInput}`}
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
