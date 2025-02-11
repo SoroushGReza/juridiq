@@ -6,6 +6,16 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
   return (
     <div className={FormStyles.formWrapper}>
       <Form onSubmit={onSubmit}>
+        {/* Hidden field for Auto-fill */}
+        <Form.Control
+          type="text"
+          name="username"
+          value="dummy-user"
+          autoComplete="username"
+          style={{ position: "absolute", left: "-9999px" }}
+          readOnly
+          tabIndex="-1"
+        />
         <h1 className={`${FormStyles["formHeader"]} text-center`}>
           Ändra Lösenord
         </h1>
@@ -19,6 +29,7 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
             name="old_password"
             value={passwordData.old_password}
             onChange={onChange}
+            autoComplete="current-password"
             required
           />
         </Form.Group>
@@ -32,6 +43,7 @@ function ChangePasswordForm({ passwordData, onChange, onSubmit }) {
             name="new_password"
             value={passwordData.new_password}
             onChange={onChange}
+            autoComplete="off"
             required
           />
         </Form.Group>
