@@ -76,6 +76,32 @@
   opacity: 0.3;
 }
 
+/* ----- Success message text ----- */
+.textContainer {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #dfdfdf;
+  font-weight: bold;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.textContainer p {
+  margin: 0;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+/* ------------------------------- */
+
 /* ----- Phone Icon ----- */
 .phoneIcon {
   font-size: 22px;
@@ -96,7 +122,6 @@
   margin-bottom: 0;
   color: white;
 }
-
 
 .phoneNumber {
   font-size: 1.3rem;
