@@ -42,8 +42,8 @@
   visibility: hidden;
 }
 
-h2 {
+.textContainer h2 {
   font-weight: 600;
-  color: white;
+  color: white !important;
   transition: opacity 0.5s ease-in-out;
 }
