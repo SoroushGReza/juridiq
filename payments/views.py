@@ -29,22 +29,39 @@ def stripe_webhook(request):
         # Verify incoming event with webhook signature
         event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
     except ValueError:
-        return HttpResponseBadRequest("Invalid payload")
+        return HttpResponseBadRequest("Ogiltig payload")
     except stripe.error.SignatureVerificationError:
-        return HttpResponseBadRequest("Invalid signature")
+        return HttpResponseBadRequest("Ogiltig signatur")
 
     # Handle different event types from Stripe
-    if event["type"] == "checkout.session.completed":
+    if event["type"] in [
+        "checkout.session.completed",
+        "checkout.session.async_payment_succeeded",
+    ]:
         session = event["data"]["object"]
         handle_checkout_session_completed(session)
     elif event["type"] == "checkout.session.async_payment_failed":
-        print("Payment failed!")
-    elif event["type"] == "checkout.session.async_payment_succeeded":
-        print("Async payment succeeded!")
+        session = event["data"]["object"]
+        handle_checkout_session_failed(
+            session
+        )
     elif event["type"] == "checkout.session.expired":
-        print("Session expired!")
+        print("Sessionen gick ut!")
 
     return JsonResponse({"status": "success"})
+
+
+def handle_checkout_session_failed(session):
+    payment_id = session["metadata"].get("payment_id")
+    try:
+        payment = Payment.objects.get(id=payment_id)
+    except Payment.DoesNotExist:
+        print(f"Ingen Payment med id={payment_id} hittades vid fail-eventet.")
+        return
+
+    payment.status = "failed"
+    payment.save()
+    print(f"Payment uppdaterad till 'failed': {payment}")
 
 
 # Handles checkout session completion & updates or creates payment
