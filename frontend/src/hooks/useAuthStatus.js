@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 const useAuthStatus = () => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isDelegatedAdmin, setIsDelegatedAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
 
@@ -18,6 +19,7 @@ const useAuthStatus = () => {
         try {
           const { data: user } = await axiosReq.get("/accounts/profile/");
           setIsAdmin(user.is_staff || user.is_superuser);
+          setIsDelegatedAdmin(!!user.is_delegated_admin);
         } catch (err) {
           console.error("Error fetching user status:", err);
           setIsAuthenticated(false);
@@ -29,11 +31,12 @@ const useAuthStatus = () => {
     } else {
       setIsAuthenticated(false);
       setIsAdmin(false);
+      setIsDelegatedAdmin(false);
       setLoading(false);
     }
   }, [location]);
 
-  return { isAdmin, isAuthenticated, loading };
+  return { isAdmin, isDelegatedAdmin, isAuthenticated, loading };
 };
 
 export default useAuthStatus;
