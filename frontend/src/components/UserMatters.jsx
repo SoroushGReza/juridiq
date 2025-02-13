@@ -10,7 +10,9 @@ import styles from "../styles/UserMatters.module.css";
 import LoadingSpinner from "./LoadingSpinner";
 
 const UserMatters = () => {
-  const { isAdmin, isAuthenticated, loading } = useAuthStatus();
+  const { isAdmin, isDelegatedAdmin, isAuthenticated, loading } =
+    useAuthStatus();
+
   const navigate = useNavigate();
   const [matters, setMatters] = useState([]);
   const [error, setError] = useState("");
@@ -113,8 +115,9 @@ const UserMatters = () => {
   return (
     <div className="container mt-4">
       <h2 className={`${styles.pageHeader}`}>
-        {isAdmin ? "Alla Ärenden" : "Mina Ärenden"}
+        {isAdmin || isDelegatedAdmin ? "Alla Ärenden" : "Mina Ärenden"}
       </h2>
+
       {error && <Alert variant="danger">{error}</Alert>}
 
       <Row className="align-items-end mb-3">
