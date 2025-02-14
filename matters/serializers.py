@@ -115,7 +115,7 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
         remove_file_ids = validated_data.pop("remove_file_ids", [])
 
         # Prevent none-admin users to update status or notes
-        if not (user.is_staff or user.is_superuser):
+        if not (user.is_staff or user.is_superuser or user.is_delegated_admin):
             validated_data.pop("status", None)
             validated_data.pop("notes", None)
 
