@@ -7,7 +7,14 @@ from django.contrib import messages
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ["email", "name", "surname", "is_staff", "is_active"]
+    list_display = [
+        "email",
+        "name",
+        "surname",
+        "is_staff",
+        "is_active",
+        "is_delegated_admin",
+    ]
     list_filter = ["is_staff", "is_active"]
     search_fields = ["email", "name", "surname"]
     ordering = ["email"]
@@ -27,6 +34,8 @@ class CustomUserAdmin(UserAdmin):
                     "is_staff",
                     "is_superuser",
                     "user_permissions",
+                    "is_delegated_admin",
+                    "groups",
                 )
             },
         ),
@@ -48,6 +57,7 @@ class CustomUserAdmin(UserAdmin):
                     "password2",
                     "is_active",
                     "is_staff",
+                    "is_delegated_admin",
                 ),
             },
         ),

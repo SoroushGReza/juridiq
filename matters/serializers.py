@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from .models import Matter, MatterFile, MAX_FILE_SIZE_TOTAL
+from accounts.models import CustomUser
 
 
 class MatterFileSerializer(serializers.ModelSerializer):
@@ -35,12 +36,25 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
         write_only=True,
     )
 
+    delegated_admins = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=CustomUser.objects.filter(is_delegated_admin=True),
+        required=False,
+    )
+
     remove_file_ids = serializers.ListField(
         child=serializers.IntegerField(),
         required=False,
         write_only=True,
     )
     files = MatterFileSerializer(many=True, read_only=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get("request")
+        # If user is not admin/superuser - made field read only
+        if request and not (request.user.is_staff or request.user.is_superuser):
+            self.fields["delegated_admins"].read_only = True
 
     class Meta:
         model = Matter
@@ -52,6 +66,7 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
             "status",
             "notes",
             "created_at",
+            "delegated_admins",
             "new_files",
             "remove_file_ids",
             "files",
@@ -100,7 +115,7 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
         remove_file_ids = validated_data.pop("remove_file_ids", [])
 
         # Prevent none-admin users to update status or notes
-        if not (user.is_staff or user.is_superuser):
+        if not (user.is_staff or user.is_superuser or user.is_delegated_admin):
             validated_data.pop("status", None)
             validated_data.pop("notes", None)
 

@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
 
-MAX_FILE_SIZE_TOTAL = 15 * 1024 * 1024  # Maximum files size 15 MB (Togehter) 
+MAX_FILE_SIZE_TOTAL = 15 * 1024 * 1024  # Maximum files size 15 MB (Togehter)
 
 
 class Matter(models.Model):
@@ -20,6 +20,13 @@ class Matter(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
     notes = models.TextField(blank=True, null=True)
+    delegated_admins = models.ManyToManyField(
+        to="accounts.CustomUser",
+        blank=True,
+        related_name="delegated_matters",
+        limit_choices_to={"is_delegated_admin": True},
+        help_text="Delegated admin-användare som har administratörsrättigheter för detta ärende.",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -31,9 +38,7 @@ class MatterFile(models.Model):
     file = models.FileField(
         upload_to="matter_files/",
         validators=[
-            FileExtensionValidator(
-                allowed_extensions=["pdf", "txt", "jpg", "png"]
-            )
+            FileExtensionValidator(allowed_extensions=["pdf", "txt", "jpg", "png"])
         ],
     )
     uploaded_at = models.DateTimeField(auto_now_add=True)

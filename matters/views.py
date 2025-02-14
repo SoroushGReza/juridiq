@@ -5,11 +5,15 @@ from .serializers import MatterCreateUpdateSerializer
 
 class IsOwnerOrAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
+        # Id user is super superuser / admin
         if request.user.is_staff or request.user.is_superuser:
             return True
-        return (getattr(obj, "user", None) == request.user) or (
-            hasattr(obj, "matter") and obj.matter.user == request.user
-        )
+        # If user is delegated admin & exist in matter object delegated_admins
+        if getattr(request.user, "is_delegated_admin", False):
+            if request.user in obj.delegated_admins.all():
+                return True
+        # If user is matter owner (regular user)
+        return obj.user == request.user
 
 
 class MatterListCreateView(generics.ListCreateAPIView):
@@ -25,6 +29,11 @@ class MatterListCreateView(generics.ListCreateAPIView):
         user = self.request.user
         if user.is_staff or user.is_superuser:
             queryset = Matter.objects.all()
+        elif getattr(user, "is_delegated_admin", False):
+            # Include matters that user own and/or is assigned to as deligated admin
+            queryset = Matter.objects.filter(user=user) | Matter.objects.filter(
+                delegated_admins=user
+            )
         else:
             queryset = Matter.objects.filter(user=user)
 
@@ -32,8 +41,7 @@ class MatterListCreateView(generics.ListCreateAPIView):
         status = self.request.query_params.get("status")
         if status:
             queryset = queryset.filter(status=status)
-
-        return queryset
+        return queryset.distinct()
 
 
 class MatterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -49,8 +57,15 @@ class MatterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff or user.is_superuser:
-            return Matter.objects.all()
-        return Matter.objects.filter(user=user)
+            queryset = Matter.objects.all()
+        elif getattr(user, "is_delegated_admin", False):
+            # Include matetrs where user id owner or delegated admin
+            queryset = Matter.objects.filter(user=user) | Matter.objects.filter(
+                delegated_admins=user
+            )
+        else:
+            queryset = Matter.objects.filter(user=user)
+        return queryset.distinct()
 
     def perform_destroy(self, instance):
         instance.delete()  # Removes matter + files (on_delete=CASCADE)
