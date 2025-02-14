@@ -7,6 +7,8 @@ import { statusTranslations, statusIcons } from "./Status";
 const StatusSection = ({
   matter,
   isAdmin,
+  isDelegatedAdmin,
+  userId,
   editingSection,
   setEditingSection,
   onStatusChange,
@@ -37,7 +39,7 @@ const StatusSection = ({
 
   return (
     <div className={`${styles.statusCol} d-flex justify-content-start`}>
-      {isAdmin ? (
+      {isAdmin || (isDelegatedAdmin && ((matter.user?.id ?? matter.user) !== userId)) ? (
         <div className="position-relative" ref={dropdownRef}>
           <p
             className={`${styles.status} text-center mt-4`}
@@ -51,7 +53,6 @@ const StatusSection = ({
             <Status status={matter.status} />{" "}
             <i className={`${styles.statusIcon} fas fa-chevron-down ms-2`}></i>
           </p>
-
           {editingSection === "status" && (
             <div className={`${styles.dropdownMenu}`}>
               {Object.entries(statusTranslations).map(
