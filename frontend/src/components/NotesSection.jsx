@@ -6,6 +6,9 @@ const NotesSection = ({
   notes,
   isEditing,
   isAdmin,
+  isDelegatedAdmin,
+  userId,
+  ownerId,
   darkMode,
   setEditingSection,
   onSaveNotes,
@@ -14,7 +17,7 @@ const NotesSection = ({
     <>
       <div className="d-flex align-items-center">
         <h4 className={`${styles.sectionHeader} fw-bold ms-3`}>Noteringar</h4>
-        {isAdmin && (
+        {(isAdmin || (isDelegatedAdmin && ((ownerId?.id ?? ownerId) !== userId))) && (
           <button
             className={`${styles.editIconButton}`}
             onClick={() => setEditingSection("notes")}
