@@ -14,6 +14,20 @@ html {
   position: relative;
 }
 
+/* ------- GDPR COSENT ------- */
+.gdpr {
+  font-size: 15px;
+}
+
+.gdpr a {
+  color: #579bf4;
+}
+
+.gdpr a:hover {
+  text-decoration: solid;
+}
+/* --------------------------- */
+
 .textAndLink {
   font-family: "Alumni Sans Pinstripe", "adventpro-regular" !important;
   justify-content: space-between;

@@ -15,6 +15,7 @@ const Register = () => {
     phone_number: "",
     password: "",
     password2: "",
+    gdpr_consent: false,
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -30,6 +31,12 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrors({});
+    if (!formData.gdpr_consent) {
+      setErrors({
+        gdpr_consent: "Du måste godkänna villkoren och integritetspolicyn.",
+      });
+      return;
+    }
     try {
       const response = await axiosReq.post("/accounts/register/", formData);
       // Save tokens in localStorage
@@ -181,6 +188,51 @@ const Register = () => {
                 <Form.Control.Feedback type="invalid">
                   {errors.password2}
                 </Form.Control.Feedback>
+              </Form.Group>
+
+              {/* --- GDPR CONSENT --- */}
+              {/* --- GDPR CONSENT --- */}
+              <Form.Group
+                className={`${styles["gdpr"]} mb-4 mt-4`}
+                controlId="formGdprConsent"
+              >
+                <Form.Check
+                  type="checkbox"
+                  name="gdpr_consent"
+                  label={
+                    <>
+                      <span className="text-white">
+                        Jag har läst och godkänner{" "}
+                      </span>
+                      <a
+                        href="/terms-and-conditions"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        villkoren
+                      </a>
+                      <span className="text-white"> och </span>
+                      <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        integritetspolicyn
+                      </a>
+                      <span className="text-danger">*</span>
+                    </>
+                  }
+                  checked={formData.gdpr_consent}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      gdpr_consent: e.target.checked,
+                    })
+                  }
+                  required
+                />
               </Form.Group>
 
               {Object.keys(errors).length > 0 && (
