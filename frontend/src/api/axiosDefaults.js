@@ -7,10 +7,15 @@ if (csrfToken) {
 }
 
 // Dynamically set the base URL based on the environment
+// axios.defaults.baseURL =
+//   import.meta.env.MODE === "development"
+//     ? "http://localhost:8000/api"
+//     : import.meta.env.VITE_BACKEND_URL || "https://api.juridiq.nu/api";
 axios.defaults.baseURL =
-  import.meta.env.MODE === "development"
+  import.meta.env.VITE_BACKEND_URL ||
+  (import.meta.env.MODE === "development"
     ? "http://localhost:8000/api"
-    : import.meta.env.VITE_BACKEND_URL || "https://api.juridiq.nu/api";
+    : "https://api.juridiq.nu/api");
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
