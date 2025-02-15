@@ -23,6 +23,8 @@ import CookieBanner from "./components/CookieBanner";
 import CookiePolicy from "./pages/CookiePolicy";
 // Privacy Policy
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+// Terms & Conditions
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 function App() {
   return (
@@ -49,6 +51,7 @@ function App() {
           <Route path="/cancel" element={<Cancel />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
       </div>
       <CookieBanner />
