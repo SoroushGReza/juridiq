@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
-import { useNavigate } from "react-router-dom";
+import { axiosReq } from "../api/axiosDefaults";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/RegisterLogin.module.css";
 import FormStyles from "../styles/FormStyles.module.css";
@@ -18,7 +17,7 @@ const Register = () => {
     gdpr_consent: false,
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,15 +37,8 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axiosReq.post("/accounts/register/", formData);
-      // Save tokens in localStorage
-      localStorage.setItem("access", response.data.access);
-      localStorage.setItem("refresh", response.data.refresh);
-      setAuthHeader(); // Update with new access token
-
-      // Redirect to home page after successful registration
-      navigate("/");
-      setTimeout(() => window.location.reload(), 0);
+      await axiosReq.post("/accounts/register/", formData);
+      setMessage("Kolla din e‑post för att verifiera ditt konto.");
     } catch (error) {
       if (error.response?.data) {
         setErrors(error.response.data);
@@ -191,7 +183,6 @@ const Register = () => {
               </Form.Group>
 
               {/* --- GDPR CONSENT --- */}
-              {/* --- GDPR CONSENT --- */}
               <Form.Group
                 className={`${styles["gdpr"]} mb-4 mt-4`}
                 controlId="formGdprConsent"
@@ -238,6 +229,12 @@ const Register = () => {
               {Object.keys(errors).length > 0 && (
                 <Alert variant="danger" className="mt-4">
                   Kontrollera errors i formuläret.
+                </Alert>
+              )}
+
+              {message && (
+                <Alert variant="info" className="mt-4">
+                  {message}
                 </Alert>
               )}
 
