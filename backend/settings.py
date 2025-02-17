@@ -84,6 +84,7 @@ CORS_ALLOW_CREDENTIALS = True
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth",
@@ -127,8 +128,14 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "Lax",
 }
 
-# Email verification OFF
-ACCOUNT_EMAIL_VERIFICATION = "none"
+# Email verification
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"  # Production
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"  # Development
+ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+
 
 REST_USE_JWT = True
 
@@ -151,7 +158,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -163,6 +170,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "backend.wsgi.application"
 

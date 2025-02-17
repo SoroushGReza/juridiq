@@ -1,0 +1,10 @@
+Hej och välkommen till JuridiQ!
+
+Tack för att du har registrerat dig. Klicka på länken nedan för att verifiera din e-postadress och aktivera ditt konto:
+
+{{ activate_url }}
+
+Om du inte har skapat detta konto kan du ignorera detta meddelande.
+
+Vänliga hälsningar,
+JuridiQ-teamet

@@ -6,10 +6,12 @@ from .views import (
     ChangePasswordView,
     DeleteAccountView,
     UserListView,
+    VerifyEmailView,
 )
 
 urlpatterns = [
     path("register/", UserRegistrationView.as_view(), name="register"),
+    path("verify-email/<str:key>/", VerifyEmailView.as_view(), name="verify-email"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("profile/", UserProfileView.as_view(), name="profile"),
     path(

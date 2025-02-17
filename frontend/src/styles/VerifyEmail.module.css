@@ -1,0 +1,28 @@
+.fullHeight {
+  min-height: 100vh;
+}
+
+.animatedText {
+  animation: slideInUp 0.8s ease-out forwards;
+  font-size: 1.6rem;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+}
+
+.iconSpacing {
+  margin-bottom: 1rem;
+}
+
+/* Animation */
+@keyframes slideInUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}

@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import Price from "./pages/Price";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import VerifyEmail from "./pages/VerifyEmail";
 // Payment components
 import PaymentList from "./pages/PaymentList";
 import AdminCreatePayment from "./pages/AdminCreatePayment";
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify-email/:key" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user-matters" element={<UserMatters />} />
           <Route path="/matters/:id" element={<Matter />} />
@@ -51,7 +53,10 @@ function App() {
           <Route path="/cancel" element={<Cancel />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
         </Routes>
       </div>
       <CookieBanner />
