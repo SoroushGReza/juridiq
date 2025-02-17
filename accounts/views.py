@@ -1,9 +1,16 @@
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
+from allauth.account.models import (
+    EmailAddress,
+    EmailConfirmation,
+    EmailConfirmationHMAC,
+)
+from allauth.account.utils import perform_login
+from allauth.account.utils import send_email_confirmation
 import logging
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authtoken.models import Token
@@ -34,27 +41,117 @@ class UserRegistrationView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        login(self.request, user)  # Log in user
-
-        # Generate JWT-token
-        refresh = RefreshToken.for_user(user)
-        # Save or create a token if you use it as well (optional depending on your needs)
-        token, created = Token.objects.get_or_create(user=user)
-
-        # Save JWT-token to send it in the post method
-        self.jwt_refresh = refresh
+        # Create an EmailAddress record if it doesn't already exist
+        email_address, created = EmailAddress.objects.get_or_create(
+            user=user, email=user.email
+        )
+        if created:
+            email_address.primary = True
+            email_address.verified = False
+            email_address.save()
+        # Send verification email to the specified email address
+        send_email_confirmation(self.request, user)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        return Response(
+            {"detail": "Kolla din e‑post för att verifiera ditt konto."},
+            status=status.HTTP_201_CREATED,
+        )
 
+
+class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, key, format=None):
+        # Try HMAC first
+        confirmation = EmailConfirmationHMAC.from_key(key)
+        if confirmation:
+            # Check if the email address is already verified
+            if confirmation.email_address.verified:
+                user = confirmation.email_address.user
+                # If the user is already active, return 200
+                if user.is_active:
+                    refresh = RefreshToken.for_user(user)
+                    login(request, user)
+                    return Response(
+                        {
+                            "message": "Konto redan verifierat. Du är nu inloggad.",
+                            "refresh": str(refresh),
+                            "access": str(refresh.access_token),
+                        },
+                        status=status.HTTP_200_OK,
+                    )
+                else:
+                    # Verified
+                    user.is_active = True
+                    user.save()
+            else:
+                # Verify email for the first time
+                confirmation.confirm(request)
+                user = confirmation.email_address.user
+                user.is_active = True
+                user.save()
+        else:
+            # If the key is not found in HMAC, try to find it in the database
+            try:
+                confirmation = EmailConfirmation.objects.get(key=key)
+                if confirmation.email_address.verified:
+                    user = confirmation.email_address.user
+                    if user.is_active:
+                        # already verified and active
+                        refresh = RefreshToken.for_user(user)
+                        login(request, user)
+                        return Response(
+                            {
+                                "message": "Konto redan verifierat. Du är nu inloggad.",
+                                "refresh": str(refresh),
+                                "access": str(refresh.access_token),
+                            },
+                            status=status.HTTP_200_OK,
+                        )
+                    else:
+                        # Verified in DB, but is_active=False
+                        user.is_active = True
+                        user.save()
+                else:
+                    # Verify for the first time
+                    confirmation.confirm(request)
+                    user = confirmation.email_address.user
+                    user.is_active = True
+                    user.save()
+            except EmailConfirmation.DoesNotExist:
+                # Check if the user is already authenticated
+                if request.user.is_authenticated and request.user.is_active:
+                    # Probably a double call – return 200
+                    refresh = RefreshToken.for_user(request.user)
+                    return Response(
+                        {
+                            "message": "Konto redan verifierat. Du är nu inloggad.",
+                            "refresh": str(refresh),
+                            "access": str(refresh.access_token),
+                        },
+                        status=status.HTTP_200_OK,
+                    )
+                return Response(
+                    {"detail": "Ogiltig verifieringsnyckel."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        # First time email is confirmed (or we just set is_active=True)
+        if not user.is_active:
+            user.is_active = True
+            user.save()
+        refresh = RefreshToken.for_user(user)
+        login(request, user)
         return Response(
             {
-                "refresh": str(self.jwt_refresh),
-                "access": str(self.jwt_refresh.access_token),
+                "message": "E‑post verifierad. Du är nu inloggad.",
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
             },
-            status=status.HTTP_201_CREATED,
+            status=status.HTTP_200_OK,
         )
 
 
