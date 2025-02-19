@@ -17,7 +17,7 @@ const useAuthStatus = () => {
       setIsAuthenticated(true);
       const checkAdminStatus = async () => {
         try {
-          const { data: user } = await axiosReq.get("/accounts/profile/");
+          const { data: user } = await axiosReq.get("/accounts/status/");
           setIsAdmin(user.is_staff || user.is_superuser);
           setIsDelegatedAdmin(!!user.is_delegated_admin);
         } catch (err) {
