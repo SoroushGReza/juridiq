@@ -101,8 +101,10 @@ class MatterCreateUpdateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         new_files = validated_data.pop("new_files", [])
         remove_file_ids = validated_data.pop("remove_file_ids", [])
+        delegated_admins = validated_data.pop("delegated_admins", None)
         matter = Matter.objects.create(**validated_data)
-
+        if delegated_admins:
+            matter.delegated_admins.set(delegated_admins)
         for f in new_files:
             MatterFile.objects.create(matter=matter, file=f)
         return matter
