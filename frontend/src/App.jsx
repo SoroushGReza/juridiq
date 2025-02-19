@@ -26,6 +26,8 @@ import CookiePolicy from "./pages/CookiePolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 // Terms & Conditions
 import TermsAndConditions from "./pages/TermsAndConditions";
+// 2FA
+import Setup2FA from "./pages/Setup2FA";
 
 function App() {
   return (
@@ -38,6 +40,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify-email/:key" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/setup-2fa" element={<Setup2FA />} />
           <Route path="/user-matters" element={<UserMatters />} />
           <Route path="/matters/:id" element={<Matter />} />
           <Route path="/profile" element={<Profile />} />
