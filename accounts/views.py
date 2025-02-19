@@ -199,6 +199,14 @@ class UserLoginView(APIView):
         )
 
 
+class UserStatusView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        serializer = UserProfileSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 # 2FA‑related views
 class TOTPSetupView(APIView):
     permission_classes = [IsAuthenticated]
