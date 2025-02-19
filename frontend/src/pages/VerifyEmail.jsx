@@ -25,10 +25,20 @@ const VerifyEmail = () => {
         localStorage.setItem("refresh", response.data.refresh);
         setAuthHeader();
 
-        setMessage("Ditt konto är verifierat! Du loggas in automatiskt...");
-        setTimeout(() => {
-          navigate("/");
-        }, 5000);
+        // Check if 2FA setup is required based on backend response
+        if (response.data.setup_2fa_required) {
+          setMessage(
+            "Ditt konto är verifierat! Du omdirigeras till 2FA setup..."
+          );
+          setTimeout(() => {
+            navigate("/setup-2fa");
+          }, 5000);
+        } else {
+          setMessage("Ditt konto är verifierat! Du loggas in automatiskt...");
+          setTimeout(() => {
+            navigate("/");
+          }, 5000);
+        }
       } catch (error) {
         console.error("Verifiering misslyckades:", error);
         setIsError(true);
@@ -38,9 +48,9 @@ const VerifyEmail = () => {
       }
     };
     verifyEmail();
-  }, []);
+  }, [key, navigate]);
 
-  // Display icon based och error or success
+  // Display icon based on error or success
   const icon = isError ? faExclamationTriangle : faCheckCircle;
 
   return (
