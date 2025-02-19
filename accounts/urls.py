@@ -11,7 +11,6 @@ from .views import (
     TOTPActivateView,
     TOTPResetView,
     ForceReset2FAView,
-    UserStatusView,
 )
 
 
@@ -25,7 +24,6 @@ urlpatterns = [
     path("2fa/force-reset/", ForceReset2FAView.as_view(), name="2fa-force-reset"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("profile/", UserProfileView.as_view(), name="profile"),
-    path("status/", UserStatusView.as_view(), name="user-status"),
     path(
         "change-password/", ChangePasswordView.as_view(), name="change-password"
     ),  # noqa: E501
