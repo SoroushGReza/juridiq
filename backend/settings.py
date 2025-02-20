@@ -126,6 +126,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     ".ngrok-free.app",
+    "juridiq-backend.onrender.com",
     "juridiq.nu",
     "www.juridiq.nu",
     "api.juridiq.nu",
