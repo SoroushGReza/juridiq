@@ -5,12 +5,11 @@ from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.http import HttpResponse
 from payments.views import stripe_webhook
-
-# from django.views.generic import TemplateView
+from .views import home_view
 
 
 urlpatterns = [
-    # path("", TemplateView.as_view(template_name="index.html")),
+    path("", home_view, name="home"),
     path("secure-admin/", admin.site.urls),  # Admin Panel
     path("api/accounts/", include("accounts.urls")),
     path("api/matters/", include("matters.urls")),
