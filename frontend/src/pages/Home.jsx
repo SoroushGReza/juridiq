@@ -25,8 +25,8 @@ const Home = () => {
               <p>
                 Vi hjälper dig att överklaga beslut från myndigheter och
                 organisationer, som exempelvis socialtjänsten eller
-                Försäkringskassan. Vi ser vi till att ditt ärende hanteras
-                korrekt och professionellt.
+                Försäkringskassan. Vi ser till att ditt ärende hanteras korrekt
+                och professionellt.
               </p>
               <div className={`${styles.iconDiv}`}>
                 <img
@@ -110,10 +110,9 @@ const Home = () => {
               <p>Vi erbjuder rådgivning för både misstänkta och brottsoffer:</p>
               <ul className={`${styles.serviceList}`}>
                 <li>Genomgång av ditt ärende</li>
-                <li>Förberedelse inför polisförhör</li>
                 <li>
-                  Polisförhörsstrategi – hur du bäst bemöter frågor och undviker
-                  missförstånd
+                  Strategisk rådgivning – hur du bäst bemöter frågor och
+                  undviker missförstånd under polisförhör och rättegång.
                 </li>
                 <li>
                   Förmedling av ditt ärende till en erfaren advokat som är bäst

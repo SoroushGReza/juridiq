@@ -12,6 +12,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
+        extra_fields.setdefault("is_active", False)
         user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -20,6 +21,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, username=None, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
 
         return self.create_user(email, username, password, **extra_fields)
 
@@ -30,6 +32,24 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=15)
+    totp_secret = models.CharField(max_length=64, blank=True, null=True)
+
+    two_factor_enabled = models.BooleanField(default=False)
+    # GDPR-approval
+    gdpr_consent = models.BooleanField(
+        default=False,
+        verbose_name="GDPR-samtycke",
+        help_text="Användaren har godkänt våra villkor och integritetspolicy.",
+    )
+    gdpr_consent_date = models.DateTimeField(
+        null=True, blank=True, verbose_name="GDPR-samtyckesdatum"
+    )
+
+    is_delegated_admin = models.BooleanField(
+        default=False,
+        verbose_name="Delegated admin",
+        help_text="Markera om denna användare är en delegerad admin.",
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)

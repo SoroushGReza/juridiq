@@ -21,7 +21,7 @@ const Matter = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [matter, setMatter] = useState(null);
-  const { isAdmin, userId } = useAuthStatus();
+  const { isAdmin, isDelegatedAdmin, userId } = useAuthStatus();
   const [localError, setLocalError] = useState("");
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -134,6 +134,8 @@ const Matter = () => {
           <StatusSection
             matter={matter}
             isAdmin={isAdmin}
+            isDelegatedAdmin={isDelegatedAdmin}
+            userId={userId}
             editingSection={editingSection}
             setEditingSection={setEditingSection}
             onStatusChange={handleStatusChange}
@@ -214,6 +216,9 @@ const Matter = () => {
             notes={matter.notes}
             isEditing={editingSection === "notes"}
             isAdmin={isAdmin}
+            isDelegatedAdmin={isDelegatedAdmin}
+            userId={userId}
+            ownerId={matter.user?.id ?? matter.user ?? null}
             darkMode={darkMode}
             setEditingSection={setEditingSection}
             onSaveNotes={handleNotesSave}

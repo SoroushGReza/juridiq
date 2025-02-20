@@ -9,6 +9,76 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ------------------------ LOGGING ------------------------
+# Create a logs directory if it doesnt exist
+LOGS_DIR = BASE_DIR / "logs"
+if not LOGS_DIR.exists():
+    LOGS_DIR.mkdir()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname} {name} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname}: {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": LOGS_DIR / "django.log",
+            "formatter": "verbose",
+            "level": "INFO",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    "loggers": {
+        # Djangos own loggers
+        "django": {
+            "handlers": ["console", "file", "mail_admins"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        # Appspecific loggers
+        "accounts": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "matters": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "payments": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "contact": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
+
+ADMINS = (("Admin Namn", os.getenv("ADMIN_EMAIL")),)
+# ---------------------------------------------------------
+
+
 if os.path.exists("env.py"):
     import env  # noqa F401
 
@@ -56,6 +126,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     ".ngrok-free.app",
+    "juridiq-backend.onrender.com",
     "juridiq.nu",
     "www.juridiq.nu",
     "api.juridiq.nu",
@@ -84,6 +155,7 @@ CORS_ALLOW_CREDENTIALS = True
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth",
@@ -113,8 +185,8 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=12),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
@@ -127,8 +199,14 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "Lax",
 }
 
-# Email verification OFF
-ACCOUNT_EMAIL_VERIFICATION = "none"
+# Email verification
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"  # Production
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"  # Development
+ACCOUNT_ADAPTER = "accounts.adapter.CustomAccountAdapter"
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+
 
 REST_USE_JWT = True
 
@@ -151,7 +229,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -163,6 +241,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "backend.wsgi.application"
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { axiosReq, setAuthHeader } from "../api/axiosDefaults";
-import { useNavigate } from "react-router-dom";
+import { axiosReq } from "../api/axiosDefaults";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import styles from "../styles/RegisterLogin.module.css";
 import FormStyles from "../styles/FormStyles.module.css";
@@ -15,9 +14,10 @@ const Register = () => {
     phone_number: "",
     password: "",
     password2: "",
+    gdpr_consent: false,
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,16 +30,15 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setErrors({});
+    if (!formData.gdpr_consent) {
+      setErrors({
+        gdpr_consent: "Du måste godkänna villkoren och integritetspolicyn.",
+      });
+      return;
+    }
     try {
-      const response = await axiosReq.post("/accounts/register/", formData);
-      // Save tokens in localStorage
-      localStorage.setItem("access", response.data.access);
-      localStorage.setItem("refresh", response.data.refresh);
-      setAuthHeader(); // Update with new access token
-
-      // Redirect to home page after successful registration
-      navigate("/");
-      setTimeout(() => window.location.reload(), 0);
+      await axiosReq.post("/accounts/register/", formData);
+      setMessage("Kolla din e‑post för att verifiera ditt konto.");
     } catch (error) {
       if (error.response?.data) {
         setErrors(error.response.data);
@@ -183,9 +182,59 @@ const Register = () => {
                 </Form.Control.Feedback>
               </Form.Group>
 
+              {/* --- GDPR CONSENT --- */}
+              <Form.Group
+                className={`${styles["gdpr"]} mb-4 mt-4`}
+                controlId="formGdprConsent"
+              >
+                <Form.Check
+                  type="checkbox"
+                  name="gdpr_consent"
+                  label={
+                    <>
+                      <span className="text-white">
+                        Jag har läst och godkänner{" "}
+                      </span>
+                      <a
+                        href="/terms-and-conditions"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        villkoren
+                      </a>
+                      <span className="text-white"> och </span>
+                      <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.link}
+                      >
+                        integritetspolicyn
+                      </a>
+                      <span className="text-danger">*</span>
+                    </>
+                  }
+                  checked={formData.gdpr_consent}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      gdpr_consent: e.target.checked,
+                    })
+                  }
+                  required
+                />
+              </Form.Group>
+
               {Object.keys(errors).length > 0 && (
                 <Alert variant="danger" className="mt-4">
                   Kontrollera errors i formuläret.
+                </Alert>
+              )}
+
+              {message && (
+                <Alert variant="info" className="mt-4">
+                  {message}
                 </Alert>
               )}
 
