@@ -9,6 +9,76 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ------------------------ LOGGING ------------------------
+# Create a logs directory if it doesnt exist
+LOGS_DIR = BASE_DIR / "logs"
+if not LOGS_DIR.exists():
+    LOGS_DIR.mkdir()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname} {name} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname}: {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": LOGS_DIR / "django.log",
+            "formatter": "verbose",
+            "level": "INFO",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    "loggers": {
+        # Djangos own loggers
+        "django": {
+            "handlers": ["console", "file", "mail_admins"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        # Appspecific loggers
+        "accounts": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "matters": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "payments": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "contact": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
+
+ADMINS = (("Admin Namn", os.getenv("ADMIN_EMAIL")),)
+# ---------------------------------------------------------
+
+
 if os.path.exists("env.py"):
     import env  # noqa F401
 
