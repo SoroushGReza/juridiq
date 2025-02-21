@@ -26,6 +26,8 @@ import CookiePolicy from "./pages/CookiePolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 // Terms & Conditions
 import TermsAndConditions from "./pages/TermsAndConditions";
+// Legal Info
+import LegalInfo from "./pages/LegalInfo";
 // 2FA
 import Setup2FA from "./pages/Setup2FA";
 
@@ -56,6 +58,7 @@ function App() {
           <Route path="/cancel" element={<Cancel />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/legal-info" element={<LegalInfo />} />
           <Route
             path="/terms-and-conditions"
             element={<TermsAndConditions />}
