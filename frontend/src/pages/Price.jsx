@@ -88,16 +88,15 @@ const Price = () => {
               </ul>
             </div>
           </Col>
-          <Col xs={12} sm={6} md={6} lg={6} className="p-3 text-white mx-auto">
+          <Col xs={12} sm={8} md={6} lg={4} className="p-3 text-white mx-auto">
             <div className={`${styles.sectionBox}`}>
               <h4 className="text-center">Brottmål</h4>
               <p>Rådgivning för misstänkta och brottsoffer:</p>
               <ul className="mb-3">
                 <li>Genomgång av ditt fall</li>
-                <li>Förberedelse inför polisförhör</li>
                 <li>
                   Strategisk rådgivning för hur du bäst bemöter frågor och
-                  undviker missförstånd
+                  undviker missförstånd under både polisförhör och rättegång. 
                 </li>
                 <li>
                   Koppling till en erfaren advokat specialiserad inom brottmål
