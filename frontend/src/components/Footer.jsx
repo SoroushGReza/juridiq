@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { FaLinkedin, FaFacebook } from "react-icons/fa"; // Importera Facebook-ikonen
+import { FaLinkedin, FaFacebook } from "react-icons/fa";
 import styles from "../../src/styles/Footer.module.css";
 import Logo from "../assets/images/JQ.svg";
 
@@ -33,6 +33,27 @@ const Footer = () => {
                 className={`${styles.footerLinks} text-white text-decoration-none`}
               >
                 Integritetspolicy
+              </NavLink>
+              <span className={styles.footerSeperator}>|</span>
+              <NavLink
+                to="/cookie-policy"
+                className={`${styles.footerLinks} text-white text-decoration-none`}
+              >
+                Cookiepolicy
+              </NavLink>
+              <span className={styles.footerSeperator}>|</span>
+              <NavLink
+                to="/terms-and-conditions"
+                className={`${styles.footerLinks} text-white text-decoration-none`}
+              >
+                Villkor
+              </NavLink>
+              <span className={styles.footerSeperator}>|</span>
+              <NavLink
+                to="/legal-info"
+                className={`${styles.footerLinks} text-white text-decoration-none`}
+              >
+                Juridisk information
               </NavLink>
             </div>
           </Col>
