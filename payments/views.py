@@ -81,6 +81,11 @@ def handle_checkout_session_failed(session):
 
 
 # Handles checkout session completion & updates or creates payment
+# The Stripe Checkout session is created here with HTTPS endpoints for both success_url and cancel_url.
+# This ensures that all communication occurs over a secure channel, which is a fundamental requirement for PSD2 and Strong Customer Authentication (SCA).
+# Stripe handles the necessary SCA process, where the user may need to confirm the payment via their banking app or via SMS before the transaction is approved.
+
+# Only staff users can create payments
 class PaymentCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
