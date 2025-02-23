@@ -13,6 +13,9 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 logger = logging.getLogger(__name__)
 
@@ -208,6 +211,25 @@ def handle_checkout_session_completed(session):
     payment.save()
     logger.info("Payment updated: %s", payment)
     print(f"Payment updated: {payment}")
+    # Send order confirmation email
+    subject = "Orderbekräftelse - JuridiQ"
+    message = (
+        f"Hej {payment.user.first_name},\n\n"
+        f"Tack för din betalning hos JuridiQ.\n\n"
+        f"Orderinformation:\n"
+        f"Ordernummer: {payment.id}\n"
+        f"Ärende: {payment.matter.title}\n"
+        f"Belopp: {payment.amount} SEK\n"
+        f"Betalningsmetod: Kortbetalning via Stripe\n"
+        f"Datum: {payment.created_at.strftime('%Y-%m-%d %H:%M')}\n\n"
+        f"Vänligen spara detta meddelande som bekräftelse på din betalning.\n\n"
+        f"Med vänlig hälsning,\n"
+        f"JuridiQ"
+    )
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [payment.user.email]
+    send_mail(subject, message, from_email, recipient_list)
+    logger.info("Orderbekräftelse skickad till %s", payment.user.email)
 
 
 # Allow access only to admins or the object owner
