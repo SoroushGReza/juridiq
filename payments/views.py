@@ -214,7 +214,7 @@ def handle_checkout_session_completed(session):
     # Send order confirmation email
     subject = "Orderbekräftelse - JuridiQ"
     message = (
-        f"Hej {payment.user.first_name},\n\n"
+        f"Hej {payment.user.name} {payment.user.surname},\n\n"
         f"Tack för din betalning hos JuridiQ.\n\n"
         f"Orderinformation:\n"
         f"Ordernummer: {payment.id}\n"
