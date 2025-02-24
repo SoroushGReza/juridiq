@@ -6,6 +6,7 @@ import useAuthStatus from "../hooks/useAuthStatus";
 import styles from "../styles/PaymentButton.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import PaymentConfirmationModal from "./PaymentConfirmationModal";
 
 const PaymentButton = () => {
   const { id } = useParams(); // Matter ID
@@ -14,6 +15,8 @@ const PaymentButton = () => {
   const [payment, setPayment] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const fetchPayment = async () => {
@@ -38,62 +41,71 @@ const PaymentButton = () => {
 
   const handlePay = async () => {
     if (!payment || payment.status !== "pending") return;
+    setShowConfirmModal(true);
+  };
 
+  const handleConfirmSubmit = async () => {
     try {
-      const { data } = await axiosReq.post(
-        `/payments/${payment.id}/create_checkout_session/`
+      console.debug(
+        "Initiating extra autentisering for payment id:",
+        payment.id
       );
-      window.location.href = data.url; // Navigate user to Stripe Checkout
+      const { data } = await axiosReq.post(
+        `/payments/${payment.id}/create_checkout_session/`,
+        { confirm_password: confirmPassword }
+      );
+      window.location.href = data.url; // Navigtae to Stripe Checkout
     } catch (err) {
-      setError("Kunde inte skapa Stripe-session.");
+      setError(
+        "Kunde inte skapa Stripe-session. Kontrollera lösenordet och försök igen."
+      );
     }
+    setShowConfirmModal(false);
+    setConfirmPassword("");
   };
 
   const handleRequestPayment = () => {
     navigate(`/admin-create-payment?matter_id=${id}`);
   };
 
-  if (loading)
-    return (
-      <Button className={styles.button} variant="secondary" disabled>
-        Laddar...
-      </Button>
-    );
-  if (error) return <Alert variant="danger">{error}</Alert>;
-
-  if (payment?.status === "paid") {
-    return (
-      <Button className={`${styles.paidContainer} me-3`}disabled>
-        Betald{" "}
-        <FontAwesomeIcon icon={faCheckCircle} className={styles.paidIcon} />
-      </Button>
-    );
-  }
-
-  if (isAdmin) {
-    return (
-      <Button
-        className={`${styles.adminBtns} me-3`}
-        disabled={!!payment}
-        onClick={handleRequestPayment}
-      >
-        {payment ? "Betalning Begärd" : "Begär Betalning"}
-      </Button>
-    );
-  }
-
-  if (payment && payment.status === "pending" && payment.user === userId) {
-    return (
-      <Button className={`${styles.payBtn} me-3`} onClick={handlePay}>
-        Betala
-      </Button>
-    );
-  }
-
   return (
-    <Button className={`${styles.payBtn} me-3`} disabled>
-      Betala
-    </Button>
+    <>
+      {loading ? (
+        <Button className={styles.button} variant="secondary" disabled>
+          Laddar...
+        </Button>
+      ) : error ? (
+        <Alert variant="danger">{error}</Alert>
+      ) : payment?.status === "paid" ? (
+        <Button className={`${styles.paidContainer} me-3`} disabled>
+          Betald{" "}
+          <FontAwesomeIcon icon={faCheckCircle} className={styles.paidIcon} />
+        </Button>
+      ) : isAdmin ? (
+        <Button
+          className={`${styles.adminBtns} me-3`}
+          disabled={!!payment}
+          onClick={handleRequestPayment}
+        >
+          {payment ? "Betalning Begärd" : "Begär Betalning"}
+        </Button>
+      ) : payment && payment.status === "pending" && payment.user === userId ? (
+        <Button className={`${styles.payBtn} me-3`} onClick={handlePay}>
+          Betala
+        </Button>
+      ) : (
+        <Button className={`${styles.payBtn} me-3`} disabled>
+          Betala
+        </Button>
+      )}
+      <PaymentConfirmationModal
+        show={showConfirmModal}
+        onHide={() => setShowConfirmModal(false)}
+        onConfirm={handleConfirmSubmit}
+        confirmPassword={confirmPassword}
+        setConfirmPassword={setConfirmPassword}
+      />
+    </>
   );
 };
 
