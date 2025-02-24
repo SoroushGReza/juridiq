@@ -85,6 +85,7 @@ def handle_checkout_session_failed(session):
 # This ensures that all communication occurs over a secure channel, which is a fundamental requirement for PSD2 and Strong Customer Authentication (SCA).
 # Stripe handles the necessary SCA process, where the user may need to confirm the payment via their banking app or via SMS before the transaction is approved.
 
+
 # Only staff users can create payments
 class PaymentCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -95,6 +96,18 @@ class PaymentCreateView(APIView):
             request.user,
             matter_id,
         )
+        confirm_password = request.data.get("confirm_password")
+        if not confirm_password or not request.user.check_password(confirm_password):
+            logger.warning(
+                "Extra autentisering misslyckades för användare %s vid skapande av betalning",
+                request.user,
+            )
+            return Response(
+                {
+                    "error": "Extra autentisering misslyckades. Kontrollera ditt lösenord."
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
         if not request.user.is_staff:
             logger.error("User %s is not staff - PermissionDenied", request.user)
             raise PermissionDenied("Endast admin kan skapa betalningar.")
