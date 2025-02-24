@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import styles from "../styles/PaymentConfirmationModal.module.css";
 
 const PaymentConfirmationModal = ({
   show,
@@ -9,30 +10,39 @@ const PaymentConfirmationModal = ({
   setConfirmPassword,
 }) => {
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Bekräfta Betalning</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form.Group controlId="confirmPassword">
-          <Form.Label>
-            Ange ditt lösenord för att komma till betalning
-          </Form.Label>
-          <Form.Control
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </Form.Group>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Avbryt
-        </Button>
-        <Button variant="primary" onClick={onConfirm}>
-          Bekräfta
-        </Button>
-      </Modal.Footer>
+    <Modal
+      show={show}
+      onHide={onHide}
+      centered
+      className={styles.modalContainer}
+    >
+      <div className={styles.modalContent}>
+        <Modal.Header closeButton className={styles.modalHeader}>
+          <Modal.Title>Fortsätt till betalning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={styles.modalBody}>
+          <p className={styles.modalText}>
+            Ange ditt lösenord för att gå vidare till betalningssidan.
+          </p>
+          <Form.Group controlId="confirmPassword">
+            <Form.Label className={styles.formLabel}>Lösenord</Form.Label>
+            <Form.Control
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={styles.inputField}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer className={styles.modalFooter}>
+          <Button className={styles.cancelButton} onClick={onHide}>
+            Avbryt
+          </Button>
+          <Button className={styles.confirmButton} onClick={onConfirm}>
+            Gå till betalning
+          </Button>
+        </Modal.Footer>
+      </div>
     </Modal>
   );
 };
