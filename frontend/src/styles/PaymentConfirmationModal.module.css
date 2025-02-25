@@ -60,8 +60,11 @@
   letter-spacing: 3px;
   color: white;
   width: 100%;
-  font-size: 38px;
+  font-size: 32px;
   height: 40px;
+  line-height: 1;
+  -webkit-text-security: disc;
+  font-family: "Arial", sans-serif;
 }
 
 .inputField:focus {
