@@ -7,9 +7,9 @@
   font-size: 22px;
   border-radius: 8px;
   margin: 20px auto;
-  box-shadow: 0px 4px 12px #8f7b32; /* Samma färg som border */
+  box-shadow: 0px 4px 12px #8f7b32;
   margin-top: 85px;
-  border: none; /* Tar bort border */
+  border: none;
 }
 .announcement h2 {
   margin-bottom: 25px;
