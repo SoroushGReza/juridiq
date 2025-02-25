@@ -10,6 +10,27 @@ const Home = () => {
     <Container fluid className={`${styles.homeContainer} p-0`}>
       <div className={styles.homeBackground}></div>
       <div className={styles.homeContent}>
+        {/* ---------------- Announcement ---------------- */}
+        <Row className="justify-content-center">
+          <Col xs={11} md={11} lg={8}>
+            <div className={styles.announcement}>
+              <h2>Sidan är under utveckling</h2>
+              <p>
+                Men vi söker redan nu <strong>jurister</strong> och{" "}
+                <strong>advokater</strong> för samarbete! Som en tidig
+                samarbetspartner får du en administrativ profil där vi förmedlar
+                ärenden anpassade efter din specialitet. Du kan även påverka
+                utvecklingen av sidan och dess funktioner.
+              </p>
+              <p>
+                📩 Är du intresserad?{" "}
+                <a href="mailto:juridiq.nu@gmail.com">Kontakta oss</a>
+              </p>
+            </div>
+          </Col>
+        </Row>
+        {/* ----------------..............---------------- */}
+
         <Row className="text-center p-3 m-3">
           <Col xs={12}>
             <h1 className={styles.homeHeading}>

@@ -72,7 +72,7 @@ const Footer = () => {
             <h6 className={styles.footerHeadings}>Följ oss på</h6>
             <div className="d-flex justify-content-center align-items-center gap-3">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/juridiqnu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${styles.socialLinks} text-white`}
@@ -80,7 +80,7 @@ const Footer = () => {
               >
                 <FaLinkedin size={18} />
               </a>
-              <a
+              {/* <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -88,7 +88,7 @@ const Footer = () => {
                 aria-label="Följ oss på Facebook"
               >
                 <FaFacebook size={18} />
-              </a>
+              </a> */}
             </div>
           </Col>
         </Row>
