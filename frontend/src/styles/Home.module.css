@@ -1,15 +1,15 @@
 /* ------------- ANNPUNCEMENT ------------- */
 .announcement {
-  background-color: #2b2b2b;
+  background-color: #2b2b2b8b;
   color: #f8d7da;
   text-align: center;
   padding: 20px;
   font-size: 22px;
   border-radius: 8px;
   margin: 20px auto;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: 2px solid #8f7b32;
+  box-shadow: 0px 4px 12px #8f7b32; /* Samma färg som border */
   margin-top: 85px;
+  border: none; /* Tar bort border */
 }
 .announcement h2 {
   margin-bottom: 25px;
