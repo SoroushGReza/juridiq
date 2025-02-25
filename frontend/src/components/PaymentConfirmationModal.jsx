@@ -24,15 +24,23 @@ const PaymentConfirmationModal = ({
           <p className={styles.modalText}>
             Ange ditt lösenord för att gå vidare till betalningssidan.
           </p>
-          <Form.Group controlId="confirmPassword">
-            <Form.Label className={styles.formLabel}>Lösenord</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={styles.inputField}
-            />
-          </Form.Group>
+          <Form onSubmit={(e) => e.preventDefault()}>
+            <Form.Group controlId="username" className="d-none">
+              <Form.Label>Användarnamn</Form.Label>
+              <Form.Control type="text" autoComplete="username" />
+            </Form.Group>
+
+            <Form.Group controlId="confirmPassword">
+              <Form.Label className={styles.formLabel}>Lösenord</Form.Label>
+              <Form.Control
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={styles.inputField}
+                autoComplete="new-password"
+              />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button className={styles.cancelButton} onClick={onHide}>
