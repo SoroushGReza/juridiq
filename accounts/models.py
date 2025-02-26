@@ -34,6 +34,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15)
     totp_secret = models.CharField(max_length=64, blank=True, null=True)
 
+    # Bank account details for payouts
+    bank_account = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Bankkonto",
+        help_text="Ange ditt bankkonto (IBAN eller kontonummer) dit betalningar ska skickas.",
+    )
+
     two_factor_enabled = models.BooleanField(default=False)
     # GDPR-approval
     gdpr_consent = models.BooleanField(

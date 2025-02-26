@@ -6,9 +6,12 @@ import ProfileForm from "../components/ProfileForm";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 import DeleteAccountModal from "../components/DeleteAccountModal";
 import Alerts from "../components/Alerts";
+import BankAccountForm from "../components/BankAccountForm";
 // Styling
 import styles from "../styles/Profile.module.css";
 import FormStyles from "../styles/FormStyles.module.css";
+// Hooks
+import useAuthStatus from "../hooks/useAuthStatus";
 
 function Profile() {
   // State to store user profile info
@@ -17,6 +20,7 @@ function Profile() {
     name: "",
     surname: "",
     phone_number: "",
+    bank_account: "",
   });
 
   // State for password change
@@ -34,6 +38,7 @@ function Profile() {
 
   // Modal to handle account deletion
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { isDelegatedAdmin } = useAuthStatus();
 
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
   const handleShowDeleteModal = () => {
@@ -52,6 +57,7 @@ function Profile() {
           name: data.name,
           surname: data.surname,
           phone_number: data.phone_number,
+          bank_account: data.bank_account || "",
         });
       } catch (error) {
         console.error("Kunde inte hämta profil: ", error);
@@ -194,6 +200,13 @@ function Profile() {
             }
             onSubmit={handleChangePassword}
           />
+
+          <hr className="my-4" />
+
+          {/* ---------- Bank Account ---------- */}
+          {isDelegatedAdmin && (
+            <BankAccountForm initialBankAccount={profileData.bank_account} />
+          )}
 
           <hr className="my-4" />
 
