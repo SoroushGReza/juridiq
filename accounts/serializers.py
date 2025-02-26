@@ -62,6 +62,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "name",
             "surname",
             "phone_number",
+            "bank_account",
+            "is_delegated_admin",
             "is_superuser",
             "is_staff",
         )
