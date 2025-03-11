@@ -13,6 +13,7 @@ const AdminCreatePayment = () => {
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (!matterId) {
