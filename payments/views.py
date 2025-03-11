@@ -86,7 +86,7 @@ def handle_checkout_session_failed(session):
 # Stripe handles the necessary SCA process, where the user may need to confirm the payment via their banking app or via SMS before the transaction is approved.
 
 
-# Only staff users can create payments
+# Only staff or delegated admins can create payments
 class PaymentCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -96,21 +96,16 @@ class PaymentCreateView(APIView):
             request.user,
             matter_id,
         )
+
         confirm_password = request.data.get("confirm_password")
         if not confirm_password or not request.user.check_password(confirm_password):
-            logger.warning(
-                "Extra autentisering misslyckades för användare %s vid skapande av betalning",
-                request.user,
-            )
+            logger.warning("Extra autentisering misslyckades ...")
             return Response(
                 {
                     "error": "Extra autentisering misslyckades. Kontrollera ditt lösenord."
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
-        if not request.user.is_staff:
-            logger.error("User %s is not staff - PermissionDenied", request.user)
-            raise PermissionDenied("Endast admin kan skapa betalningar.")
 
         amount = request.data.get("amount")
         if not amount:
@@ -122,14 +117,12 @@ class PaymentCreateView(APIView):
 
         try:
             matter = Matter.objects.get(id=matter_id)
-            logger.debug("Found Matter with id: %s", matter_id)
         except Matter.DoesNotExist:
             logger.error("Matter with id %s does not exist", matter_id)
             return Response(
                 {"error": "Ärendet existerar inte."}, status=status.HTTP_404_NOT_FOUND
             )
 
-        # Check if there is existing payment for matter
         existing_payment = Payment.objects.filter(
             matter=matter, status="pending"
         ).first()
@@ -142,11 +135,60 @@ class PaymentCreateView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        try:
+        if request.user.is_staff:
+            # Admin = 100% to their own account
             payment = Payment.objects.create(
                 user=matter.user, matter=matter, amount=amount, status="pending"
             )
-            logger.info("Payment created with id: %s", payment.id)
+            session = stripe.checkout.Session.create(
+                payment_method_types=["card"],
+                line_items=[
+                    {
+                        "price_data": {
+                            "currency": "sek",
+                            "product_data": {"name": f"Matter: {matter.title}"},
+                            "unit_amount": int(float(amount) * 100),
+                        },
+                        "quantity": 1,
+                    }
+                ],
+                mode="payment",
+                success_url="https://juridiq.nu/success",
+                cancel_url="https://juridiq.nu/cancel",
+                client_reference_id=str(matter.user.id),
+                metadata={
+                    "matter_id": str(matter.id),
+                    "payment_id": str(payment.id),
+                },
+            )
+            payment.stripe_payment_id = session["payment_intent"]
+            payment.save()
+
+            serializer = PaymentSerializer(payment)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        elif request.user.is_delegated_admin:
+            # Delegated admin = 90% to their own account, 10% to JuridiQ
+            if not request.user.stripe_account_id:
+                return Response(
+                    {"error": "Du har inget Stripe Express-konto kopplat."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # Check if user is delegated admin for the matter
+            if request.user not in matter.delegated_admins.all():
+                return Response(
+                    {"error": "Du är inte delegerad admin för detta ärende."},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
+            payment = Payment.objects.create(
+                user=matter.user, matter=matter, amount=amount, status="pending"
+            )
+
+            application_fee_amount = int(
+                float(amount) * 100 * 0.10
+            )  # 10% in cents (ören in SEK)
 
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -161,8 +203,6 @@ class PaymentCreateView(APIView):
                     }
                 ],
                 mode="payment",
-                # success_url="http://localhost:5173/success",
-                # cancel_url="http://localhost:5173/cancel",
                 success_url="https://juridiq.nu/success",
                 cancel_url="https://juridiq.nu/cancel",
                 client_reference_id=str(matter.user.id),
@@ -170,26 +210,24 @@ class PaymentCreateView(APIView):
                     "matter_id": str(matter.id),
                     "payment_id": str(payment.id),
                 },
+                payment_intent_data={
+                    "application_fee_amount": application_fee_amount,
+                    "transfer_data": {
+                        "destination": request.user.stripe_account_id,
+                    },
+                },
             )
-            logger.debug(
-                "Stripe checkout session created for payment id: %s", payment.id
-            )
-
             payment.stripe_payment_id = session["payment_intent"]
             payment.save()
-            logger.info(
-                "Payment updated with stripe_payment_id for payment id: %s", payment.id
-            )
 
-            return Response(
-                PaymentSerializer(payment).data, status=status.HTTP_201_CREATED
-            )
+            serializer = PaymentSerializer(payment)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        except Exception as e:
-            logger.exception("Error creating Stripe session")
+        else:
+            # No permission
             return Response(
-                {"error": f"Stripe-session kunde inte skapas: {str(e)}"},
-                status=status.HTTP_400_BAD_REQUEST,
+                {"error": "Du har inte behörighet att skapa betalningar."},
+                status=status.HTTP_403_FORBIDDEN,
             )
 
 
