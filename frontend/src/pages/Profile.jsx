@@ -21,7 +21,22 @@ function Profile() {
     surname: "",
     phone_number: "",
     bank_account: "",
+    stripe_account_id: "",
   });
+
+  // Create Express account for delegated admins
+  const handleCreateExpressAccount = async () => {
+    try {
+      const { data } = await axiosReq.post("/accounts/connect/create_express/");
+      if (data.onboarding_url) {
+        // Open Stripe Hosted Onboarding
+        window.location.href = data.onboarding_url;
+      }
+    } catch (error) {
+      console.error("Misslyckades att skapa Express-konto:", error);
+      setErrorMessage("Kunde inte skapa Stripe Express-konto. Se loggar.");
+    }
+  };
 
   // State for password change
   const [passwordData, setPasswordData] = useState({
@@ -38,6 +53,7 @@ function Profile() {
 
   // Modal to handle account deletion
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const { isDelegatedAdmin } = useAuthStatus();
 
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
@@ -58,6 +74,7 @@ function Profile() {
           surname: data.surname,
           phone_number: data.phone_number,
           bank_account: data.bank_account || "",
+          stripe_account_id: data.stripe_account_id || "",
         });
       } catch (error) {
         console.error("Kunde inte hämta profil: ", error);
@@ -83,7 +100,7 @@ function Profile() {
     }
   };
 
-  // Handle password chaneg
+  // Handle password change
   const handleChangePassword = async (event) => {
     event.preventDefault();
     setSuccessMessage("");
@@ -101,14 +118,14 @@ function Profile() {
         new_password,
       });
 
-      // Uppdatera tokens efter lösenordsbyte
+      // Update token after password change
       const refreshToken = localStorage.getItem("refresh");
       if (refreshToken) {
         const tokenResponse = await axiosReq.post("/auth/token/refresh/", {
           refresh: refreshToken,
         });
 
-        // Spara de nya tokens i localStorage
+        // Save new access token in local storage
         localStorage.setItem("access", tokenResponse.data.access);
         axiosReq.defaults.headers.common[
           "Authorization"
@@ -206,6 +223,15 @@ function Profile() {
           {/* ---------- Bank Account ---------- */}
           {isDelegatedAdmin && (
             <BankAccountForm initialBankAccount={profileData.bank_account} />
+          )}
+
+          {/* ---------- Create Stripe Accounts BTN ---------- */}
+          {isDelegatedAdmin && !profileData.stripe_account_id && (
+            <div className="text-center my-3">
+              <Button variant="info" onClick={handleCreateExpressAccount}>
+                Skapa Stripe-konto
+              </Button>
+            </div>
           )}
 
           <hr className="my-4" />

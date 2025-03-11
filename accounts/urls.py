@@ -12,6 +12,7 @@ from .views import (
     TOTPResetView,
     ForceReset2FAView,
 )
+from .connect_views import CreateExpressAccountView
 
 
 urlpatterns = [
@@ -24,6 +25,11 @@ urlpatterns = [
     path("2fa/force-reset/", ForceReset2FAView.as_view(), name="2fa-force-reset"),
     path("login/", UserLoginView.as_view(), name="login"),
     path("profile/", UserProfileView.as_view(), name="profile"),
+    path(
+        "connect/create_express/",
+        CreateExpressAccountView.as_view(),
+        name="create-express-account",
+    ),  # noqa: E501
     path(
         "change-password/", ChangePasswordView.as_view(), name="change-password"
     ),  # noqa: E501
