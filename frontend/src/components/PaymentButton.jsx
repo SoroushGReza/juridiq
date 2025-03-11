@@ -11,7 +11,7 @@ import PaymentConfirmationModal from "./PaymentConfirmationModal";
 const PaymentButton = () => {
   const { id } = useParams(); // Matter ID
   const navigate = useNavigate();
-  const { userId, isAdmin } = useAuthStatus();
+  const { userId, isAdmin, isDelegatedAdmin } = useAuthStatus();
   const [payment, setPayment] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ const PaymentButton = () => {
         `/payments/${payment.id}/create_checkout_session/`,
         { confirm_password: confirmPassword }
       );
-      window.location.href = data.url; // Navigtae to Stripe Checkout
+      window.location.href = data.url; // Navigate to Stripe Checkout
     } catch (err) {
       setError(
         "Kunde inte skapa Stripe-session. Kontrollera lösenordet och försök igen."
@@ -89,6 +89,20 @@ const PaymentButton = () => {
         >
           {payment ? "Betalning Begärd" : "Begär Betalning"}
         </Button>
+      ) : isDelegatedAdmin ? (
+        // If user is delegated admin, show a similar scenario as admin:
+        !payment ? (
+          <Button
+            className={`${styles.adminBtns} me-3`}
+            onClick={handleRequestPayment}
+          >
+            Begär Betalning
+          </Button>
+        ) : (
+          <Button className={`${styles.adminBtns} me-3`} disabled>
+            Betalning redan begärd
+          </Button>
+        )
       ) : payment && payment.status === "pending" && payment.user === userId ? (
         <Button className={`${styles.payBtn} me-3`} onClick={handlePay}>
           Betala
