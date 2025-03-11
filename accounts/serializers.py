@@ -54,6 +54,7 @@ class UserLoginSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     is_superuser = serializers.BooleanField(read_only=True)
     is_staff = serializers.BooleanField(read_only=True)
+    stripe_account_id = serializers.CharField(read_only=True)
 
     class Meta:
         model = CustomUser
@@ -66,6 +67,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "is_delegated_admin",
             "is_superuser",
             "is_staff",
+            "stripe_account_id",
         )
 
 
