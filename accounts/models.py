@@ -43,6 +43,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         help_text="Ange ditt bankkonto (IBAN eller kontonummer) dit betalningar ska skickas.",
     )
 
+    # Stripe customer ID
+    stripe_account_id = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="Stripe Express-konto för delegerad admin",
+    )
+
     two_factor_enabled = models.BooleanField(default=False)
     # GDPR-approval
     gdpr_consent = models.BooleanField(
