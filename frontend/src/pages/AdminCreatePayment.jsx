@@ -26,6 +26,11 @@ const AdminCreatePayment = () => {
       return;
     }
 
+    if (!password) {
+      setError("Vänligen ange ditt lösenord för extra autentisering.");
+      return;
+    }
+
     try {
       const { data: payments } = await axiosReq.get(
         `/payments/?matter=${matterId}`
@@ -42,6 +47,7 @@ const AdminCreatePayment = () => {
       }
 
       await axiosReq.post(`/payments/create/${matterId}/`, {
+        confirm_password: password,
         amount: parseFloat(amount),
       });
 
@@ -74,7 +80,7 @@ const AdminCreatePayment = () => {
           </h1>
           {/* Success Massage */}
           {success && <Alert variant="success">{success}</Alert>}
-          
+
           <div className={formStyles.formWrapper}>
             <Form className={`${formStyles.profileForm}`}>
               {/* Stripe Payment Methods Image */}
@@ -96,6 +102,19 @@ const AdminCreatePayment = () => {
                   onChange={(e) => setAmount(e.target.value)}
                   isInvalid={!!error}
                 />
+
+                <Form.Group className="mb-3">
+                  <Form.Label className={`${formStyles.formLabel}`}>
+                    Ange ditt lösenord
+                  </Form.Label>
+                  <Form.Control
+                    className={`${formStyles.formInput}`}
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+
                 {error && (
                   <Form.Text className="text-danger">{error}</Form.Text>
                 )}
